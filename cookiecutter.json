@@ -1,0 +1,9 @@
+{
+    "directory_name": "project-name",
+    "author_name": "Dan Saattrup Nielsen",
+    "email": "saattrupdan@gmail.com",
+    "compatible_python_versions": "^3.8",
+    "github_user": "saattrupdan",
+    "version": "0.0.1",
+    "license": "MIT"
+}
