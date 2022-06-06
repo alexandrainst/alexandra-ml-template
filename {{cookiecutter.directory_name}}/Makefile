@@ -10,10 +10,6 @@ install:
 	git rm -r --cached 'data/final'
 	git rm -r --cached 'models'
 
-activate:
-	@echo "Activating virtual environment"
-	poetry shell
-
 pull_data:
 	poetry run dvc pull
 
