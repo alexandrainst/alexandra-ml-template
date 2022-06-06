@@ -1,9 +1,7 @@
-"""
-This is the demo code that uses hy                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      dra to access the parameters in under the directory config.
+"""Demo code that uses hydra to access the parameters in the directory config.
 
-Author: Khuyen Tran 
+Author: Khuyen Tran
 """
-
 import hydra
 from omegaconf import DictConfig
 from hydra.utils import to_absolute_path as abspath
