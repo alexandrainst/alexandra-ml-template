@@ -3,15 +3,15 @@ defaults:
   - model: model1
   - _self_
 
-raw: 
-  path: data/raw/sample.csv
+raw:
+  path: data/raw/raw_data.csv
 
 processed:
   dir: data/processed
-  name: processed.csv
+  name: processed.parquet
   path: ${processed.dir}/${processed.name}
 
 final:
   dir: data/final
-  name: final.csv
+  name: final.parquet
   path: ${final.dir}/${final.name}

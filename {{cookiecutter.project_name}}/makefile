@@ -1,6 +1,11 @@
 .PHONY: notebook docs
 .EXPORT_ALL_VARIABLES:
 
+activate:
+	@echo "Activating virtual environment"
+	poetry shell
+	source "$( poetry env list --full-path | grep Activated | cut -d' ' -f1 )/bin/activate"
+
 install:
 	@echo "Installing..."
 	poetry install
@@ -9,6 +14,10 @@ install:
 	git rm -r --cached 'data/processed'
 	git rm -r --cached 'data/final'
 	git rm -r --cached 'models'
+	git init
+
+delete_env:
+	poetry env remove python3
 
 pull_data:
 	poetry run dvc pull
