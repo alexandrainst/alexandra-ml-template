@@ -11,10 +11,6 @@ install:
 	git init
 	poetry install
 	poetry run pre-commit install
-	git rm -r --cached 'data/raw'
-	git rm -r --cached 'data/processed'
-	git rm -r --cached 'data/final'
-	git rm -r --cached 'models'
 
 delete_env:
 	poetry env remove python3
