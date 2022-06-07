@@ -1,8 +1,6 @@
 {
-    "project_name": "project_name",
+    "project_name": "",
     "project_description": "",
     "author_name": "Dan Saattrup Nielsen",
-    "email": "saattrupdan@gmail.com",
-    "compatible_python_versions": "^3.8",
-    "version": "0.0.1"
+    "compatible_python_versions": "^3.8"
 }

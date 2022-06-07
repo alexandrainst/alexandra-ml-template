@@ -1,5 +1,68 @@
 # {{cookiecutter.project_name}}
 
+{{cookiecutter.project_description}}
+
+
+## Setup
+
+### Set up the environment
+1. If you do not have [Poetry](https://python-poetry.org/docs/#installation) then
+   install it:
+```bash
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+```
+2. Set up the environment:
+```bash
+make activate
+make install
+```
+
+### Install new packages
+To install new PyPI packages, run:
+```bash
+poetry add <package-name>
+```
+
+### Run the entire pipeline
+To run the entire pipeline, type:
+```bash
+dvc repo
+```
+
+### Version your data
+Read [this article](https://towardsdatascience.com/introduction-to-dvc-data-version-control-tool-for-machine-learning-projects-7cb49c229fe0) on how to use DVC to version your data.
+
+Basically, you start with setting up a remote storage. The remote storage is where your data is stored. You can store your data on DagsHub, Google Drive, Amazon S3, Azure Blob Storage, Google Cloud Storage, Aliyun OSS, SSH, HDFS, and HTTP.
+
+```bash
+dvc remote add -d remote <REMOTE-URL>
+```
+
+Commit the config file:
+```bash
+git commit .dvc/config -m "Configure remote storage"
+```
+
+Push the data to remote storage:
+```bash
+dvc push
+```
+
+Add and push all changes to Git:
+```bash
+git add .
+git commit -m 'commit-message'
+git push origin <branch>
+```
+
+### Auto-generate API documentation
+
+To auto-generate API document for your project, run:
+
+```bash
+make docs
+```
+
 ## Tools used in this project
 * [Poetry](https://towardsdatascience.com/how-to-effortlessly-publish-your-python-package-to-pypi-using-poetry-44b305362f9f): Dependency management - [article](https://towardsdatascience.com/how-to-effortlessly-publish-your-python-package-to-pypi-using-poetry-44b305362f9f)
 * [hydra](https://hydra.cc/): Manage configuration files - [article](https://towardsdatascience.com/introduction-to-hydra-cc-a-powerful-framework-to-configure-your-data-science-projects-ed65713a53c6)
@@ -36,62 +99,4 @@
 │   └── demo.py                     # demo module
 └── tests                           # store tests
     └── __init__.py                 # make tests a Python module
-```
-
-## Set up the environment
-1. If you do not have [Poetry](https://python-poetry.org/docs/#installation) then
-   install it:
-```bash
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-```
-2. Set up the environment:
-```bash
-make activate
-make install
-```
-
-## Install new packages
-To install new PyPI packages, run:
-```bash
-poetry add <package-name>
-```
-
-## Run the entire pipeline
-To run the entire pipeline, type:
-```bash
-dvc repo
-```
-
-## Version your data
-Read [this article](https://towardsdatascience.com/introduction-to-dvc-data-version-control-tool-for-machine-learning-projects-7cb49c229fe0) on how to use DVC to version your data.
-
-Basically, you start with setting up a remote storage. The remote storage is where your data is stored. You can store your data on DagsHub, Google Drive, Amazon S3, Azure Blob Storage, Google Cloud Storage, Aliyun OSS, SSH, HDFS, and HTTP.
-
-```bash
-dvc remote add -d remote <REMOTE-URL>
-```
-
-Commit the config file:
-```bash
-git commit .dvc/config -m "Configure remote storage"
-```
-
-Push the data to remote storage:
-```bash
-dvc push
-```
-
-Add and push all changes to Git:
-```bash
-git add .
-git commit -m 'commit-message'
-git push origin <branch>
-```
-
-# Auto-generate API documentation
-
-To auto-generate API document for your project, run:
-
-```bash
-make docs
 ```
