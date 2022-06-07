@@ -1,10 +1,11 @@
 .PHONY: notebook docs
 .EXPORT_ALL_VARIABLES:
+export ENV_DIR = $( poetry env list --full-path | grep Activated | cut -d' ' -f1 )"
 
 activate:
 	@echo "Activating virtual environment"
 	poetry shell
-	source "$( poetry env list --full-path | grep Activated | cut -d' ' -f1 )/bin/activate"
+	source "$(ENV_DIR)/bin/activate"
 
 install:
 	@echo "Installing..."
