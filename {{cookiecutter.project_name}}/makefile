@@ -8,9 +8,9 @@ activate:
 
 install:
 	@echo "Installing..."
+	git init
 	poetry install
 	poetry run pre-commit install
-	git init
 	git rm -r --cached 'data/raw'
 	git rm -r --cached 'data/processed'
 	git rm -r --cached 'data/final'
