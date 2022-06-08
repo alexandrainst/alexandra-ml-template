@@ -52,7 +52,7 @@ This repository is a template for a data science project. This is the project st
 
 Install Cookiecutter:
 ```bash
-pip install cookiecutter
+python3 -m pip install --user cookiecutter
 ```
 
 Create a project based on the template:
