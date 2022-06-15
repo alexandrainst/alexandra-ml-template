@@ -22,9 +22,6 @@ install:
 delete_env:
 	poetry env remove python3
 
-pull_data:
-	poetry run dvc pull
-
 docs_view:
 	@echo View API documentation...
 	pdoc src --http localhost:8080
