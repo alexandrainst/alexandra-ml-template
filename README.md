@@ -20,23 +20,24 @@ I frequently use for my data science project.
 │   └── process                     # Configurations for processing data
 │       └── process1.yaml           # First variation of parameters to process data
 ├── data
-│   ├── final                       # data after training the model
-│   ├── processed                   # data after processing
-│   └── raw                         # raw data
-├── docs                            # documentation for your project
-├── .flake8                         # configuration for flake8 - a Python formatter tool
-├── .gitignore                      # ignore files that cannot commit to Git
-├── makefile                        # store useful commands to set up the environment
-├── models                          # store models
-├── notebooks                       # store notebooks
-├── .pre-commit-config.yaml         # configurations for pre-commit
-├── pyproject.toml                  # dependencies for poetry
-├── README.md                       # describe your project
-├── src                             # store source code
-│   ├── __init__.py                 # make src a Python module
-│   └── demo.py                     # demo module
-└── tests                           # store tests
-    └── __init__.py                 # make tests a Python module
+│   ├── final                       # Data after training the model
+│   ├── processed                   # Data after processing
+│   └── raw                         # Raw data
+├── docs                            # Documentation for the project
+├── .flake8                         # Configuration for the linting tool flake8
+├── .gitignore
+├── makefile
+├── models                          # Trained machine learning models
+├── notebooks                       # Jupyter notebooks
+├── .pre-commit-config.yaml         # Configurations for pre-commit hook
+├── pyproject.toml                  # Project setup
+├── README.md                       # Description of the project
+├── src                             # All source code
+│   └── {{cookiecutter.project_name}}
+│      ├── __init__.py
+│      └── demo.py                  # Demo module
+└── tests                           # Unit tests
+    └── __init__.py
 ```
 
 ## How to use this project
