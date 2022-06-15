@@ -10,9 +10,9 @@ activate:
 install:
 	@echo "Installing..."
 	git init
-	@if [ ! "{{cookiecutter.gpg_key}}" = "" ];
+	@if [ ! "{{cookiecutter.gpg_key_id}}" = "" ];
 		git config commit.gpgsign true
-		git config user.signingkey "{{cookiecutter.gpg_key}}"
+		git config user.signingkey "{{cookiecutter.gpg_key_id}}"
 	fi
 	git config user.email "saattrupdan@gmail.com"
 	git config user.name "{{cookiecutter.author_name}}"
