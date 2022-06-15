@@ -8,7 +8,6 @@ I frequently use for my data science project.
 * [Poetry](https://towardsdatascience.com/how-to-effortlessly-publish-your-python-package-to-pypi-using-poetry-44b305362f9f): Dependency management
 * [hydra](https://hydra.cc/): Manage configuration files
 * [pre-commit plugins](https://pre-commit.com/): Automate code reviewing formatting
-* [DVC](https://dvc.org/): Data version control
 * [pdoc](https://github.com/pdoc3/pdoc): Automatically create an API documentation for your project
 
 ## Project Structure
@@ -23,10 +22,8 @@ I frequently use for my data science project.
 ├── data
 │   ├── final                       # data after training the model
 │   ├── processed                   # data after processing
-│   ├── raw                         # raw data
-│   └── raw.dvc                     # DVC file of data/raw
+│   └── raw                         # raw data
 ├── docs                            # documentation for your project
-├── dvc.yaml                        # DVC pipeline
 ├── .flake8                         # configuration for flake8 - a Python formatter tool
 ├── .gitignore                      # ignore files that cannot commit to Git
 ├── makefile                        # store useful commands to set up the environment
