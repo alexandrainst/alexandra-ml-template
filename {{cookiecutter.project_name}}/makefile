@@ -28,7 +28,7 @@ view-docs:
 	@pdoc src/{{cookiecutter.project_name}}
 
 docs:
-	@pdoc src -o docs
+	@pdoc src/{{cookiecutter.project_name}} -o docs
 	@echo "Saved documentation."
 
 clean:
