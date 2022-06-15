@@ -10,11 +10,11 @@ activate:
 install:
 	@echo "Installing..."
 	git init
-	@if [ ! "{{cookiecutter.gpg_key_id}}" = "" ];
-		git config commit.gpgsign true
-		git config user.signingkey "{{cookiecutter.gpg_key_id}}"
+	@if [ ! "{{cookiecutter.gpg_key_id}}" = "" ]; then\
+		git config commit.gpgsign true;\
+		git config user.signingkey "{{cookiecutter.gpg_key_id}}";\
 	fi
-	git config user.email "saattrupdan@gmail.com"
+	git config user.email "{{cookiecutter.email}}"
 	git config user.name "{{cookiecutter.author_name}}"
 	poetry install
 	poetry run pre-commit install
