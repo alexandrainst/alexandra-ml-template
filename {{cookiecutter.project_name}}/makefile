@@ -10,7 +10,7 @@ activate:
 install:
 	@echo "Installing..."
 	git init
-	@if [ ! "{{cookiecutter.gpg_key_id}}" = "" ]; then\
+	@if [ "{{cookiecutter.gpg_key_id}}" = "Type `gpg --list-keys` to see your key IDs" ]; then\
 		git config commit.gpgsign true;\
 		git config user.signingkey "{{cookiecutter.gpg_key_id}}";\
 	fi
