@@ -1,6 +1,6 @@
 .PHONY: notebook docs
 .EXPORT_ALL_VARIABLES:
-export ENV_DIR = $( poetry env list --full-path | grep Activated | cut -d' ' -f1 )"
+export ENV_DIR=$( poetry env list --full-path | grep Activated | cut -d' ' -f1 )"
 
 activate:
 	@echo "Activating virtual environment"
@@ -10,6 +10,12 @@ activate:
 install:
 	@echo "Installing..."
 	git init
+	git config commit.gpgsign true
+	@if [ ! "{{cookiecutter.gpg_key}}" = "" ];
+		git config user.signingkey "{{cookiecutter.gpg_key}}"
+	fi
+	git config user.email "saattrupdan@gmail.com"
+	git config user.name "{{cookiecutter.author_name}}"
 	poetry install
 	poetry run pre-commit install
 

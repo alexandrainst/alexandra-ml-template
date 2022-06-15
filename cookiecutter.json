@@ -2,5 +2,7 @@
     "project_name": "",
     "project_description": "",
     "author_name": "Dan Saattrup Nielsen",
+    "email": "dan.nielsen@alexandra.dk",
+    "gpg_key": "E0E6DFBD1D28BC10",
     "compatible_python_versions": "^3.8"
 }

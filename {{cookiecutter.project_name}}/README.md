@@ -2,6 +2,10 @@
 
 {{cookiecutter.project_description}}
 
+Developers:
+
+- {{cookiecutter.author_name}} ({{cookiecutter.email}})
+
 
 ## Setup
 
