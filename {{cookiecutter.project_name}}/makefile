@@ -19,15 +19,15 @@ install:
 	@poetry install
 	@poetry run pre-commit install
 
-delete_env:
+remove-env:
 	@poetry env remove python3
 	@echo "Removed virtual environment."
 
-docs_view:
+view-docs:
 	@echo "Viewing API documentation..."
-	@pdoc src --http localhost:8080
+	@pdoc src/{{cookiecutter.project_name}}
 
-docs_save:
+docs:
 	@pdoc src -o docs
 	@echo "Saved documentation."
 
