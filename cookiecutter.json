@@ -2,7 +2,7 @@
     "project_name": "",
     "project_description": "",
     "author_name": "Dan Saattrup Nielsen",
-    "email": "dan.nielsen@alexandra.dk",
+    "email": "saattrupdan@gmail.com",
     "gpg_key_id": "Type `gpg --list-keys` to see your key IDs",
     "compatible_python_versions": "^3.8",
     "_copy_without_render": [".github/*"]
