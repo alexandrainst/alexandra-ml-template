@@ -1,6 +1,10 @@
 .PHONY: notebook docs
 .EXPORT_ALL_VARIABLES:
 
+install-poetry:
+	@echo "Installing poetry..."
+	curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+
 activate:
 	@echo "Activating virtual environment..."
 	@poetry shell
