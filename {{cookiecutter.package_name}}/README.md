@@ -50,6 +50,13 @@ make view-docs
 ## Project structure
 ```bash
 .
+├── .env
+├── .flake8
+├── .github
+│   └── workflows
+│       └── ci.yml
+├── .gitignore
+├── .pre-commit-config.yaml
 ├── LICENSE
 ├── README.md
 ├── config
@@ -60,12 +67,18 @@ make view-docs
 │       └── process1.yaml
 ├── data
 │   ├── final
+│   │   └── .gitkeep
 │   ├── processed
+│   │   └── .gitkeep
 │   └── raw
+│       └── .gitkeep
 ├── docs
+│   └── .gitkeep
 ├── makefile
 ├── models
+│   └── .gitkeep
 ├── notebooks
+│   └── .gitkeep
 ├── pyproject.toml
 ├── src
 │   └── {{cookiecutter.package_name}}

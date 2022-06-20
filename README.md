@@ -13,6 +13,13 @@ I frequently use for my data science projects.
 ## Project Structure
 ```bash
 .
+├── .env
+├── .flake8
+├── .github
+│   └── workflows
+│       └── ci.yml
+├── .gitignore
+├── .pre-commit-config.yaml
 ├── LICENSE
 ├── README.md
 ├── config
@@ -23,12 +30,18 @@ I frequently use for my data science projects.
 │       └── process1.yaml
 ├── data
 │   ├── final
+│   │   └── .gitkeep
 │   ├── processed
+│   │   └── .gitkeep
 │   └── raw
+│       └── .gitkeep
 ├── docs
+│   └── .gitkeep
 ├── makefile
 ├── models
+│   └── .gitkeep
 ├── notebooks
+│   └── .gitkeep
 ├── pyproject.toml
 ├── src
 │   └── {{cookiecutter.package_name}}
