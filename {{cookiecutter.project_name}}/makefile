@@ -1,5 +1,15 @@
+# This ensures that we can call `make <target>` even if `<target>` exists as a file or
+# directory.
 .PHONY: notebook docs
+
+# Exports all variables defined in the makefile available to scripts
 .EXPORT_ALL_VARIABLES:
+
+# Export all environment variables in .env file
+ifneq (,$(wildcard ./.env))
+    include .env
+    export
+endif
 
 install-poetry:
 	@echo "Installing poetry..."
@@ -13,12 +23,10 @@ activate:
 install:
 	@echo "Installing..."
 	@git init
-	@if [ "{{cookiecutter.gpg_key_id}}" != "Type `gpg --list-keys` to see your key IDs" ]; then\
-		git config commit.gpgsign true;\
-		git config user.signingkey "{{cookiecutter.gpg_key_id}}";\
-	fi
-	@git config user.email "{{cookiecutter.email}}"
-	@git config user.name "{{cookiecutter.author_name}}"
+	@git config commit.gpgsign true
+	@git config user.signingkey "$(GPG_KEY)"
+	@git config user.name "$(GIT_NAME)"
+	@git config user.email "$(GIT_EMAIL)"
 	@poetry install
 	@poetry run pre-commit install
 
