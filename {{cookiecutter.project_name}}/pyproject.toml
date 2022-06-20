@@ -29,7 +29,7 @@ addopts = ['--verbose',
            '-vv',
            '--doctest-modules']
 xfail_strict = true
-filterwarnings = ["error"]
+filterwarnings = ["ignore"]
 log_cli_level = "info"
 testpaths = ["tests"]
 
