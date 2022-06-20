@@ -13,7 +13,7 @@ Developers:
 1. If you do not have [Poetry](https://python-poetry.org/docs/#installation) then
    install it:
 ```bash
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+make install-poetry
 ```
 2. Set up the environment:
 ```bash
