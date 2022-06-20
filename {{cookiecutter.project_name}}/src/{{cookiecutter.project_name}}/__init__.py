@@ -1,1 +1,1 @@
-"""Source code of your project."""
+"""{{cookiecutter.project_description}}"""
