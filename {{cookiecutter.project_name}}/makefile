@@ -35,12 +35,12 @@ remove-env:
 	@echo "Removed virtual environment."
 
 docs:
-	@poetry run pdoc --html src/dr_hatespeech -o docs --force
+	@poetry run pdoc --html src/{{cookiecutter.project_name}} -o docs --force
 	@echo "Saved documentation."
 
 view-docs:
 	@echo "Viewing API documentation..."
-	@open docs/dr_hatespeech/index.html
+	@open docs/{{cookiecutter.project_name}}/index.html
 
 clean:
 	@find . -type f -name "*.py[co]" -delete
