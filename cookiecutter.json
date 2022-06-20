@@ -1,6 +1,6 @@
 {
-    "project_name": "",
-    "project_description": "",
+    "project_name": "Project name without spaces or hyphens",
+    "project_description": "Short description of the project",
     "author_name": "Dan Saattrup Nielsen",
     "email": "saattrupdan@gmail.com",
     "gpg_key_id": "Type `gpg --list-secret-keys --keyid-format=long | grep sec | sed -E 's/.*\/([^ ]+).*/\1/'` to see your key ID",
