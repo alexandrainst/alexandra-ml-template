@@ -4,9 +4,6 @@ version = "0.0.1"
 description = "{{cookiecutter.project_description}}"
 authors = ["{{cookiecutter.author_name}} <{{cookiecutter.email}}>"]
 readme = "README.md"
-classifiers = ["License :: OSI Approved :: MIT License",
-               "Programming Language :: Python :: 3.8",
-               "Programming Language :: Python :: 3.9"]
 
 [tool.poetry.dependencies]
 python = "{{cookiecutter.compatible_python_versions}}"
