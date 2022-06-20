@@ -35,6 +35,12 @@ To auto-generate API document for your project, run:
 make docs
 ```
 
+To view the documentation, run:
+
+```bash
+make view-docs
+```
+
 ## Tools used in this project
 * [Poetry](https://towardsdatascience.com/how-to-effortlessly-publish-your-python-package-to-pypi-using-poetry-44b305362f9f): Dependency management
 * [hydra](https://hydra.cc/): Manage configuration files
