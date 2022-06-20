@@ -2,7 +2,7 @@
 
 ## What is this?
 This repository is a template for a data science project. This is the project structure
-I frequently use for my data science project.
+I frequently use for my data science projects.
 
 ## Tools used in this project
 * [Poetry](https://towardsdatascience.com/how-to-effortlessly-publish-your-python-package-to-pypi-using-poetry-44b305362f9f): Dependency management
@@ -13,30 +13,28 @@ I frequently use for my data science project.
 ## Project Structure
 ```bash
 .
+├── LICENSE
+├── README.md
 ├── config
-│   ├── main.yaml                   # Main configuration file
-│   ├── model                       # Configurations for training model
-│   │   └── model1.yaml             # First variation of parameters to train model
-│   └── process                     # Configurations for processing data
-│       └── process1.yaml           # First variation of parameters to process data
+│   ├── main.yaml
+│   ├── model
+│   │   └── model1.yaml
+│   └── process
+│       └── process1.yaml
 ├── data
-│   ├── final                       # Data after training the model
-│   ├── processed                   # Data after processing
-│   └── raw                         # Raw data
-├── docs                            # Documentation for the project
-├── .flake8                         # Configuration for the linting tool flake8
-├── .gitignore
+│   ├── final
+│   ├── processed
+│   └── raw
+├── docs
 ├── makefile
-├── models                          # Trained machine learning models
-├── notebooks                       # Jupyter notebooks
-├── .pre-commit-config.yaml         # Configurations for pre-commit hook
-├── pyproject.toml                  # Project setup
-├── README.md                       # Description of the project
-├── src                             # All source code
-│   └── {{cookiecutter.project_name}}
-│      ├── __init__.py
-│      └── demo.py                  # Demo module
-└── tests                           # Unit tests
+├── models
+├── notebooks
+├── pyproject.toml
+├── src
+│   └── {{cookiecutter.package_name}}
+│       ├── __init__.py
+│       └── demo.py
+└── tests
     └── __init__.py
 ```
 
