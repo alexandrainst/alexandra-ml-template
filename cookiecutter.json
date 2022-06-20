@@ -1,5 +1,6 @@
 {
-    "project_name": "Project name without spaces or hyphens",
+    "project_name": "Project name, spaces and capitalisation allowed",
+    "package_name": "The Python package name, in snake_case",
     "project_description": "Short description of the project",
     "author_name": "Dan Saattrup Nielsen",
     "email": "saattrupdan@gmail.com",
