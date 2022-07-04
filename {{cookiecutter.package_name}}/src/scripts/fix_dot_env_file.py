@@ -8,8 +8,8 @@ DESIRED_ENVIRONMENT_VARIABLES = dict(
     GPG_KEY_ID="Enter GPG key ID or leave empty if you do not want to use it. Type "
                "`gpg --list-secret-keys --keyid-format=long | grep sec | sed -E "
                "'s/.*/([^ ]+).*/\1/'` to see your key ID:\n> ",
-    GIT_NAME="Enter your full name\n> ",
-    GIT_EMAIL="Enter your email, as registered on your Github account\n> ",
+    GIT_NAME="Enter your full name:\n> ",
+    GIT_EMAIL="Enter your email, as registered on your Github account:\n> ",
 )
 
 
