@@ -5,15 +5,17 @@
 # Exports all variables defined in the makefile available to scripts
 .EXPORT_ALL_VARIABLES:
 
+# Run the .env file checks, which also ensures that it exists and contains all the
+# desired environment variables
+python3 -m src.scripts.fix_dot_env_file.py
+
 # Export all environment variables in .env file
-ifneq (,$(wildcard ./.env))
-    include .env
-    export
-endif
+include .env
+export
 
 install-poetry:
 	@echo "Installing poetry..."
-	curl -sSL https://install.python-poetry.org | python3 -
+	@curl -sSL https://install.python-poetry.org | python3 -
 
 activate:
 	@echo "Activating virtual environment..."
@@ -24,7 +26,7 @@ install:
 	@echo "Installing..."
 	@git init
 	@git config commit.gpgsign true
-	@git config user.signingkey "$(GPG_KEY)"
+	@git config user.signingkey "$(GPG_KEY_ID)"
 	@git config user.name "$(GIT_NAME)"
 	@git config user.email "$(GIT_EMAIL)"
 	@poetry install
