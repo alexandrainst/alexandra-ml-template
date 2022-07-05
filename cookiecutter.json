@@ -4,7 +4,7 @@
     "project_description": "Short description of the project",
     "author_name": "Dan Saattrup Nielsen",
     "email": "dan.nielsen@alexandra.dk",
-    "gpg_key_id": "${gpg --list-secret-keys --keyid-format=long | grep sec | sed -E 's/.*\\\/([^ ]+).*/\\1/'}",
+    "gpg_key_id": "$(gpg --list-secret-keys --keyid-format=long | grep sec | sed -E 's/.*\\\/([^ ]+).*/\\1/')",
     "compatible_python_versions": ">=3.8,<3.11",
     "_copy_without_render": [".github/*"]
 }
