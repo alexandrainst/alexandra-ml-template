@@ -16,8 +16,7 @@ uninstall-poetry:
 install:
 	@echo "Installing..."
 	@if [ "$(shell which poetry)" = "" ]; then \
-		echo "Installing poetry..."; \
-		curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -; \
+		make install-poetry; \
 	fi
 	@poetry env use python3
 	@poetry run python3 -m src.scripts.fix_dot_env_file
