@@ -1,0 +1,2 @@
+GIT_NAME="{{cookiecutter.author_name}}"
+GIT_EMAIL="{{cookiecutter.email}}"
