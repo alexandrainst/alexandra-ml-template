@@ -1,6 +1,7 @@
 """Checks related to the .env file in the repository."""
 
 from pathlib import Path
+import os
 
 
 # List of all the environment variables that are desired
@@ -40,7 +41,6 @@ def fix_dot_env_file():
         for env_var in env_vars_missing:
             value = ""
             if env_var == 'GPG_KEY_ID':
-                import os
                 value = os.system(
                     "gpg --list-secret-keys --keyid-format=long | "
                     "grep sec | "
@@ -48,7 +48,7 @@ def fix_dot_env_file():
                 )
             if value == "":
                 value = input(DESIRED_ENVIRONMENT_VARIABLES[env_var])
-            f.write(f"{env_var}=\"{value}\"")
+            f.write(f"{env_var}=\"{value}\"\n")
 
 
 if __name__ == "__main__":
