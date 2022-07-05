@@ -18,22 +18,22 @@ install:
 	@if [ "$(shell which poetry)" = "" ]; then \
 		echo "Installing poetry..."; \
 		curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -; \
-	fi;
+	fi
 	@poetry env use python3
 	@poetry run python3 -m src.scripts.fix_dot_env_file
 	@git init
 	@. .env; \
+		git config --local user.name "$${GIT_NAME}"; \
+		git config --local user.email "$${GIT_EMAIL}"
+	@. .env; \
 		if [ "$${GPG_KEY_ID}" = "" ]; then \
 			echo "No GPG key ID specified. Skipping GPG signing."; \
-			git config commit.gpgsign false; \
+			git config --local commit.gpgsign false; \
 		else \
 			echo "Signing with GPG key ID $${GPG_KEY_ID}..."; \
-			git config commit.gpgsign true; \
-			git config user.signingkey $${GPG_KEY_ID}; \
-		fi;
-		@. .env; \
-			git config user.name $${GIT_NAME}; \
-			git config user.email $${GIT_EMAIL};
+			git config --local commit.gpgsign true; \
+			git config --local user.signingkey "$${GPG_KEY_ID}"; \
+		fi
 	@poetry install
 	@poetry run pre-commit install
 
