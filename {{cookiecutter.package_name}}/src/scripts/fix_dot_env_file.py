@@ -46,6 +46,7 @@ def fix_dot_env_file():
                     "grep sec | "
                     "sed -E 's/.*\\/([^ ]+).*/\\1/'"
                 )
+                print(value)
             if value == "":
                 value = input(DESIRED_ENVIRONMENT_VARIABLES[env_var])
             f.write(f"{env_var}=\"{value}\"\n")

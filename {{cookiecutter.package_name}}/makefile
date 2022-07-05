@@ -15,7 +15,7 @@ uninstall-poetry:
 
 install:
 	@echo "Installing..."
-	@if [ "$(shell which poetry)" == "" ]; then \
+	@if [ "$(shell which poetry)" = "" ]; then \
 		echo "Installing poetry..."; \
 		curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -; \
 	fi;
@@ -23,12 +23,12 @@ install:
 	@poetry run python3 -m src.scripts.fix_dot_env_file
 	@git init
 	@. .env;
-	@if [ $${GPG_KEY_ID} == "" ]; then \
+	@if [ "$${GPG_KEY_ID}" = "" ]; then \
 		echo "No GPG key ID specified. Skipping GPG signing."; \
-		git config commit.gpgsign false
+		git config commit.gpgsign false; \
 	else \
 		echo "Signing with GPG key ID $${GPG_KEY_ID}..."; \
-		git config commit.gpgsign true
+		git config commit.gpgsign true; \
 		git config user.signingkey $${GPG_KEY_ID}; \
 	fi;
 	@. .env; \
