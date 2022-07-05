@@ -2,7 +2,6 @@
 
 from pathlib import Path
 import subprocess
-import tempfile
 
 
 # List of all the environment variables that are desired
@@ -46,14 +45,17 @@ def fix_dot_env_file():
                     ["gpg", "--list-secret-keys", "--keyid-format=long"],
                     stdout=subprocess.PIPE
                 )
-                grep = subprocess.Popen(["grep", "sec"], stdin=gpg.stdout)
-                value = subprocess.check_output(
-                    ["sed", "-E", "'s/.*\/([^ ]+).*/\\1/'"],
-                    stdin=grep.stdout,
+                grep = subprocess.Popen(
+                    ["grep", "sec"],
+                    stdin=gpg.stdout,
+                    stdout=subprocess.PIPE
                 )
+                value = subprocess.check_output(
+                    ["sed", "-E", "s/.*\\/([^ ]+).*/\\1/"],
+                    stdin=grep.stdout,
+                ).decode().strip("\n")
                 gpg.wait()
                 grep.wait()
-                print(value)
             if value == "":
                 value = input(DESIRED_ENVIRONMENT_VARIABLES[env_var])
             f.write(f"{env_var}=\"{value}\"\n")
