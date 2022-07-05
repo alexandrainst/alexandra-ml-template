@@ -7,29 +7,26 @@
 
 install-poetry:
 	@echo "Installing poetry..."
-	@curl -sSL https://install.python-poetry.org | python3 -
+	@curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
 
-activate:
-	@echo "Activating virtual environment..."
-	@poetry shell
-	@source `poetry env info --path`/bin/activate
+uninstall-poetry:
+	@echo "Installing poetry..."
+	@curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 - --uninstall
 
 install:
 	@echo "Installing..."
-
-	# Run the .env file checks, which also ensures that it exists and contains all the
-	# desired environment variables
-	poetry run python3 -m src.scripts.fix_dot_env_file
-
-	# Export all environment variables in .env file
-	include .env
-	export
-
+	@if [ "$(shell which poetry)" == "" ]; then \
+		echo "Installing poetry..."; \
+		curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -; \
+	fi;
+	@poetry env use python3
+	@poetry run python3 -m src.scripts.fix_dot_env_file
 	@git init
 	@git config commit.gpgsign true
-	@git config user.signingkey "$(GPG_KEY_ID)"
-	@git config user.name "$(GIT_NAME)"
-	@git config user.email "$(GIT_EMAIL)"
+	@. .env; \
+		git config user.signingkey $${GPG_KEY_ID}; \
+		git config user.name $${GIT_NAME}; \
+		git config user.email $${GIT_EMAIL};
 	@poetry install
 	@poetry run pre-commit install
 
