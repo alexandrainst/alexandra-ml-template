@@ -1,14 +1,13 @@
 """Checks related to the .env file in the repository."""
 
-from pathlib import Path
 import subprocess
-
+from pathlib import Path
 
 # List of all the environment variables that are desired
 DESIRED_ENVIRONMENT_VARIABLES = dict(
     GPG_KEY_ID="Enter GPG key ID or leave empty if you do not want to use it. Type "
-               "`gpg --list-secret-keys --keyid-format=long | grep sec | sed -E "
-               "'s/.*\/([^ ]+).*/\\1/'` to see your key ID:\n> ",
+    "`gpg --list-secret-keys --keyid-format=long | grep sec | sed -E "
+    "'s/.*\/([^ ]+).*/\\1/'` to see your key ID:\n> ",  # noqa
     GIT_NAME="Enter your full name, to be shown in Git commits:\n> ",
     GIT_EMAIL="Enter your email, as registered on your Github account:\n> ",
 )
@@ -17,7 +16,7 @@ DESIRED_ENVIRONMENT_VARIABLES = dict(
 def fix_dot_env_file():
     """Ensures that the .env file exists and contains all desired variables."""
     # Create path to the .env file
-    env_file_path = Path('.env')
+    env_file_path = Path(".env")
 
     # Ensure that the .env file exists
     env_file_path.touch(exist_ok=True)
@@ -26,7 +25,7 @@ def fix_dot_env_file():
     env_file_lines = env_file_path.read_text().splitlines(keepends=False)
 
     # Extract all the environment variables in the .env file
-    env_vars = [line.split('=')[0] for line in env_file_lines]
+    env_vars = [line.split("=")[0] for line in env_file_lines]
 
     # For each of the desired environment variables, check if it exists in the .env
     # file
@@ -37,28 +36,30 @@ def fix_dot_env_file():
     ]
 
     # Create all the missing environment variables
-    with env_file_path.open('a') as f:
+    with env_file_path.open("a") as f:
         for env_var in env_vars_missing:
             value = ""
-            if env_var == 'GPG_KEY_ID':
+            if env_var == "GPG_KEY_ID":
                 gpg = subprocess.Popen(
                     ["gpg", "--list-secret-keys", "--keyid-format=long"],
-                    stdout=subprocess.PIPE
+                    stdout=subprocess.PIPE,
                 )
                 grep = subprocess.Popen(
-                    ["grep", "sec"],
-                    stdin=gpg.stdout,
-                    stdout=subprocess.PIPE
+                    ["grep", "sec"], stdin=gpg.stdout, stdout=subprocess.PIPE
                 )
-                value = subprocess.check_output(
-                    ["sed", "-E", "s/.*\\/([^ ]+).*/\\1/"],
-                    stdin=grep.stdout,
-                ).decode().strip("\n")
+                value = (
+                    subprocess.check_output(
+                        ["sed", "-E", "s/.*\\/([^ ]+).*/\\1/"],
+                        stdin=grep.stdout,
+                    )
+                    .decode()
+                    .strip("\n")
+                )
                 gpg.wait()
                 grep.wait()
             if value == "":
                 value = input(DESIRED_ENVIRONMENT_VARIABLES[env_var])
-            f.write(f"{env_var}=\"{value}\"\n")
+            f.write(f'{env_var}="{value}"\n')
 
 
 if __name__ == "__main__":
