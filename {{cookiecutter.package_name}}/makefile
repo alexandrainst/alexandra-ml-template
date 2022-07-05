@@ -19,7 +19,7 @@ install:
 
 	# Run the .env file checks, which also ensures that it exists and contains all the
 	# desired environment variables
-	poetry run python3 -m src.scripts.fix_dot_env_file.py
+	poetry run python3 -m src.scripts.fix_dot_env_file
 
 	# Export all environment variables in .env file
 	include .env
