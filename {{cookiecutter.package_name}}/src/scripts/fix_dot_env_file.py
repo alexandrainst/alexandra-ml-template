@@ -42,22 +42,18 @@ def fix_dot_env_file():
         for env_var in env_vars_missing:
             value = ""
             if env_var == 'GPG_KEY_ID':
-                with tempfile.TemporaryFile() as tempf:
-                    proc = subprocess.Popen([
-                            "gpg",
-                            "--list-secret-keys",
-                            "--keyid-format=long",
-                            "|",
-                            "grep sec",
-                            "|",
-                            "sed -E 's/.*\\/([^ ]+).*/\\1/'",
-                        ],
-                        stdout=tempf
-                    )
-                    proc.wait()
-                    tempf.seek(0)
-                    value = tempf.read()
-                    print(value)
+                gpg = subprocess.Popen(
+                    ["gpg", "--list-secret-keys", "--keyid-format=long"],
+                    stdout=subprocess.PIPE
+                )
+                grep = subprocess.Popen(["grep", "sec"], stdin=gpg.stdout)
+                value = subprocess.check_output(
+                    ["sed", "-E", "'s/.*\/([^ ]+).*/\\1/'"],
+                    stdin=grep.stdout,
+                )
+                gpg.wait()
+                grep.wait()
+                print(value)
             if value == "":
                 value = input(DESIRED_ENVIRONMENT_VARIABLES[env_var])
             f.write(f"{env_var}=\"{value}\"\n")
