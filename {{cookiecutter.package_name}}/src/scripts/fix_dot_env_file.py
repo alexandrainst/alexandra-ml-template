@@ -38,7 +38,16 @@ def fix_dot_env_file():
     # Create all the missing environment variables
     with env_file_path.open('a') as f:
         for env_var in env_vars_missing:
-            value = input(DESIRED_ENVIRONMENT_VARIABLES[env_var])
+            value = ""
+            if env_var == 'GPG_KEY_ID':
+                import os
+                value = os.system(
+                    "gpg --list-secret-keys --keyid-format=long | "
+                    "grep sec | "
+                    "sed -E 's/.*\\\/([^ ]+).*/\\1/'"
+                )
+            if value == "":
+                value = input(DESIRED_ENVIRONMENT_VARIABLES[env_var])
             f.write(f"{env_var}=\"{value}\"")
 
 
