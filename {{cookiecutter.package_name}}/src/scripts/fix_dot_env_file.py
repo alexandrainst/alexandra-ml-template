@@ -44,7 +44,7 @@ def fix_dot_env_file():
                 value = os.system(
                     "gpg --list-secret-keys --keyid-format=long | "
                     "grep sec | "
-                    "sed -E 's/.*\\\/([^ ]+).*/\\1/'"
+                    "sed -E 's/.*\\/([^ ]+).*/\\1/'"
                 )
             if value == "":
                 value = input(DESIRED_ENVIRONMENT_VARIABLES[env_var])
