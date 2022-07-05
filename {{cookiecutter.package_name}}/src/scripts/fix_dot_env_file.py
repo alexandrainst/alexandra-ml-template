@@ -57,6 +57,7 @@ def fix_dot_env_file():
                     proc.wait()
                     tempf.seek(0)
                     value = tempf.read()
+                    print(value)
             if value == "":
                 value = input(DESIRED_ENVIRONMENT_VARIABLES[env_var])
             f.write(f"{env_var}=\"{value}\"\n")
