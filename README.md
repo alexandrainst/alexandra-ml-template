@@ -23,7 +23,8 @@ I frequently use for my data science projects.
 ├── LICENSE
 ├── README.md
 ├── config
-│   ├── main.yaml
+│   ├── __init__.py
+│   ├── config.yaml
 │   ├── model
 │   │   └── model1.yaml
 │   └── process
@@ -42,8 +43,11 @@ I frequently use for my data science projects.
 │   └── .gitkeep
 ├── notebooks
 │   └── .gitkeep
+├── poetry.toml
 ├── pyproject.toml
 ├── src
+│   ├── scripts
+│   │   └── fix_dot_env_file.py
 │   └── {{cookiecutter.package_name}}
 │       ├── __init__.py
 │       └── demo.py

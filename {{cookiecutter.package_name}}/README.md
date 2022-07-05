@@ -10,19 +10,14 @@ Developers:
 ## Setup
 
 ### Set up the environment
-1. If you do not have [Poetry](https://python-poetry.org/docs/#installation) then
-   install it:
-```bash
-make install-poetry
-```
-2. Set up the environment:
-```bash
-make activate
-make install
-```
+
+1. Run `make install`, which installs poetry, sets up a virtual environment and all Python dependencies therein.
+2. Run `source .venv/bin/activate` to activate the virtual environment.
 
 ### Install new packages
+
 To install new PyPI packages, run:
+
 ```bash
 poetry add <package-name>
 ```
@@ -60,7 +55,8 @@ make view-docs
 ├── LICENSE
 ├── README.md
 ├── config
-│   ├── main.yaml
+│   ├── __init__.py
+│   ├── config.yaml
 │   ├── model
 │   │   └── model1.yaml
 │   └── process
@@ -79,8 +75,11 @@ make view-docs
 │   └── .gitkeep
 ├── notebooks
 │   └── .gitkeep
+├── poetry.toml
 ├── pyproject.toml
 ├── src
+│   ├── scripts
+│   │   └── fix_dot_env_file.py
 │   └── {{cookiecutter.package_name}}
 │       ├── __init__.py
 │       └── demo.py
