@@ -22,9 +22,16 @@ install:
 	@poetry env use python3
 	@poetry run python3 -m src.scripts.fix_dot_env_file
 	@git init
-	@git config commit.gpgsign true
-	@. .env; \
+	@. .env;
+	if [ $${GPG_KEY_ID} == "" ]; then \
+		echo "No GPG key ID specified. Skipping GPG signing."; \
+		git config commit.gpgsign false
+	else \
+		echo "Signing with GPG key ID $${GPG_KEY_ID}..."; \
+		git config commit.gpgsign true
 		git config user.signingkey $${GPG_KEY_ID}; \
+	fi;
+	@. .env; \
 		git config user.name $${GIT_NAME}; \
 		git config user.email $${GIT_EMAIL};
 	@poetry install
