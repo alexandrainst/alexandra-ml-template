@@ -5,6 +5,10 @@
 # Exports all variables defined in the makefile available to scripts
 .EXPORT_ALL_VARIABLES:
 
+# Includes environment variables stored in the dotenv file
+include .env
+export
+
 install-poetry:
 	@echo "Installing poetry..."
 	@curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
