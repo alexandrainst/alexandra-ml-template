@@ -18,6 +18,11 @@ install:
 	@if [ "$(shell which poetry)" = "" ]; then \
 		make install-poetry; \
 	fi
+	@if [ "$(shell which gpg)" = "" ]; then \
+		echo "GPG not installed, so an error will occur. Install GPG on MacOS with " \
+			 "`brew install gnupg` or on Ubuntu with `apt install gnupg` and run " \
+			 "`make install` again."; \
+	fi
 	@poetry env use python3
 	@poetry run python3 -m src.scripts.fix_dot_env_file
 	@git init
