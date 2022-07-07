@@ -2,7 +2,9 @@
 name = "{{cookiecutter.project_name}}"
 version = "0.0.1"
 description = "{{cookiecutter.project_description}}"
-authors = ["{{cookiecutter.author_name}} <{{cookiecutter.email}}>"]
+authors = [
+    "{{cookiecutter.author_name}} <{{cookiecutter.email}}>",
+]
 readme = "README.md"
 license = "MIT"
 
@@ -17,12 +19,14 @@ pdoc3 = "^0.10.0"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = ['--verbose',
-           '--durations=10',
-           '--color=yes',
-           '-s',
-           '-vv',
-           '--doctest-modules']
+addopts = [
+    '--verbose',
+    '--durations=10',
+    '--color=yes',
+    '-s',
+    '-vv',
+    '--doctest-modules',
+]
 xfail_strict = true
 filterwarnings = ["ignore"]
 log_cli_level = "info"
