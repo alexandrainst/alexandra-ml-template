@@ -91,3 +91,6 @@ target/
 
 # Hydra logs
 outputs
+
+# Documentation
+docs/{{cookiecutter.package_name}}/
