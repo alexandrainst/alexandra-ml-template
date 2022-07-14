@@ -86,3 +86,16 @@ publish:
 		else \
 			echo "Publishing aborted."; \
 		fi
+
+tree:
+	@tree -a \
+		-I .git \
+		-I .mypy_cache . \
+		-I .env \
+		-I .venv \
+		-I poetry.lock \
+		-I .ipynb_checkpoints \
+		-I dist \
+		-I .gitkeep \
+		-I docs \
+		-I .pytest_cache
