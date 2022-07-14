@@ -1,1 +1,3 @@
-"""{{cookiecutter.project_description}}"""
+"""
+.. include:: ../../README.md
+"""
