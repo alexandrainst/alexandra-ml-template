@@ -58,3 +58,13 @@ clean:
 	@find . -type d -name "__pycache__" -delete
 	@rm -rf .pytest_cache
 	@echo "Cleaned repository."
+
+publish:
+	@. .env; \
+		if [ "$${PYPI_API_TOKEN}" = "" ]; then \
+			echo "No PyPI API token specified in the `.env` file, so cannot publish."; \
+		else \
+			echo "Publishing to PyPI..."
+			poetry publish --build --username "__token__" --password "$${PYPI_API_TOKEN}"
+			echo "Published!"
+		fi
