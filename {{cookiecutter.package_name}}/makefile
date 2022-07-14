@@ -60,11 +60,17 @@ clean:
 	@echo "Cleaned repository."
 
 publish:
+	@echo "Preparing to publish to PyPI. Have you ensured to change the package version? (y/n)"
+	@read answer
 	@. .env; \
-		if [ "$${PYPI_API_TOKEN}" = "" ]; then \
-			echo "No PyPI API token specified in the `.env` file, so cannot publish."; \
+		if [ "${answer}" = "y" ]; then \
+			if [ "$${PYPI_API_TOKEN}" = "" ]; then \
+				echo "No PyPI API token specified in the `.env` file, so cannot publish."; \
+			else \
+				echo "Publishing to PyPI..."; \
+				poetry publish --build --username "__token__" --password "$${PYPI_API_TOKEN}"; \
+				echo "Published!"; \
+			fi \
 		else \
-			echo "Publishing to PyPI..."
-			poetry publish --build --username "__token__" --password "$${PYPI_API_TOKEN}"
-			echo "Published!"
+			echo "Publishing aborted."; \
 		fi
