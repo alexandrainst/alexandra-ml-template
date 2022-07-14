@@ -11,9 +11,8 @@ I frequently use for my data science projects.
 * [pdoc](https://github.com/pdoc3/pdoc): Automatically create an API documentation for your project
 
 ## Project Structure
-```bash
+```
 .
-├── .env
 ├── .flake8
 ├── .github
 │   └── workflows
@@ -31,23 +30,17 @@ I frequently use for my data science projects.
 │       └── process1.yaml
 ├── data
 │   ├── final
-│   │   └── .gitkeep
 │   ├── processed
-│   │   └── .gitkeep
 │   └── raw
-│       └── .gitkeep
-├── docs
-│   └── .gitkeep
 ├── makefile
 ├── models
-│   └── .gitkeep
 ├── notebooks
-│   └── .gitkeep
 ├── poetry.toml
 ├── pyproject.toml
 ├── src
 │   ├── scripts
-│   │   └── fix_dot_env_file.py
+│   │   ├── fix_dot_env_file.py
+│   │   └── versioning.py
 │   └── {{cookiecutter.package_name}}
 │       ├── __init__.py
 │       └── demo.py
@@ -58,11 +51,11 @@ I frequently use for my data science projects.
 ## How to use this project
 
 Install Cookiecutter:
-```bash
-python3 -m pip install --user cookiecutter
+```
+$ python3 -m pip install --user cookiecutter
 ```
 
 Create a project based on the template:
-```bash
-cookiecutter https://github.com/saattrupdan/saattrupdan-template
+```
+$ cookiecutter https://github.com/saattrupdan/saattrupdan-template
 ```

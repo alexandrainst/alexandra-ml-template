@@ -18,22 +18,22 @@ Developers:
 
 To install new PyPI packages, run:
 
-```bash
-poetry add <package-name>
+```
+$ poetry add <package-name>
 ```
 
 ### Auto-generate API documentation
 
 To auto-generate API document for your project, run:
 
-```bash
-make docs
+```
+$ make docs
 ```
 
 To view the documentation, run:
 
-```bash
-make view-docs
+```
+$ make view-docs
 ```
 
 ## Tools used in this project
@@ -43,9 +43,8 @@ make view-docs
 * [pdoc](https://github.com/pdoc3/pdoc): Automatically create an API documentation for your project
 
 ## Project structure
-```bash
+```
 .
-├── .env
 ├── .flake8
 ├── .github
 │   └── workflows
@@ -63,23 +62,17 @@ make view-docs
 │       └── process1.yaml
 ├── data
 │   ├── final
-│   │   └── .gitkeep
 │   ├── processed
-│   │   └── .gitkeep
 │   └── raw
-│       └── .gitkeep
-├── docs
-│   └── .gitkeep
 ├── makefile
 ├── models
-│   └── .gitkeep
 ├── notebooks
-│   └── .gitkeep
 ├── poetry.toml
 ├── pyproject.toml
 ├── src
 │   ├── scripts
-│   │   └── fix_dot_env_file.py
+│   │   ├── fix_dot_env_file.py
+│   │   └── versioning.py
 │   └── {{cookiecutter.package_name}}
 │       ├── __init__.py
 │       └── demo.py
