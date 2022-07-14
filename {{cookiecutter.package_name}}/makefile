@@ -59,9 +59,21 @@ clean:
 	@rm -rf .pytest_cache
 	@echo "Cleaned repository."
 
+bump-major:
+	@poetry run python -m src.scripts.versioning --major
+	@echo "Bumped major version."
+
+bump-minor:
+	@poetry run python -m src.scripts.versioning --minor
+	@echo "Bumped minor version."
+
+bump-patch:
+	@poetry run python -m src.scripts.versioning --patch
+	@echo "Bumped patch version."
+
 publish:
 	@. .env; \
-		printf "Preparing to publish to PyPI. Have you ensured to change the package version in pyproject.toml? [y/n] : "; \
+		printf "Preparing to publish to PyPI. Have you ensured to change the package version with `make bump-X` for `X` being `major`, `minor` or `patch`? [y/n] : "; \
 		read -r answer; \
 		if [ "$${answer}" = "y" ]; then \
 			if [ "$${PYPI_API_TOKEN}" = "" ]; then \
