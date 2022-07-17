@@ -87,6 +87,9 @@ publish:
 			echo "Publishing aborted."; \
 		fi
 
+test:
+	@pytest && readme-cov
+
 tree:
 	@tree -a \
 		-I .git \
