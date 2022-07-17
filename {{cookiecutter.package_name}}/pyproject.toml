@@ -37,7 +37,7 @@ addopts = [
 xfail_strict = true
 filterwarnings = ["ignore"]
 log_cli_level = "info"
-testpaths = ["tests"]
+testpaths = ["tests", "src/{{cookiecutter.package_name}}"]
 
 [tool.black]
 line-length = 88
