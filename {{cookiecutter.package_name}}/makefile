@@ -101,4 +101,12 @@ tree:
 		-I dist \
 		-I .gitkeep \
 		-I docs \
-		-I .pytest_cache
+		-I .pytest_cache \
+		-I outputs \
+		-I .DS_Store \
+		-I .cache \
+		-I *.parquet \
+		-I *.csv \
+		-I *.txt \
+		-I checkpoint-* \
+		-I .coverage*
