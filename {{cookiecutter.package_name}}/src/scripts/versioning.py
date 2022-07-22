@@ -80,8 +80,7 @@ def get_current_version() -> Tuple[int, int, int]:
     """
     # Get all the version candidates from pyproject.toml
     version_candidates = re.search(
-        r'(?<=version = ")[^"]+(?=")',
-        Path("pyproject.toml").read_text()
+        r'(?<=version = ")[^"]+(?=")', Path("pyproject.toml").read_text()
     )
 
     # If no version candidates were found, raise an error
