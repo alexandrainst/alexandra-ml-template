@@ -26,19 +26,18 @@ install:
 	fi
 	@poetry env use python3
 	@poetry run python3 -m src.scripts.fix_dot_env_file
+	@$(eval include .env)
 	@git init
-	@. .env; \
-		git config --local user.name "$${GIT_NAME}"; \
-		git config --local user.email "$${GIT_EMAIL}"
-	@. .env; \
-		if [ "$${GPG_KEY_ID}" = "" ]; then \
-			echo "No GPG key ID specified. Skipping GPG signing."; \
-			git config --local commit.gpgsign false; \
-		else \
-			echo "Signing with GPG key ID $${GPG_KEY_ID}..."; \
-			git config --local commit.gpgsign true; \
-			git config --local user.signingkey "$${GPG_KEY_ID}"; \
-		fi
+	@git config --local user.name "$${GIT_NAME}"
+	@git config --local user.email "$${GIT_EMAIL}"
+	@if [ "$${GPG_KEY_ID}" = "" ]; then \
+		echo "No GPG key ID specified. Skipping GPG signing."; \
+		git config --local commit.gpgsign false; \
+	else \
+		echo "Signing with GPG key ID $${GPG_KEY_ID}..."; \
+		git config --local commit.gpgsign true; \
+		git config --local user.signingkey "$${GPG_KEY_ID}"; \
+	fi
 	@poetry install
 	@poetry run pre-commit install
 
@@ -73,8 +72,8 @@ bump-patch:
 	@echo "Bumped patch version."
 
 publish:
-	@. .env; \
-		printf "Preparing to publish to PyPI. Have you ensured to change the package version with 'make bump-X' for 'X' being 'major', 'minor' or 'patch'? [y/n] : "; \
+	@$(eval include .env)
+	@printf "Preparing to publish to PyPI. Have you ensured to change the package version with 'make bump-X' for 'X' being 'major', 'minor' or 'patch'? [y/n] : "; \
 		read -r answer; \
 		if [ "$${answer}" = "y" ]; then \
 			if [ "$${PYPI_API_TOKEN}" = "" ]; then \
