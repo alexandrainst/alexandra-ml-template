@@ -58,12 +58,6 @@ view-docs:
 	@echo "Viewing API documentation..."
 	@open docs/{{cookiecutter.package_name}}.html
 
-clean:
-	@find . -type f -name "*.py[co]" -delete
-	@find . -type d -name "__pycache__" -delete
-	@rm -rf .pytest_cache
-	@echo "Cleaned repository."
-
 bump-major:
 	@poetry run python -m src.scripts.versioning --major
 	@echo "Bumped major version."
