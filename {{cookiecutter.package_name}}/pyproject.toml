@@ -32,7 +32,7 @@ addopts = [
     '-vv',
     '--doctest-modules',
     '--cov=src/{{cookiecutter.package_name}}',
-    '-n 8',
+    '-n 2',
 ]
 xfail_strict = true
 filterwarnings = ["ignore"]
