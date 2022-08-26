@@ -40,4 +40,4 @@ jobs:
           poetry install
 
       - name: Test with pytest
-        run: poetry run pytest -n 1
+        run: poetry run pytest --dist no
