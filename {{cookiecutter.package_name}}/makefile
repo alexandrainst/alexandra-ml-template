@@ -58,7 +58,14 @@ docs:
 
 view-docs:
 	@echo "Viewing API documentation..."
-	@open docs/{{cookiecutter.package_name}}.html
+	@uname=$$(uname); \
+		case $${uname} in \
+			(*Linux*) openCmd='xdg-open'; ;; \
+			(*Darwin*) openCmd='open'; ;; \
+			(*CYGWIN*) openCmd='cygstart'; ;; \
+			(*) echo 'Error: Unsupported platform: $${uname}'; exit 2; ;; \
+		esac; \
+		"$${openCmd}" docs/{{ cookiecutter.package_name }}.html
 
 publish-major:
 	@poetry run python -m src.scripts.versioning --major
