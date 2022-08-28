@@ -28,13 +28,16 @@ install:
 			 "`make install` again."; \
 	fi
 	@$(MAKE) setup-poetry
+	@$(MAKE) setup-environment-variables
 	@$(MAKE) setup-git
 
 setup-poetry:
 	@poetry env use python3
-	@poetry run python3 -m src.scripts.fix_dot_env_file
 	@poetry install
 	@poetry run pre-commit install
+
+setup-environment-variables:
+	@poetry run python3 -m src.scripts.fix_dot_env_file
 
 setup-git:
 	@git init
@@ -58,36 +61,32 @@ view-docs:
 	@echo "Viewing API documentation..."
 	@open docs/{{cookiecutter.package_name}}.html
 
-bump-major:
+publish-major:
 	@poetry run python -m src.scripts.versioning --major
-	@echo "Bumped major version."
+	@$(MAKE) publish
+	@echo "Published major version."
 
-bump-minor:
+publish-minor:
 	@poetry run python -m src.scripts.versioning --minor
-	@echo "Bumped minor version."
+	@$(MAKE) publish
+	@echo "Published minor version."
 
-bump-patch:
+publish-patch:
 	@poetry run python -m src.scripts.versioning --patch
-	@echo "Bumped patch version."
+	@$(MAKE) publish
+	@echo "Published patch version."
 
 publish:
-	@$(eval include .env)
-	@printf "Preparing to publish to PyPI. Have you ensured to change the package version with 'make bump-X' for 'X' being 'major', 'minor' or 'patch'? [y/n] : "; \
-		read -r answer; \
-		if [ "$${answer}" = "y" ]; then \
-			if [ "$${PYPI_API_TOKEN}" = "" ]; then \
-				echo "No PyPI API token specified in the '.env' file, so cannot publish."; \
-			else \
-				echo "Publishing to PyPI..."; \
-				poetry publish --build --username "__token__" --password "$${PYPI_API_TOKEN}"; \
-				echo "Published!"; \
-			fi \
-		else \
-			echo "Publishing aborted."; \
-		fi
+	@if [ ${PYPI_API_TOKEN} = "" ]; then \
+		echo "No PyPI API token specified in the '.env' file, so cannot publish."; \
+	else \
+		echo "Publishing to PyPI..."; \
+		poetry publish --build --username "__token__" --password ${PYPI_API_TOKEN}; \
+		echo "Published!"; \
+	fi
 
 test:
-	@pytest && readme-cov
+	@poetry run pytest && readme-cov
 
 tree:
 	@tree -a \
