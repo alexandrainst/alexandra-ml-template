@@ -54,9 +54,13 @@ $ make view-docs
 ├── .flake8
 ├── .github
 │   └── workflows
-│       └── ci.yml
+│       ├── ci.yaml
+│       └── docs.yaml
 ├── .gitignore
 ├── .pre-commit-config.yaml
+├── CHANGELOG.md
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
 ├── LICENSE
 ├── README.md
 ├── config
@@ -79,7 +83,7 @@ $ make view-docs
 │   ├── scripts
 │   │   ├── fix_dot_env_file.py
 │   │   └── versioning.py
-│   └── {{cookiecutter.package_name}}
+│   └── {{ cookiecutter.package_name }}
 │       ├── __init__.py
 │       └── demo.py
 └── tests
