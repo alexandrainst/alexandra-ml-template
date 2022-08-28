@@ -64,17 +64,17 @@ view-docs:
 publish-major:
 	@poetry run python -m src.scripts.versioning --major
 	@$(MAKE) publish
-	@echo "Published major version."
+	@echo "Published major version!"
 
 publish-minor:
 	@poetry run python -m src.scripts.versioning --minor
 	@$(MAKE) publish
-	@echo "Published minor version."
+	@echo "Published minor version!"
 
 publish-patch:
 	@poetry run python -m src.scripts.versioning --patch
 	@$(MAKE) publish
-	@echo "Published patch version."
+	@echo "Published patch version!"
 
 publish:
 	@if [ ${PYPI_API_TOKEN} = "" ]; then \
@@ -82,7 +82,6 @@ publish:
 	else \
 		echo "Publishing to PyPI..."; \
 		poetry publish --build --username "__token__" --password ${PYPI_API_TOKEN}; \
-		echo "Published!"; \
 	fi
 
 test:
