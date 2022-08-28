@@ -34,7 +34,6 @@ install:
 setup-poetry:
 	@poetry env use python3
 	@poetry install
-	@poetry run pre-commit install
 
 setup-environment-variables:
 	@poetry run python3 -m src.scripts.fix_dot_env_file
@@ -52,6 +51,7 @@ setup-git:
 		git config --local commit.gpgsign true; \
 		git config --local user.signingkey ${GPG_KEY_ID}; \
 	fi
+	@poetry run pre-commit install
 
 docs:
 	@poetry run pdoc --docformat google src/{{cookiecutter.package_name}} -o docs
