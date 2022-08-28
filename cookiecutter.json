@@ -1,6 +1,7 @@
 {
     "project_name": "Project name, spaces and capitalisation allowed",
     "package_name": "The Python package name, in snake_case",
+    "github_user": "The username of the Github account on which the project will be hosted",
     "project_description": "Short description of the project",
     "author_name": "Dan Saattrup Nielsen",
     "email": "dan.nielsen@alexandra.dk",
