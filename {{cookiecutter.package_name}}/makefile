@@ -32,8 +32,7 @@ install:
 	@$(MAKE) setup-git
 
 setup-poetry:
-	@poetry env use python3
-	@poetry install
+	@poetry env use python3 && poetry install
 
 setup-environment-variables:
 	@poetry run python3 -m src.scripts.fix_dot_env_file
