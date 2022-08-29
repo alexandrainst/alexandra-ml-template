@@ -2,15 +2,16 @@
 
 {{cookiecutter.project_description}}
 
-Developers:
-
-- {{cookiecutter.author_name}} ({{cookiecutter.email}})
-
 ______________________________________________________________________
 [![Documentation](https://img.shields.io/badge/docs-passing-green)](https://{{ cookiecutter.github_user }}.github.io/{{ cookiecutter.package_name }}/{{ cookiecutter.package_name }}.html)
 [![License](https://img.shields.io/github/license/{{ cookiecutter.github_user }}/{{ cookiecutter.package_name }})](https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.package_name }}/blob/main/LICENSE)
 [![LastCommit](https://img.shields.io/github/last-commit/{{ cookiecutter.github_user }}/{{ cookiecutter.package_name }})](https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.package_name }}/commits/main)
 [![Code Coverage](https://img.shields.io/badge/Coverage-0%25-red.svg)](https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.package_name }}/tree/main/tests)
+
+
+Developers:
+
+- {{cookiecutter.author_name}} ({{cookiecutter.email}})
 
 
 ## Setup
