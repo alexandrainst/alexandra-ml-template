@@ -67,20 +67,17 @@ view-docs:
 		esac; \
 		"$${openCmd}" docs/{{ cookiecutter.package_name }}.html
 
-publish-major:
+bump-major:
 	@poetry run python -m src.scripts.versioning --major
-	@$(MAKE) publish
-	@echo "Published major version!"
+	@echo "Bumped major version!"
 
-publish-minor:
+bump-minor:
 	@poetry run python -m src.scripts.versioning --minor
-	@$(MAKE) publish
-	@echo "Published minor version!"
+	@echo "Bumped minor version!"
 
-publish-patch:
+bump-patch:
 	@poetry run python -m src.scripts.versioning --patch
-	@$(MAKE) publish
-	@echo "Published patch version!"
+	@echo "Bumped patch version!"
 
 publish:
 	@if [ ${PYPI_API_TOKEN} = "" ]; then \
@@ -89,6 +86,13 @@ publish:
 		echo "Publishing to PyPI..."; \
 		poetry publish --build --username "__token__" --password ${PYPI_API_TOKEN}; \
 	fi
+	@echo "Published!"
+
+publish-major: bump-major publish
+
+publish-minor: bump-minor publish
+
+publish-patch: bump-patch publish
 
 test:
 	@poetry run pytest && readme-cov
