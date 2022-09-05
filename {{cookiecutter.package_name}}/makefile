@@ -5,6 +5,11 @@
 # Exports all variables defined in the makefile available to scripts
 .EXPORT_ALL_VARIABLES:
 
+# Create .env file if it does not already exist
+ifeq (,$(wildcard .env))
+	$(shell touch .env)
+endif
+
 # Includes environment variables from the .env file
 include .env
 
