@@ -13,6 +13,10 @@ endif
 # Includes environment variables from the .env file
 include .env
 
+# Set gRPC environment variables, which prevents some errors with the `grpcio` package
+export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
+export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
+
 install-poetry:
 	@echo "Installing poetry..."
 	@curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
