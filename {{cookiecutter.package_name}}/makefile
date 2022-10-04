@@ -19,12 +19,12 @@ export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 
 install-poetry:
 	@echo "Installing poetry..."
-	@curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
+	@pipx install poetry==1.2.0
 	@$(eval include ${HOME}/.poetry/env)
 
 uninstall-poetry:
 	@echo "Uninstalling poetry..."
-	@curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 - --uninstall
+	@pipx uninstall poetry
 
 install:
 	@echo "Installing..."
