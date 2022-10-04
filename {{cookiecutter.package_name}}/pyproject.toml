@@ -12,7 +12,7 @@ license = "MIT"
 python = "{{cookiecutter.compatible_python_versions}}"
 hydra-core = "^1.1.1"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^7.0.0"
 pytest-xdist = "^2.5.0"
 pytest-cov = "^4.0.0"
