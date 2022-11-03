@@ -109,7 +109,7 @@ test:
 tree:
 	@tree -a \
 		-I .git \
-		-I .mypy_cache . \
+		-I .mypy_cache \
 		-I .env \
 		-I .venv \
 		-I poetry.lock \
@@ -126,4 +126,6 @@ tree:
 		-I *.txt \
 		-I checkpoint-* \
 		-I .coverage* \
-		-I __pycache__
+		-I .DS_Store \
+		-I __pycache__ \
+		.
