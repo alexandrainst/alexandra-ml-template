@@ -97,3 +97,9 @@ docs/{{cookiecutter.package_name}}/
 docs/{{cookiecutter.package_name}}.html
 docs/index.html
 docs/search.json
+
+# Data
+data/
+
+# Models
+models/
