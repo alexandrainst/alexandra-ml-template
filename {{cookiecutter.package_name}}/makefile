@@ -121,9 +121,9 @@ tree:
 		-I outputs \
 		-I .DS_Store \
 		-I .cache \
-		-I *.parquet \
-		-I *.csv \
-		-I *.txt \
+		-I raw \
+		-I processed \
+		-I final \
 		-I checkpoint-* \
 		-I .coverage* \
 		-I .DS_Store \
