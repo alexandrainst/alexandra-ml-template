@@ -90,7 +90,8 @@ target/
 .pytest_cache/
 
 # Hydra logs
-outputs
+outputs/
+multirun/
 
 # Documentation
 docs/{{cookiecutter.package_name}}/
