@@ -66,15 +66,8 @@ $ make view-docs
 ├── README.md
 ├── config
 │   ├── __init__.py
-│   ├── config.yaml
-│   ├── model
-│   │   └── model1.yaml
-│   └── process
-│       └── process1.yaml
+│   └── config.yaml
 ├── data
-│   ├── final
-│   ├── processed
-│   └── raw
 ├── makefile
 ├── models
 ├── notebooks
@@ -84,9 +77,8 @@ $ make view-docs
 │   ├── scripts
 │   │   ├── fix_dot_env_file.py
 │   │   └── versioning.py
-│   └── {{ cookiecutter.package_name }}
-│       ├── __init__.py
-│       └── demo.py
+│   └── {{cookiecutter.package_name}}
+│       └── __init__.py
 └── tests
     └── __init__.py
 ```

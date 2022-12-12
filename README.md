@@ -16,22 +16,19 @@ I frequently use for my data science projects.
 ├── .flake8
 ├── .github
 │   └── workflows
-│       └── ci.yml
+│       ├── ci.yaml
+│       └── docs.yaml
 ├── .gitignore
 ├── .pre-commit-config.yaml
+├── CHANGELOG.md
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
 ├── LICENSE
 ├── README.md
 ├── config
 │   ├── __init__.py
-│   ├── config.yaml
-│   ├── model
-│   │   └── model1.yaml
-│   └── process
-│       └── process1.yaml
+│   └── config.yaml
 ├── data
-│   ├── final
-│   ├── processed
-│   └── raw
 ├── makefile
 ├── models
 ├── notebooks
@@ -42,8 +39,7 @@ I frequently use for my data science projects.
 │   │   ├── fix_dot_env_file.py
 │   │   └── versioning.py
 │   └── {{cookiecutter.package_name}}
-│       ├── __init__.py
-│       └── demo.py
+│       └── __init__.py
 └── tests
     └── __init__.py
 ```
