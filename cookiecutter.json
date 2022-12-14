@@ -6,5 +6,5 @@
     "author_name": "Dan Saattrup Nielsen",
     "email": "dan.nielsen@alexandra.dk",
     "compatible_python_versions": ">=3.8,<3.11",
-    "_copy_without_render": [".github/*"]
+    "_copy_without_render": [".github/ci.yaml"]
 }
