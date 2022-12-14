@@ -18,7 +18,7 @@ jobs:
         matrix:
             os: [windows-latest, macos-latest, ubuntu-latest]
             python-version: ["3.8", "3.9", "3.10"]
-    runs-on: ${{ matrix.os }}
+    runs-on: {% raw %}${{ matrix.os }}{% endraw %}
     steps:
       - uses: actions/checkout@v3
 
@@ -28,12 +28,12 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
           cache: "poetry"
 
       - name: Install Dependencies
         run: |
-          poetry env use "${{ matrix.python-version }}"
+          poetry env use {% raw %}"${{ matrix.python-version }}"{% endraw %}
           poetry install
 
       - name: Test with pytest
