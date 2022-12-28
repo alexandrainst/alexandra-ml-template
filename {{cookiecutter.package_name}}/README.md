@@ -3,6 +3,7 @@
 {{cookiecutter.project_description}}
 
 ______________________________________________________________________
+[![PyPI Status](https://badge.fury.io/py/{{ cookiecutter.package_name }}.svg)](https://pypi.org/project/{{ cookiecutter.package_name }}/)
 [![Documentation](https://img.shields.io/badge/docs-passing-green)](https://{{ cookiecutter.github_user }}.github.io/{{ cookiecutter.package_name }}/{{ cookiecutter.package_name }}.html)
 [![License](https://img.shields.io/github/license/{{ cookiecutter.github_user }}/{{ cookiecutter.package_name }})](https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.package_name }}/blob/main/LICENSE)
 [![LastCommit](https://img.shields.io/github/last-commit/{{ cookiecutter.github_user }}/{{ cookiecutter.package_name }})](https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.package_name }}/commits/main)
