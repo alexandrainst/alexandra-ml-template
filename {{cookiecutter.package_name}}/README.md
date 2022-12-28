@@ -7,6 +7,7 @@ ______________________________________________________________________
 [![License](https://img.shields.io/github/license/{{ cookiecutter.github_user }}/{{ cookiecutter.package_name }})](https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.package_name }}/blob/main/LICENSE)
 [![LastCommit](https://img.shields.io/github/last-commit/{{ cookiecutter.github_user }}/{{ cookiecutter.package_name }})](https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.package_name }}/commits/main)
 [![Code Coverage](https://img.shields.io/badge/Coverage-0%25-red.svg)](https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.package_name }}/tree/main/tests)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.package_name }}/blob/main/CODE_OF_CONDUCT.md)
 
 
 Developers:
