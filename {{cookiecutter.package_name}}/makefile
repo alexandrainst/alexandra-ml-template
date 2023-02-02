@@ -100,7 +100,7 @@ publish:
 	fi
 	@echo "Published!"
 
-publish-major: bump-major publish  ## Publish a major version
+publish-major: bump-major publish  ## Publish a major version
 
 publish-minor: bump-minor publish  ## Publish a minor version
 
