@@ -58,7 +58,9 @@ setup-git:
 		git config --local commit.gpgsign false; \
 	else \
 		echo "Signing with GPG key ID ${GPG_KEY_ID}..."; \
-		echo 'If you get the "failed to sign the data" error when committing, try running `export GPG_TTY=$$(tty)`.'; \
+		echo 'Just for info: If you get the "failed to sign the data" error when '\
+			 'committing, try running `export GPG_TTY=$$(tty)` and `gpgconf --kill '\
+			 'gpg-agent`, and try again.'; \
 		git config --local commit.gpgsign true; \
 		git config --local user.signingkey ${GPG_KEY_ID}; \
 	fi
