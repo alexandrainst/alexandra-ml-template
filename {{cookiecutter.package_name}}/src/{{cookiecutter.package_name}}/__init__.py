@@ -2,7 +2,7 @@
 .. include:: ../../README.md
 """
 
-import pkg_resources
+import importlib.metadata
 
 # Fetches the version of the package as defined in pyproject.toml
-__version__ = pkg_resources.get_distribution("{{cookiecutter.package_name}}").version
+__version__ = importlib.metadata.version(__package__)
