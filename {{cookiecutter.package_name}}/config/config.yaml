@@ -6,3 +6,4 @@ dirs:
   raw: raw
   processed: processed
   final: final
+  models: models
