@@ -6,6 +6,6 @@
     "project_description": "Short description of the project",
     "author_name": "Dan Saattrup Nielsen",
     "email": "dan.nielsen@alexandra.dk",
-    "compatible_python_versions": ">=3.8,<3.11",
+    "compatible_python_versions": ">=3.10,<3.11",
     "_copy_without_render": []
 }
