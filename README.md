@@ -4,6 +4,18 @@
 This repository is a template for a Python-based data science project. This is the
 project structure we frequently use in our data science projects.
 
+## How to use this project
+
+Install Cookiecutter:
+```
+$ python3 -m pip install --user cookiecutter
+```
+
+Create a project based on the template:
+```
+$ cookiecutter https://github.com/alexandrainst/python-repo-template
+```
+
 ## Tools used in this project
 * [Poetry](https://towardsdatascience.com/how-to-effortlessly-publish-your-python-package-to-pypi-using-poetry-44b305362f9f): Dependency management
 * [hydra](https://hydra.cc/): Manage configuration files
@@ -41,17 +53,6 @@ project structure we frequently use in our data science projects.
 │   └── {{cookiecutter.package_name}}
 │       └── __init__.py
 └── tests
-    └── __init__.py
-```
-
-## How to use this project
-
-Install Cookiecutter:
-```
-$ python3 -m pip install --user cookiecutter
-```
-
-Create a project based on the template:
-```
-$ cookiecutter https://github.com/alexandrainst/python-repo-template
+    ├── __init__.py
+    └── test_dummy.py
 ```

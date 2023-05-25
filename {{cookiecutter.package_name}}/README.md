@@ -76,5 +76,6 @@ publishing the code as a package and more.
 │   └── {{cookiecutter.package_name}}
 │       └── __init__.py
 └── tests
-    └── __init__.py
+    ├── __init__.py
+    └── test_dummy.py
 ```
