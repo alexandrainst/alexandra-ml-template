@@ -4,6 +4,18 @@
 This repository is a template for a data science project. This is the project structure
 I frequently use for my data science projects.
 
+## How to use this project
+
+Install Cookiecutter:
+```
+$ python3 -m pip install --user cookiecutter
+```
+
+Create a project based on the template:
+```
+$ cookiecutter gh:saattrupdan/saattrupdan-template
+```
+
 ## Tools used in this project
 * [Poetry](https://towardsdatascience.com/how-to-effortlessly-publish-your-python-package-to-pypi-using-poetry-44b305362f9f): Dependency management
 * [hydra](https://hydra.cc/): Manage configuration files
@@ -41,17 +53,6 @@ I frequently use for my data science projects.
 │   └── {{cookiecutter.package_name}}
 │       └── __init__.py
 └── tests
-    └── __init__.py
-```
-
-## How to use this project
-
-Install Cookiecutter:
-```
-$ python3 -m pip install --user cookiecutter
-```
-
-Create a project based on the template:
-```
-$ cookiecutter https://github.com/saattrupdan/saattrupdan-template
+    ├── __init__.py
+    └── test_dummy.py
 ```
