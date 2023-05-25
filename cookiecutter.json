@@ -2,10 +2,10 @@
     "project_name": "Project name, spaces and capitalisation allowed",
     "package_name": "The Python package name, in snake_case",
     "repo_name": "The GitHub repo name, capitalisation allowed, but not spaces",
-    "github_user": "The username of the Github account on which the project will be hosted",
+    "github_user": "alexandrainst",
     "project_description": "Short description of the project",
     "author_name": "Your full name",
-    "email": "Your Alexandra email",
+    "email": "<name>@alexandra.dk",
     "compatible_python_versions": ">=3.10,<3.11",
     "_copy_without_render": []
 }
