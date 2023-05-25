@@ -13,7 +13,7 @@ $ python3 -m pip install --user cookiecutter
 
 Create a project based on the template:
 ```
-$ cookiecutter https://github.com/alexandrainst/alexandra-ml-template
+$ cookiecutter gh:alexandrainst/alexandra-ml-template
 ```
 
 ## Tools used in this project
