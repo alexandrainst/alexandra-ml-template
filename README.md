@@ -1,8 +1,8 @@
-# Data Science Cookie Cutter
+# Alexandra Institute Python Repository Template
 
 ## What is this?
-This repository is a template for a data science project. This is the project structure
-I frequently use for my data science projects.
+This repository is a template for a Python-based data science project. This is the
+project structure we frequently use in our data science projects.
 
 ## Tools used in this project
 * [Poetry](https://towardsdatascience.com/how-to-effortlessly-publish-your-python-package-to-pypi-using-poetry-44b305362f9f): Dependency management
@@ -53,5 +53,5 @@ $ python3 -m pip install --user cookiecutter
 
 Create a project based on the template:
 ```
-$ cookiecutter https://github.com/saattrupdan/saattrupdan-template
+$ cookiecutter https://github.com/alexandrainst/python-repo-template
 ```

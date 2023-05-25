@@ -4,8 +4,8 @@
     "repo_name": "The GitHub repo name, capitalisation allowed, but not spaces",
     "github_user": "The username of the Github account on which the project will be hosted",
     "project_description": "Short description of the project",
-    "author_name": "Dan Saattrup Nielsen",
-    "email": "dan.nielsen@alexandra.dk",
+    "author_name": "Your full name",
+    "email": "Your Alexandra email",
     "compatible_python_versions": ">=3.10,<3.11",
     "_copy_without_render": []
 }
