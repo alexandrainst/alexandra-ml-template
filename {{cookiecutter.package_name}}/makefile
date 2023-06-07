@@ -10,6 +10,12 @@ ifeq (,$(wildcard .env))
   $(shell touch .env)
 endif
 
+# Create poetry env file if it does not already exist
+ifeq (,$(wildcard ${HOME}/.poetry/env))
+  $(shell mkdir ${HOME}/.poetry)
+  $(shell touch ${HOME}/.poetry/env)
+endif
+
 # Includes environment variables from the .env file
 include .env
 
