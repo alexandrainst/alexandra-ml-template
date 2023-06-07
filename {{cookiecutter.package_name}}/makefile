@@ -10,6 +10,12 @@ ifeq (,$(wildcard .env))
   $(shell touch .env)
 endif
 
+# Create poetry env file if it does not already exist
+ifeq (,$(wildcard ${HOME}/.poetry/env))
+  $(shell mkdir ${HOME}/.poetry)
+  $(shell touch ${HOME}/.poetry/env)
+endif
+
 # Includes environment variables from the .env file
 include .env
 
@@ -22,7 +28,7 @@ help:
 
 install-poetry:
 	@echo "Installing poetry..."
-	@pipx install poetry==1.2.0
+	@pipx install --force poetry==1.4.0
 	@$(eval include ${HOME}/.poetry/env)
 
 uninstall-poetry:
@@ -31,14 +37,12 @@ uninstall-poetry:
 
 install: ## Install dependencies
 	@echo "Installing..."
-	@if [ "$(shell which poetry)" = "" ]; then \
-		$(MAKE) install-poetry; \
-	fi
 	@if [ "$(shell which gpg)" = "" ]; then \
 		echo "GPG not installed, so an error will occur. Install GPG on MacOS with "\
 			 "`brew install gnupg` or on Ubuntu with `apt install gnupg` and run "\
 			 "`make install` again."; \
 	fi
+	@$(MAKE) install-poetry
 	@$(MAKE) setup-poetry
 	@$(MAKE) setup-environment-variables
 	@$(MAKE) setup-git
