@@ -100,7 +100,12 @@ docs/index.html
 docs/search.json
 
 # Data
-data/
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/final/*
+!data/final/.gitkeep
 
 # Models
 models/
