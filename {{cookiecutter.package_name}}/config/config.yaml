@@ -1,4 +1,5 @@
 defaults:
+  - override hydra/job_logging: custom
   - _self_
 
 dirs:
