@@ -25,7 +25,6 @@ $ cookiecutter gh:alexandrainst/alexandra-ml-template
 ## Project Structure
 ```
 .
-├── .flake8
 ├── .github
 │   └── workflows
 │       ├── ci.yaml
@@ -39,7 +38,10 @@ $ cookiecutter gh:alexandrainst/alexandra-ml-template
 ├── README.md
 ├── config
 │   ├── __init__.py
-│   └── config.yaml
+│   ├── config.yaml
+│   └── hydra
+│       └── job_logging
+│           └── custom.yaml
 ├── data
 ├── makefile
 ├── models

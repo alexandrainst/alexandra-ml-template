@@ -48,7 +48,6 @@ publishing the code as a package and more.
 ## Project structure
 ```
 .
-├── .flake8
 ├── .github
 │   └── workflows
 │       ├── ci.yaml
@@ -62,7 +61,10 @@ publishing the code as a package and more.
 ├── README.md
 ├── config
 │   ├── __init__.py
-│   └── config.yaml
+│   ├── config.yaml
+│   └── hydra
+│       └── job_logging
+│           └── custom.yaml
 ├── data
 ├── makefile
 ├── models
