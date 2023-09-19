@@ -6,6 +6,6 @@
     "project_description": "Short description of the project",
     "author_name": "Your full name",
     "email": "<name>@alexandra.dk",
-    "compatible_python_versions": ">=3.8",
+    "compatible_python_versions": ">=3.8,<4",
     "_copy_without_render": []
 }
