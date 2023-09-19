@@ -49,7 +49,7 @@ install: ## Install dependencies
 	@$(MAKE) setup-git
 
 setup-python-version:
-	@python src/scripts/fix_dot_env_file.py
+	@python src/scripts/setup_python_version.py
 
 setup-poetry:
 	@poetry env use python3 && poetry install
