@@ -1,4 +1,8 @@
-"""Scripts related to updating of version."""
+"""Scripts related to updating of version.
+
+Usage:
+    python src/scripts/versioning.py [--major] [--minor] [--patch]
+"""
 
 import datetime as dt
 import re

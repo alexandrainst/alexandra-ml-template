@@ -1,4 +1,8 @@
-"""Checks related to the .env file in the repository."""
+"""Checks related to the .env file in the repository.
+
+Usage:
+    python src/scripts/fix_dot_env_file.py
+"""
 
 import subprocess
 from pathlib import Path

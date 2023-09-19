@@ -42,16 +42,20 @@ install: ## Install dependencies
 			 "`brew install gnupg` or on Ubuntu with `apt install gnupg` and run "\
 			 "`make install` again."; \
 	fi
+	@$(MAKE) setup-python-version
 	@$(MAKE) install-poetry
 	@$(MAKE) setup-poetry
 	@$(MAKE) setup-environment-variables
 	@$(MAKE) setup-git
 
+setup-python-version:
+	@python src/scripts/fix_dot_env_file.py
+
 setup-poetry:
-	@poetry env use python3.11 && poetry install
+	@poetry env use python3 && poetry install
 
 setup-environment-variables:
-	@poetry run python -m src.scripts.fix_dot_env_file
+	@poetry run python src/scripts/fix_dot_env_file.py
 
 setup-git:
 	@git init
@@ -86,15 +90,15 @@ view-docs:  ## View documentation
 		"$${openCmd}" docs/{{ cookiecutter.package_name }}.html
 
 bump-major:
-	@poetry run python -m src.scripts.versioning --major
+	@poetry run python src/scripts/versioning.py --major
 	@echo "Bumped major version!"
 
 bump-minor:
-	@poetry run python -m src.scripts.versioning --minor
+	@poetry run python src/scripts/versioning.py --minor
 	@echo "Bumped minor version!"
 
 bump-patch:
-	@poetry run python -m src.scripts.versioning --patch
+	@poetry run python src/scripts/versioning.py --patch
 	@echo "Bumped patch version!"
 
 publish:
