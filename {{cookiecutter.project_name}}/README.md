@@ -52,9 +52,6 @@ publishing the code as a package and more.
 │       └── docs.yaml
 ├── .gitignore
 ├── .pre-commit-config.yaml
-├── CHANGELOG.md
-├── CODE_OF_CONDUCT.md
-├── CONTRIBUTING.md
 ├── LICENSE
 ├── README.md
 ├── config
@@ -65,15 +62,15 @@ publishing the code as a package and more.
 │           └── custom.yaml
 ├── data
 ├── makefile
-├── models
 ├── notebooks
 ├── poetry.toml
 ├── pyproject.toml
 ├── src
 │   ├── scripts
 │   │   ├── fix_dot_env_file.py
+│   │   ├── setup_python_version.py
 │   │   └── versioning.py
-│   └── {{cookiecutter.project_name}}
+│   └── {{ cookiecutter.project_name }}
 │       └── __init__.py
 └── tests
     ├── __init__.py
