@@ -96,6 +96,10 @@ view-docs:  ## View documentation
 test:  ## Run tests
 	@poetry run pytest && poetry run readme-cov
 
+docker:  ## Build Docker image and run container
+	@docker build -t {{ cookiecutter.project_name }} .
+	@docker run -it --rm {{ cookiecutter.project_name }}
+
 tree:  ## Print directory tree
 	@tree -a \
 		-I .git \
