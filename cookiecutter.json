@@ -3,6 +3,6 @@
     "project_description": "Short description of the project",
     "author_name": "Your full name",
     "email": "<name>@alexandra.dk",
-    "python_version": "3.11",
+    "python_version": "Your Python version, e.g., 3.11",
     "_copy_without_render": []
 }
