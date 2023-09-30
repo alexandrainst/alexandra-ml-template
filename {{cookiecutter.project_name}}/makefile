@@ -29,7 +29,6 @@ help:
 install-poetry:
 	@if [ ! "$(shell poetry --version)" = "Poetry (version 1.4.0)" ]; then \
 		pip3 install --force --quiet poetry==1.4.0; \
-		$(eval include ${HOME}/.poetry/env); \
 		echo "Installed Poetry."; \
 	fi
 
