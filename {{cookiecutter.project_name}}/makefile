@@ -48,7 +48,7 @@ install: ## Install dependencies
 		$(MAKE) --quiet setup-poetry; \
 		$(MAKE) --quiet setup-environment-variables; \
 		$(MAKE) --quiet setup-git; \
-		echo "Installed the project into the '{{ cookiecutter.project_name }}' directory."; \
+		echo "Installed the '{{ cookiecutter.project_name }}' project."; \
 	fi
 
 setup-python-version:
