@@ -1,19 +1,20 @@
 # Alexandra Institute Python Repository Template
 
 ## What is this?
-This repository is a template for a Python-based data science project. This is the
-project structure we frequently use in our data science projects.
+This repository is a template for a Python-based data science project within the
+Alexandra Institute, and is the project structure we frequently use in our data science
+projects.
 
 ## How to use this project
 
 Install Cookiecutter:
 ```
-$ python3 -m pip install --user cookiecutter
+pip3 install cookiecutter
 ```
 
 Create a project based on the template:
 ```
-$ rm -rf .cookiecutters/alexandra-ml-template && cookiecutter gh:alexandrainst/alexandra-ml-template
+rm -rf .cookiecutters/alexandra-ml-template && cookiecutter gh:alexandrainst/alexandra-ml-template
 ```
 
 ## Tools used in this project
@@ -30,10 +31,9 @@ $ rm -rf .cookiecutters/alexandra-ml-template && cookiecutter gh:alexandrainst/a
 │       ├── ci.yaml
 │       └── docs.yaml
 ├── .gitignore
+├── .name_and_email
 ├── .pre-commit-config.yaml
-├── CHANGELOG.md
-├── CODE_OF_CONDUCT.md
-├── CONTRIBUTING.md
+├── Dockerfile
 ├── LICENSE
 ├── README.md
 ├── config
@@ -51,9 +51,11 @@ $ rm -rf .cookiecutters/alexandra-ml-template && cookiecutter gh:alexandrainst/a
 ├── src
 │   ├── scripts
 │   │   ├── fix_dot_env_file.py
-│   │   └── versioning.py
+│   │   ├── setup_python_version.py
+│   │   └── your_script.py
 │   └── {{cookiecutter.project_name}}
-│       └── __init__.py
+│       ├── __init__.py
+│       └── your_module.py
 └── tests
     ├── __init__.py
     └── test_dummy.py

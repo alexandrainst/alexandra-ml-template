@@ -62,7 +62,9 @@ README, showing you how much of your code base that is currently being tested.
 │       ├── ci.yaml
 │       └── docs.yaml
 ├── .gitignore
+├── .name_and_email
 ├── .pre-commit-config.yaml
+├── Dockerfile
 ├── LICENSE
 ├── README.md
 ├── config
@@ -73,6 +75,7 @@ README, showing you how much of your code base that is currently being tested.
 │           └── custom.yaml
 ├── data
 ├── makefile
+├── models
 ├── notebooks
 ├── poetry.toml
 ├── pyproject.toml
@@ -80,9 +83,10 @@ README, showing you how much of your code base that is currently being tested.
 │   ├── scripts
 │   │   ├── fix_dot_env_file.py
 │   │   ├── setup_python_version.py
-│   │   └── versioning.py
-│   └── {{ cookiecutter.project_name }}
-│       └── __init__.py
+│   │   └── your_script.py
+│   └── {{cookiecutter.project_name}}
+│       ├── __init__.py
+│       └── your_module.py
 └── tests
     ├── __init__.py
     └── test_dummy.py
