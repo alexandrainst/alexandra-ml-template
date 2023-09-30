@@ -1,6 +1,10 @@
 """An example module for your project."""
 
 from omegaconf import DictConfig
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def example_function(config: DictConfig) -> None:
@@ -9,5 +13,5 @@ def example_function(config: DictConfig) -> None:
     Args:
         config: The Hydra config for your project.
     """
-    print("Hello World!")
-    print(f"Your config is: {config}")
+    logger.info("Hello World!")
+    logger.info(f"Your config is: {config}")
