@@ -75,6 +75,8 @@ setup-git:
 		echo "Signed with GPG key ID ${GPG_KEY_ID}."; \
 	fi
 	@poetry run pre-commit install
+	@git add .
+	@git commit -m "Initial commit"
 
 docs:  ## Generate documentation
 	@poetry run pdoc --docformat google src/{{cookiecutter.project_name}} -o docs
