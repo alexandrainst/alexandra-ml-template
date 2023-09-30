@@ -42,11 +42,11 @@ install: ## Install dependencies
 			 "`brew install gnupg` or on Ubuntu with `apt install gnupg` and run "\
 			 "`make install` again."; \
 	fi
-	@$(MAKE) setup-python-version
-	@$(MAKE) install-poetry
-	@$(MAKE) setup-poetry
-	@$(MAKE) setup-environment-variables
-	@$(MAKE) setup-git
+	@$(MAKE) -s setup-python-version
+	@$(MAKE) -s install-poetry
+	@$(MAKE) -s setup-poetry
+	@$(MAKE) -s setup-environment-variables
+	@$(MAKE) -s setup-git
 
 setup-python-version:
 	@python3 src/scripts/setup_python_version.py
