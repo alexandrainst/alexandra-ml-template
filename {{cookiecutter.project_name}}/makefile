@@ -39,7 +39,7 @@ uninstall-poetry:
 
 install: ## Install dependencies
 	@if [ "$(shell which gpg)" = "" ]; then \
-		echo "GPG not installed. Install GPG on MacOS with `brew install gnupg` or "
+		echo "GPG not installed. Install GPG on MacOS with `brew install gnupg` or "; \
 			 "on Ubuntu with `apt install gnupg` and run `make install` again."; \
 	else \
 		@echo "Installing the '{{ cookiecutter.project_name }}' project..."; \
