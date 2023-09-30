@@ -96,6 +96,8 @@ for the repository (can be enabled on Github in the repository settings).
 │       └── job_logging
 │           └── custom.yaml
 ├── data
+├── gfx
+│   └── alexandra_logo.png
 ├── makefile
 ├── models
 ├── notebooks
