@@ -14,24 +14,29 @@ DESIRED_ENVIRONMENT_VARIABLES = dict(
     "'s/.*\/([^ ]+).*/\\1/'` to see your key ID:\n> ",  # noqa
     GIT_NAME="Enter your full name, to be shown in Git commits:\n> ",
     GIT_EMAIL="Enter your email, as registered on your Github account:\n> ",
-    PYPI_API_TOKEN="Enter your PyPI API token, or leave empty if you are not "
-    "developing a Python package:\n> ",
 )
 
 
 def fix_dot_env_file():
     """Ensures that the .env file exists and contains all desired variables."""
-    # Create path to the .env file
-    env_file_path = Path(".env")
+    env_path = Path(".env")
+    name_and_email_path = Path(".name_and_email")
 
-    # Ensure that the .env file exists
-    env_file_path.touch(exist_ok=True)
+    # Ensure that the files exists
+    env_path.touch(exist_ok=True)
+    name_and_email_path.touch(exist_ok=True)
 
-    # Otherwise, extract all the lines in the .env file
-    env_file_lines = env_file_path.read_text().splitlines(keepends=False)
+    # Extract all the lines in the files
+    env_file_lines = env_path.read_text().splitlines(keepends=False)
+    name_and_email_file_lines = name_and_email_path.read_text().splitlines(
+        keepends=False
+    )
 
-    # Extract all the environment variables in the .env file
-    env_vars = [line.split("=")[0] for line in env_file_lines]
+    # Extract all the environment variables in the files
+    env_vars = {line.split("=")[0]: line.split("=")[1] for line in env_file_lines}
+    name_and_email_vars = {
+        line.split("=")[0]: line.split("=")[1] for line in name_and_email_file_lines
+    }
 
     # For each of the desired environment variables, check if it exists in the .env
     # file
@@ -42,10 +47,13 @@ def fix_dot_env_file():
     ]
 
     # Create all the missing environment variables
-    with env_file_path.open("a") as f:
+    with env_path.open("a") as f:
         for env_var in env_vars_missing:
             value = ""
-            if env_var == "GPG_KEY_ID":
+
+            if env_var in name_and_email_vars:
+                value = name_and_email_vars[env_var]
+            elif env_var == "GPG_KEY_ID":
                 gpg = subprocess.Popen(
                     ["gpg", "--list-secret-keys", "--keyid-format=long"],
                     stdout=subprocess.PIPE,
@@ -63,8 +71,10 @@ def fix_dot_env_file():
                 )
                 gpg.wait()
                 grep.wait()
+
             if value == "":
                 value = input(DESIRED_ENVIRONMENT_VARIABLES[env_var])
+
             f.write(f'{env_var}="{value}"\n')
 
 
