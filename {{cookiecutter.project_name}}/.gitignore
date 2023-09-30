@@ -94,8 +94,8 @@ outputs/
 multirun/
 
 # Documentation
-docs/{{cookiecutter.package_name}}/
-docs/{{cookiecutter.package_name}}.html
+docs/{{cookiecutter.project_name}}/
+docs/{{cookiecutter.project_name}}.html
 docs/index.html
 docs/search.json
 
