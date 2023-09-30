@@ -90,7 +90,7 @@ view-docs:  ## View documentation
 		"$${openCmd}" docs/{{ cookiecutter.project_name }}.html
 
 test:  ## Run tests
-	@poetry run pytest && readme-cov
+	@poetry run pytest && poetry run readme-cov
 
 tree:  ## Print directory tree
 	@tree -a \
