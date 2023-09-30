@@ -100,6 +100,15 @@ Github CI pipelines are included in the repo, running all the tests in the `test
 directory, as well as building online documentation, if Github Pages has been enabled
 for the repository (can be enabled on Github in the repository settings).
 
+### Code Spaces
+
+Code Spaces is a new feature on Github, that allows you to develop on a project
+completely in the cloud, without having to do any local setup at all. This repo comes
+included with a configuration file for running code spaces on Github. When hosted on
+`alexandrainst/{{ cookiecutter.project_name }}` then simply press the `<> Code` button
+and add a code space to get started, which will open a VSCode window directly in your
+browser.
+
 
 ## Project structure
 ```

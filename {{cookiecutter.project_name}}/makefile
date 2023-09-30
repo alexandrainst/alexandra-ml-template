@@ -55,6 +55,9 @@ setup-poetry:
 setup-environment-variables:
 	@poetry run python src/scripts/fix_dot_env_file.py
 
+setup-environment-variables-non-interactive:
+	@poetry run python src/scripts/fix_dot_env_file.py --non-interactive
+
 setup-git:
 	@git init
 	@git config --local user.name ${GIT_NAME}
@@ -71,8 +74,12 @@ setup-git:
 	@export GPG_TTY=$(tty)
 	@gpgconf --kill gpg-agent
 	@git add .
-	@git commit --quiet -m "Initial commit"
-	@git remote add origin git@github.com:alexandrainst/{{ cookiecutter.project_name }}.git
+	@if [ ! "$(shell git status --short)" = "" ]; then \
+		git commit --quiet -m "Initial commit"; \
+	fi
+	@if [ "$(shell git remote)" = "" ]; then \
+		git remote add origin git@github.com:alexandrainst/{{ cookiecutter.project_name }}.git; \
+	fi
 
 docs:  ## Generate documentation
 	@poetry run pdoc --docformat google src/{{cookiecutter.project_name}} -o docs

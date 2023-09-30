@@ -1,11 +1,12 @@
 """Checks related to the .env file in the repository.
 
 Usage:
-    python src/scripts/fix_dot_env_file.py
+    python src/scripts/fix_dot_env_file.py [--non-interactive]
 """
 
 import subprocess
 from pathlib import Path
+import click
 
 # List of all the environment variables that are desired
 DESIRED_ENVIRONMENT_VARIABLES = dict(
@@ -17,8 +18,19 @@ DESIRED_ENVIRONMENT_VARIABLES = dict(
 )
 
 
-def fix_dot_env_file() -> None:
-    """Ensures that the .env file exists and contains all desired variables."""
+@click.command()
+@click.option(
+    "--non-interactive",
+    is_flag=True,
+    default=False,
+    help="If set, the script will not ask for user input.",
+)
+def fix_dot_env_file(non_interactive: bool) -> None:
+    """Ensures that the .env file exists and contains all desired variables.
+
+    Args:
+        non_interactive: If set, the script will not ask for user input.
+    """
     env_path = Path(".env")
     name_and_email_path = Path(".name_and_email")
 
@@ -72,7 +84,7 @@ def fix_dot_env_file() -> None:
                 gpg.wait()
                 grep.wait()
 
-            if value == "":
+            if value == "" and not non_interactive:
                 value = input(DESIRED_ENVIRONMENT_VARIABLES[env_var])
 
             f.write(f'{env_var}="{value}"\n')
