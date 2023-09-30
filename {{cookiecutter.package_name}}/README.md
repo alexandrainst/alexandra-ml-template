@@ -3,12 +3,10 @@
 {{cookiecutter.project_description}}
 
 ______________________________________________________________________
-[![PyPI Status](https://badge.fury.io/py/{{ cookiecutter.package_name }}.svg)](https://pypi.org/project/{{ cookiecutter.package_name }}/)
-[![Documentation](https://img.shields.io/badge/docs-passing-green)](https://{{ cookiecutter.github_user }}.github.io/{{ cookiecutter.repo_name }}/{{ cookiecutter.package_name }}.html)
-[![License](https://img.shields.io/github/license/{{ cookiecutter.github_user }}/{{ cookiecutter.repo_name }})](https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.repo_name }}/blob/main/LICENSE)
-[![LastCommit](https://img.shields.io/github/last-commit/{{ cookiecutter.github_user }}/{{ cookiecutter.repo_name }})](https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.repo_name }}/commits/main)
-[![Code Coverage](https://img.shields.io/badge/Coverage-0%25-red.svg)](https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.repo_name }}/tree/main/tests)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.repo_name }}/blob/main/CODE_OF_CONDUCT.md)
+[![Documentation](https://img.shields.io/badge/docs-passing-green)](https://alexandrainst.github.io/{{ cookiecutter.project_name }}/{{ cookiecutter.repo_name }}.html)
+[![License](https://img.shields.io/github/license/alexandrainst/{{ cookiecutter.project_name }})](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/blob/main/LICENSE)
+[![LastCommit](https://img.shields.io/github/last-commit/alexandrainst/{{ cookiecutter.project_name }})](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/commits/main)
+[![Code Coverage](https://img.shields.io/badge/Coverage-0%25-red.svg)](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/tree/main/tests)
 
 
 Developers:
@@ -75,7 +73,7 @@ publishing the code as a package and more.
 │   ├── scripts
 │   │   ├── fix_dot_env_file.py
 │   │   └── versioning.py
-│   └── {{cookiecutter.package_name}}
+│   └── {{cookiecutter.repo_name}}
 │       └── __init__.py
 └── tests
     ├── __init__.py

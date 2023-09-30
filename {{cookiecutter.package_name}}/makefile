@@ -75,7 +75,7 @@ setup-git:
 	@poetry run pre-commit install
 
 docs:  ## Generate documentation
-	@poetry run pdoc --docformat google src/{{cookiecutter.package_name}} -o docs
+	@poetry run pdoc --docformat google src/{{cookiecutter.project_name}} -o docs
 	@echo "Saved documentation."
 
 view-docs:  ## View documentation
@@ -87,7 +87,7 @@ view-docs:  ## View documentation
 			(*CYGWIN*) openCmd='cygstart'; ;; \
 			(*) echo 'Error: Unsupported platform: $${uname}'; exit 2; ;; \
 		esac; \
-		"$${openCmd}" docs/{{ cookiecutter.package_name }}.html
+		"$${openCmd}" docs/{{ cookiecutter.project_name }}.html
 
 bump-major:
 	@poetry run python src/scripts/versioning.py --major

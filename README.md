@@ -52,7 +52,7 @@ $ rm -rf .cookiecutters/alexandra-ml-template && cookiecutter gh:alexandrainst/a
 │   ├── scripts
 │   │   ├── fix_dot_env_file.py
 │   │   └── versioning.py
-│   └── {{cookiecutter.package_name}}
+│   └── {{cookiecutter.project_name}}
 │       └── __init__.py
 └── tests
     ├── __init__.py

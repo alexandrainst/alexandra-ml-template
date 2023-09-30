@@ -1,8 +1,5 @@
 {
-    "project_name": "Project name, spaces and capitalisation allowed",
-    "repo_name": "The GitHub repo name, capitalisation allowed, but not spaces",
-    "package_name": "The Python package name, in snake_case",
-    "github_user": "alexandrainst",
+    "project_name": "Project name, in snake_case",
     "project_description": "Short description of the project",
     "author_name": "Your full name",
     "email": "<name>@alexandra.dk",
