@@ -27,9 +27,9 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 install-poetry:
-	@echo "Installing poetry..."
 	@pip3 install --force --quiet poetry==1.4.0
 	@$(eval include ${HOME}/.poetry/env)
+	@echo "Poetry installed."
 
 uninstall-poetry:
 	@echo "Uninstalling poetry..."
@@ -65,12 +65,12 @@ setup-git:
 		echo "No GPG key ID specified. Skipping GPG signing."; \
 		git config --local commit.gpgsign false; \
 	else \
-		echo "Signing with GPG key ID ${GPG_KEY_ID}..."; \
 		echo 'Just for info: If you get the "failed to sign the data" error when'\
 			 'committing, try running `export GPG_TTY=$$(tty)` and `gpgconf --kill'\
 			 'gpg-agent`, and try again.'; \
 		git config --local commit.gpgsign true; \
 		git config --local user.signingkey ${GPG_KEY_ID}; \
+		echo "Signed with GPG key ID ${GPG_KEY_ID}."; \
 	fi
 	@poetry run pre-commit install
 
