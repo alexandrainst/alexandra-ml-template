@@ -113,6 +113,8 @@ browser.
 ## Project structure
 ```
 .
+├── .devcontainer
+│   └── devcontainer.json
 ├── .github
 │   └── workflows
 │       ├── ci.yaml

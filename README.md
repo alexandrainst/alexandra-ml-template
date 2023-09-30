@@ -79,6 +79,8 @@ for the repository (can be enabled on Github in the repository settings).
 ## Project Structure
 ```
 .
+├── .devcontainer
+│   └── devcontainer.json
 ├── .github
 │   └── workflows
 │       ├── ci.yaml
