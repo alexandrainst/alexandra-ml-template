@@ -36,7 +36,7 @@ uninstall-poetry:
 	@pip3 uninstall poetry
 
 install: ## Install dependencies
-	@echo "Installing the `{{ cookiecutter.project_name }}` project..."
+	@echo "Installing the '{{ cookiecutter.project_name }}' project..."
 	@if [ "$(shell which gpg)" = "" ]; then \
 		echo "GPG not installed, so an error will occur. Install GPG on MacOS with "\
 			 "`brew install gnupg` or on Ubuntu with `apt install gnupg` and run "\
