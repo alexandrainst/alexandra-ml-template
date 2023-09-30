@@ -21,26 +21,37 @@ Developers:
 1. Run `make install`, which installs Poetry (if it isn't already installed), sets up a virtual environment and all Python dependencies therein.
 2. Run `source .venv/bin/activate` to activate the virtual environment.
 
-### Install new packages
+### Package Management
 
 To install new PyPI packages, run:
 
 ```
-$ poetry add <package-name>
+poetry add <package-name>
 ```
 
-### Get an overview of the available commands
+To remove them again, run:
+```
+poetry remove <package-name>
+```
 
-Simply write `make` to display a list of the commands available. This includes the
-above-mentioned `make install` command, as well as building and viewing documentation,
-publishing the code as a package and more.
+To show all installed packages, run:
+```
+poetry show
+```
 
 
-## Tools used in this project
-* [Poetry](https://towardsdatascience.com/how-to-effortlessly-publish-your-python-package-to-pypi-using-poetry-44b305362f9f): Dependency management
-* [hydra](https://hydra.cc/): Manage configuration files
-* [pre-commit plugins](https://pre-commit.com/): Automate code reviewing formatting
-* [pdoc](https://github.com/pdoc3/pdoc): Automatically create an API documentation for your project
+## Features
+
+### Automatic Documentation
+
+Run `make docs` to create the documentation in the `docs` folder, which is based on
+your docstrings in your code. You can view this by running `make view-docs`.
+
+### Automatic Test Coverage Calculation
+
+Run `make test` to test your code, which also updates the "coverage badge" in the
+README, showing you how much of your code base that is currently being tested.
+
 
 
 ## Project structure
