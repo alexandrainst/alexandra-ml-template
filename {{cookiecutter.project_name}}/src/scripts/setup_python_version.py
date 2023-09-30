@@ -10,8 +10,7 @@ import re
 
 
 def main() -> None:
-
-    # Get Python version
+    # Get Python version
     python_process = subprocess.Popen(
         ["python3", "--version"],
         stdout=subprocess.PIPE,
@@ -21,19 +20,23 @@ def main() -> None:
         stdin=python_process.stdout,
         stdout=subprocess.PIPE,
     )
-    python_version = subprocess.check_output(
-        ["sed", "s/\\(^[0-9]*\\.[0-9]*\\).*/\\1/g"],
-        stdin=sed_process.stdout,
-    ).decode().strip('\n')
+    python_version = (
+        subprocess.check_output(
+            ["sed", "s/\\(^[0-9]*\\.[0-9]*\\).*/\\1/g"],
+            stdin=sed_process.stdout,
+        )
+        .decode()
+        .strip("\n")
+    )
     python_process.wait()
     sed_process.wait()
 
-    # Set up compatible Python version in `pyproject.toml`
+    # Set up compatible Python version in `pyproject.toml`
     compatible_python_versions = f">={python_version},<4"
     pyproject_content = Path("pyproject.toml").read_text()
     pyproject_content = re.sub(
         pattern=r"python = \".*\"",
-        repl=f"python = \"{compatible_python_versions}\"",
+        repl=f'python = "{compatible_python_versions}"',
         string=pyproject_content,
     )
     Path("pyproject.toml").write_text(pyproject_content)
