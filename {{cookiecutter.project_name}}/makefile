@@ -28,7 +28,7 @@ help:
 
 install-poetry:
 	@echo "Installing poetry..."
-	@pip3 install --force poetry==1.4.0
+	@pip3 install --force --quiet poetry==1.4.0
 	@$(eval include ${HOME}/.poetry/env)
 
 uninstall-poetry:
