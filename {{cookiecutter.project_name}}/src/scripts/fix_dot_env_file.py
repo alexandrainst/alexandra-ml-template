@@ -17,7 +17,7 @@ DESIRED_ENVIRONMENT_VARIABLES = dict(
 )
 
 
-def fix_dot_env_file():
+def fix_dot_env_file() -> None:
     """Ensures that the .env file exists and contains all desired variables."""
     env_path = Path(".env")
     name_and_email_path = Path(".name_and_email")
