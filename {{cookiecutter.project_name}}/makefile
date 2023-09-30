@@ -36,23 +36,23 @@ uninstall-poetry:
 	@pip3 uninstall poetry
 
 install: ## Install dependencies
-	@echo "Installing..."
+	@echo "Installing the {{ cookiecutter.project_name }} project..."
 	@if [ "$(shell which gpg)" = "" ]; then \
 		echo "GPG not installed, so an error will occur. Install GPG on MacOS with "\
 			 "`brew install gnupg` or on Ubuntu with `apt install gnupg` and run "\
 			 "`make install` again."; \
 	fi
-	@$(MAKE) -s setup-python-version
-	@$(MAKE) -s install-poetry
-	@$(MAKE) -s setup-poetry
-	@$(MAKE) -s setup-environment-variables
-	@$(MAKE) -s setup-git
+	@$(MAKE) --quiet setup-python-version
+	@$(MAKE) --quiet install-poetry
+	@$(MAKE) --quiet setup-poetry
+	@$(MAKE) --quiet setup-environment-variables
+	@$(MAKE) --quiet setup-git
 
 setup-python-version:
 	@python3 src/scripts/setup_python_version.py
 
 setup-poetry:
-	@poetry env use python3 && poetry install
+	@poetry env use python3 && poetry install --quiet
 
 setup-environment-variables:
 	@poetry run python src/scripts/fix_dot_env_file.py
