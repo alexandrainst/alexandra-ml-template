@@ -51,7 +51,6 @@ rm -rf .cookiecutters/alexandra-ml-template && cookiecutter gh:alexandrainst/ale
 ├── src
 │   ├── scripts
 │   │   ├── fix_dot_env_file.py
-│   │   ├── setup_python_version.py
 │   │   └── your_script.py
 │   └── {{cookiecutter.project_name}}
 │       ├── __init__.py

@@ -43,7 +43,6 @@ install: ## Install dependencies
 			 "on Ubuntu with `apt install gnupg` and run `make install` again."; \
 	else \
 		echo "Installing the '{{ cookiecutter.project_name }}' project..."; \
-		$(MAKE) --quiet setup-python-version; \
 		$(MAKE) --quiet install-poetry; \
 		$(MAKE) --quiet setup-poetry; \
 		$(MAKE) --quiet setup-environment-variables; \
@@ -51,11 +50,8 @@ install: ## Install dependencies
 		echo "Installed the '{{ cookiecutter.project_name }}' project."; \
 	fi
 
-setup-python-version:
-	@python3 src/scripts/setup_python_version.py
-
 setup-poetry:
-	@poetry env use python3 && poetry install --quiet
+	@poetry env use python{{ cookiecutter.python_version }} && poetry install --quiet
 
 setup-environment-variables:
 	@poetry run python src/scripts/fix_dot_env_file.py

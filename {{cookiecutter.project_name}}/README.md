@@ -82,7 +82,6 @@ README, showing you how much of your code base that is currently being tested.
 ├── src
 │   ├── scripts
 │   │   ├── fix_dot_env_file.py
-│   │   ├── setup_python_version.py
 │   │   └── your_script.py
 │   └── {{cookiecutter.project_name}}
 │       ├── __init__.py
