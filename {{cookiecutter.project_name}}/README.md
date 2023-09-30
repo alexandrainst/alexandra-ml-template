@@ -58,7 +58,7 @@ import_ notation - here's an example:
 from .other_module import some_function
 ```
 
-### Scripts
+### Scripts
 Python files in the `scripts` folder are scripts, which are short code snippets that
 are _external_ to the project package, and which is meant to actually run the code. As
 such, _only_ scripts will be called from the terminal. An analogy here is that the
