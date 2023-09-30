@@ -38,18 +38,18 @@ uninstall-poetry:
 	@pip3 uninstall poetry
 
 install: ## Install dependencies
-	@echo "Installing the '{{ cookiecutter.project_name }}' project..."
 	@if [ "$(shell which gpg)" = "" ]; then \
-		echo "GPG not installed, so an error will occur. Install GPG on MacOS with "\
-			 "`brew install gnupg` or on Ubuntu with `apt install gnupg` and run "\
-			 "`make install` again."; \
+		echo "GPG not installed. Install GPG on MacOS with `brew install gnupg` or "
+			 "on Ubuntu with `apt install gnupg` and run `make install` again."; \
+	else \
+		@echo "Installing the '{{ cookiecutter.project_name }}' project..."
+		@$(MAKE) --quiet setup-python-version
+		@$(MAKE) --quiet install-poetry
+		@$(MAKE) --quiet setup-poetry
+		@$(MAKE) --quiet setup-environment-variables
+		@$(MAKE) --quiet setup-git
+		@echo "Installed the '{{ cookiecutter.project_name }}' project."
 	fi
-	@$(MAKE) --quiet setup-python-version
-	@$(MAKE) --quiet install-poetry
-	@$(MAKE) --quiet setup-poetry
-	@$(MAKE) --quiet setup-environment-variables
-	@$(MAKE) --quiet setup-git
-	@echo "Installed the '{{ cookiecutter.project_name }}' project."
 
 setup-python-version:
 	@python3 src/scripts/setup_python_version.py
@@ -68,14 +68,13 @@ setup-git:
 		echo "No GPG key ID specified. Skipping GPG signing."; \
 		git config --local commit.gpgsign false; \
 	else \
-		echo 'Just for info: If you get the "failed to sign the data" error when'\
-			 'committing, try running `export GPG_TTY=$$(tty)` and `gpgconf --kill'\
-			 'gpg-agent`, and try again.'; \
 		git config --local commit.gpgsign true; \
 		git config --local user.signingkey ${GPG_KEY_ID}; \
 		echo "Signed with GPG key ID ${GPG_KEY_ID}."; \
 	fi
 	@poetry run pre-commit install
+	@export GPG_TTY=$(tty)
+	@gpgconf --kill gpg-agent
 	@git add .
 	@git commit --quiet -m "Initial commit"
 
