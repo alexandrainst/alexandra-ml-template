@@ -46,6 +46,7 @@ install: ## Install dependencies
 		$(MAKE) --quiet setup-poetry; \
 		$(MAKE) --quiet setup-environment-variables; \
 		$(MAKE) --quiet setup-git; \
+		$(MAKE) --quiet add-repo-to-git; \
 		echo "Installed the '{{ cookiecutter.project_name }}' project."; \
 	fi
 
@@ -71,6 +72,8 @@ setup-git:
 		echo "Signed with GPG key ID ${GPG_KEY_ID}."; \
 	fi
 	@poetry run pre-commit install
+
+add-repo-to-git:
 	@export GPG_TTY=$(tty)
 	@gpgconf --kill gpg-agent
 	@git add .

@@ -4,5 +4,5 @@
   "features": {
     "ghcr.io/devcontainers-contrib/features/coverage-py:2": {}
   },
-  "postCreateCommand": "make install-poetry && make setup-poetry && make setup-environment-variables-non-interactive && make setup-git"
+  "postCreateCommand": "make install-poetry && make setup-poetry && make setup-environment-variables-non-interactive && make setup-git && make add-repo-to-git"
 }
