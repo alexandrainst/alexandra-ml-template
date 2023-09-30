@@ -89,33 +89,6 @@ view-docs:  ## View documentation
 		esac; \
 		"$${openCmd}" docs/{{ cookiecutter.project_name }}.html
 
-bump-major:
-	@poetry run python src/scripts/versioning.py --major
-	@echo "Bumped major version!"
-
-bump-minor:
-	@poetry run python src/scripts/versioning.py --minor
-	@echo "Bumped minor version!"
-
-bump-patch:
-	@poetry run python src/scripts/versioning.py --patch
-	@echo "Bumped patch version!"
-
-publish:
-	@if [ ${PYPI_API_TOKEN} = "" ]; then \
-		echo "No PyPI API token specified in the '.env' file, so cannot publish."; \
-	else \
-		echo "Publishing to PyPI..."; \
-		poetry publish --build --username "__token__" --password ${PYPI_API_TOKEN}; \
-	fi
-	@echo "Published!"
-
-publish-major: bump-major publish  ## Publish a major version
-
-publish-minor: bump-minor publish  ## Publish a minor version
-
-publish-patch: bump-patch publish  ## Publish a patch version
-
 test:  ## Run tests
 	@poetry run pytest && readme-cov
 
