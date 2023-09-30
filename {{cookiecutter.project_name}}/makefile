@@ -27,9 +27,11 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 install-poetry:
-	@pip3 install --force --quiet poetry==1.4.0
-	@$(eval include ${HOME}/.poetry/env)
-	@echo "Poetry installed."
+	@if [! "$(shell poetry --version)" = "Poetry (version 1.4.0)" ]; then \
+		@pip3 install --force --quiet poetry==1.4.0; \
+		@$(eval include ${HOME}/.poetry/env)
+		@echo "Installed Poetry."
+	fi
 
 uninstall-poetry:
 	@echo "Uninstalling poetry..."
