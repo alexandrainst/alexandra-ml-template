@@ -16,7 +16,7 @@ Developers:
 
 ## Setup
 
-### Set up the environment
+### Installation
 
 1. Run `make install`, which installs Poetry (if it isn't already installed), sets up a virtual environment and all Python dependencies therein.
 2. Run `source .venv/bin/activate` to activate the virtual environment.
@@ -42,6 +42,12 @@ poetry show
 
 ## Features
 
+### Docker Setup
+
+A Dockerfile is included in the new repositories, which by default runs
+`src/scripts/your_script.py`. You can build the Docker image and run the Docker
+container by running `make docker`.
+
 ### Automatic Documentation
 
 Run `make docs` to create the documentation in the `docs` folder, which is based on
@@ -52,6 +58,11 @@ your docstrings in your code. You can view this by running `make view-docs`.
 Run `make test` to test your code, which also updates the "coverage badge" in the
 README, showing you how much of your code base that is currently being tested.
 
+### Continuous Integration
+
+Github CI pipelines are included in the repo, running all the tests in the `tests`
+directory, as well as building online documentation, if Github Pages has been enabled
+for the repository (can be enabled on Github in the repository settings).
 
 
 ## Project structure
