@@ -1,3 +1,4 @@
+<a href="https://github.com/alexandrainst/{{ cookiecutter.project_name }}"><img src="https://github.com/alexandrainst/{{ cookiecutter.project_name }}/raw/main/gfx/alexandra_logo.png" width="239" height="175" align="right" /></a>
 # {{cookiecutter.project_name}}
 
 {{cookiecutter.project_description}}
