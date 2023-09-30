@@ -73,6 +73,7 @@ setup-git:
 	@gpgconf --kill gpg-agent
 	@git add .
 	@git commit --quiet -m "Initial commit"
+	@git remote add origin git@github.com:alexandrainst/{{ cookiecutter.project_name }}.git
 
 docs:  ## Generate documentation
 	@poetry run pdoc --docformat google src/{{cookiecutter.project_name}} -o docs
