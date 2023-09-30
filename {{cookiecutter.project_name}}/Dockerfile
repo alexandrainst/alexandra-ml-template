@@ -1,4 +1,4 @@
-FROM python:3.11-slim-bookworm
+FROM python:{{ cookiecutter.python_version }}-slim-bookworm
 
 # Install poetry
 RUN pip install "poetry==1.4.0"
@@ -8,7 +8,7 @@ WORKDIR /project
 COPY . /project
 
 # Install dependencies
-RUN poetry env use python3.11
+RUN poetry env use python{{ cookiecutter.python_version }}
 RUN poetry install --no-interaction --no-cache --without dev
 
 # Run the script
