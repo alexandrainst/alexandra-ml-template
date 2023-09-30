@@ -49,6 +49,7 @@ install: ## Install dependencies
 	@$(MAKE) --quiet setup-poetry
 	@$(MAKE) --quiet setup-environment-variables
 	@$(MAKE) --quiet setup-git
+	@echo "Installed the '{{ cookiecutter.project_name }}' project."
 
 setup-python-version:
 	@python3 src/scripts/setup_python_version.py
@@ -76,7 +77,7 @@ setup-git:
 	fi
 	@poetry run pre-commit install
 	@git add .
-	@git commit -m "Initial commit"
+	@git commit --quiet -m "Initial commit"
 
 docs:  ## Generate documentation
 	@poetry run pdoc --docformat google src/{{cookiecutter.project_name}} -o docs
