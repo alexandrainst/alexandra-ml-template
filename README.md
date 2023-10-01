@@ -40,16 +40,16 @@ README, showing you how much of your code base that is currently being tested.
 ### Continuous Integration
 
 Github CI pipelines are included in the repo, running all the tests in the `tests`
-directory, as well as building online documentation, if Github Pages has been enabled
+directory, as well as building online documentation if Github Pages has been enabled
 for the repository (can be enabled on Github in the repository settings).
 
 ### Code Spaces
 
-Code Spaces is a new feature on Github, that allows you to develop on a project
+Code Spaces is a new feature on Github that allows you to develop on a project
 completely in the cloud, without having to do any local setup at all. This repo comes
 included with a configuration file for running code spaces on Github. When hosted on
-`alexandrainst/{{ cookiecutter.project_name }}` then simply press the `<> Code` button
-and add a code space to get started, which will open a VSCode window directly in your
+`alexandrainst/{{ cookiecutter.project_name }}`, simply press the `<> Code` button and
+add a code space to get started, which will open a VSCode window directly in your
 browser.
 
 
