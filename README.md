@@ -58,6 +58,7 @@ browser.
 * [pre-commit plugins](https://pre-commit.com/): Automate code reviewing formatting
 * [pdoc](https://github.com/pdoc3/pdoc): Automatically create an API documentation for your project
 
+
 ## Project Structure
 ```
 .
@@ -70,6 +71,8 @@ browser.
 ├── .gitignore
 ├── .name_and_email
 ├── .pre-commit-config.yaml
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
 ├── Dockerfile
 ├── LICENSE
 ├── README.md

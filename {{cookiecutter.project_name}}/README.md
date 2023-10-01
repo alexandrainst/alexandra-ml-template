@@ -123,6 +123,8 @@ browser.
 ├── .gitignore
 ├── .name_and_email
 ├── .pre-commit-config.yaml
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
 ├── Dockerfile
 ├── LICENSE
 ├── README.md
