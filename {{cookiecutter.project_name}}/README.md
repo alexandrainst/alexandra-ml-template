@@ -22,7 +22,7 @@ Developers:
 1. Run `make install`, which installs Poetry (if it isn't already installed), sets up a virtual environment and all Python dependencies therein.
 2. Run `source .venv/bin/activate` to activate the virtual environment.
 
-### Package Management
+### Adding and Removing Packages
 
 To install new PyPI packages, run:
 

@@ -1,14 +1,11 @@
 <a href="https://github.com/alexandrainst/{{ cookiecutter.project_name }}"><img src="https://github.com/alexandrainst/alexandra-ml-template/blob/main/%7B%7Bcookiecutter.project_name%7D%7D/gfx/alexandra_logo.png" width="239" height="175" align="right" /></a>
 # Alexandra Institute Machine Learning Repository Template
 
-## What is this?
 This repository is a template for a Python-based data science project within the
 Alexandra Institute, and is the project structure we frequently use in our data science
 projects.
 
 ## Quickstart
-
-### Creating a New Project
 
 Install Cookiecutter:
 ```
@@ -20,30 +17,6 @@ Create a project based on the template:
 rm -rf .cookiecutters/alexandra-ml-template && cookiecutter gh:alexandrainst/alexandra-ml-template
 ```
 
-### Setting up a New Project
-
-After you've built the repository, you can now install the project as follows:
-
-1. Run `make install`, which installs Poetry (if it isn't already installed), sets up a virtual environment and all Python dependencies therein.
-2. Run `source .venv/bin/activate` to activate the virtual environment.
-
-### Package Management
-
-To install new PyPI packages, run:
-
-```
-poetry add <package-name>
-```
-
-To remove them again, run:
-```
-poetry remove <package-name>
-```
-
-To show all installed packages, run:
-```
-poetry show
-```
 
 ## Features
 
