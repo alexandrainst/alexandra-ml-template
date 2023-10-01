@@ -12,9 +12,10 @@ Install Cookiecutter:
 pip3 install cookiecutter
 ```
 
-Create a project based on the template:
+Create a project based on the template (the `-f` flag ensures that you use the newest
+version of the template):
 ```
-rm -rf .cookiecutters/alexandra-ml-template && cookiecutter gh:alexandrainst/alexandra-ml-template
+cookiecutter -f gh:alexandrainst/alexandra-ml-template
 ```
 
 
