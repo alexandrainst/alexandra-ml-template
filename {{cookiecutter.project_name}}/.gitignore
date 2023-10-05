@@ -110,3 +110,6 @@ data/final/*
 # Models
 models/*
 !models/.gitkeep
+
+# Dotenv file with name and email
+.name_and_email
