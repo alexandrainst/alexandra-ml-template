@@ -97,7 +97,7 @@ multirun/
 docs/{{cookiecutter.project_name}}/
 docs/{{cookiecutter.project_name}}.html
 docs/index.html
-docs/search.json
+docs/search.js
 
 # Data
 data/raw/*
