@@ -35,7 +35,12 @@ addopts = [
     '-n 2',
 ]
 xfail_strict = true
-filterwarnings = ["ignore"]
+filterwarnings = [
+    "error",
+    "ignore::UserWarning",
+    "ignore::DeprecationWarning",
+    "ignore::ImportWarning",
+]
 log_cli_level = "info"
 testpaths = ["tests", "src/{{cookiecutter.project_name}}"]
 
