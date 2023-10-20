@@ -30,6 +30,7 @@ install: ## Install dependencies
 	@echo "Installing the '{{ cookiecutter.project_name }}' project..."
 	@$(MAKE) --quiet install-brew
 	@$(MAKE) --quiet install-gpg
+	@$(MAKE) --quiet generate-gpg-key
 	@$(MAKE) --quiet install-pipx
 	@$(MAKE) --quiet install-poetry
 	@$(MAKE) --quiet setup-poetry
@@ -39,7 +40,7 @@ install: ## Install dependencies
 	@echo "Installed the '{{ cookiecutter.project_name }}' project."
 
 install-brew:
-	@if [ $$(uname) == "Darwin" && "$(shell which brew)" = "" ]; then \
+	@if [ $$(uname) == "Darwin" ] && [ "$(shell which brew)" = "" ]; then \
 		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
 		echo "Installed Homebrew."; \
 	fi
@@ -50,15 +51,20 @@ install-gpg:
 			case $${uname} in \
 				(*Linux*) distro=$$(lsb_release -i | sed 's/Distributor ID:\t//'); \
 					case $${distro} in \
-						(*Ubuntu*) installCmd='apt-get update && apt-get install -y gnupg'; \
-						(*CentOS*) installCmd='yum install -y gnupg'; \
+						(*Ubuntu*) installCmd='apt-get update && apt-get install -y gnupg'; ;; \
+						(*CentOS*) installCmd='yum install -y gnupg'; ;; \
 						(*) echo 'Could not automatically install gnupg for the $${distro} distribution. Please manually install gnupg and try again.'; exit 2; ;; \
 					esac; ;; \
 				(*Darwin*) installCmd='brew install gnupg'; ;; \
 				(*) echo 'Could not automatically install gnupg. Please manually install gnupg and try again.'; exit 2; ;; \
 			esac; \
 			"$${installCmd}"; \
-		echo "Installed gnupg. Now generating a new GPG key - please follow the prompts."; \
+		echo "Installed gnupg."; \
+	fi
+
+generate-gpg-key:
+	@if [ "$(shell gpg --list-secret-keys --keyid-format=long | grep sec | sed -E 's/.*\/([^ ]+).*/\1/'" = "" ]; then \
+		echo "Generating a new GPG key - please follow the prompts."; \
 		gpg --full-generate-key; \
 	fi
 
@@ -66,19 +72,19 @@ install-pipx:
 	@if [ "$(shell which pipx)" = "" ]; then \
 		uname=$$(uname); \
 			case $${uname} in \
-				(*Linux*) installCmd='apt-get update && apt-get install -y pipx'; ;; \
+				(*Linux*) installCmd='sudo apt-get install -y pipx'; ;; \
 				(*Darwin*) installCmd='brew install pipx'; ;; \
 				(*CYGWIN*) installCmd='py -3 -m pip install --user pipx'; ;; \
 				(*) installCmd='python3 -m pip install --user pipx'; ;; \
 			esac; \
-			"$${installCmd}"; \
-		pipx ensurepath; \
+			$${installCmd}; \
+		pipx ensurepath --force; \
 		echo "Installed pipx."; \
 	fi
 
 install-poetry:
 	@if [ ! "$(shell poetry --version)" = "Poetry (version 1.5.1)" ]; then \
-		pipx install --force --quiet poetry==1.5.1; \
+		pipx install --force poetry==1.5.1; \
 		echo "Installed Poetry."; \
 	fi
 
