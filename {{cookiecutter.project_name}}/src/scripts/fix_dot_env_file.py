@@ -89,6 +89,9 @@ def fix_dot_env_file(non_interactive: bool) -> None:
 
             f.write(f'{env_var}="{value}"\n')
 
+    # Remove the name and email file
+    name_and_email_path.unlink()
+
 
 if __name__ == "__main__":
     fix_dot_env_file()
