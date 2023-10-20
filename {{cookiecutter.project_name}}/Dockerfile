@@ -1,7 +1,7 @@
 FROM python:{{ cookiecutter.python_version }}-slim-bookworm
 
 # Install poetry
-RUN pip install "poetry==1.4.0"
+RUN pip install "poetry==1.5.1"
 
 # Move the files into the container
 WORKDIR /project
