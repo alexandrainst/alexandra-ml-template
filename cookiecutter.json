@@ -4,5 +4,6 @@
     "author_name": "Your full name",
     "email": "<name>@alexandra.dk",
     "python_version": "Your Python version, written as 3.xx",
+    "poetry_version": "1.5.1",
     "_copy_without_render": []
 }

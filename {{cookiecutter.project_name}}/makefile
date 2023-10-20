@@ -83,8 +83,8 @@ install-pipx:
 	fi
 
 install-poetry:
-	@if [ ! "$(shell poetry --version)" = "Poetry (version 1.5.1)" ]; then \
-		pipx install --force poetry==1.5.1; \
+	@if [ ! "$(shell poetry --version)" = "Poetry (version {{ cookiecutter.poetry_version }})" ]; then \
+		pipx install --force poetry=={{ cookiecutter.poetry_version }}; \
 		echo "Installed Poetry."; \
 	fi
 
