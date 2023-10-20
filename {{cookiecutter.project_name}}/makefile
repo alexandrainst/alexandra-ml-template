@@ -98,6 +98,7 @@ setup-environment-variables-non-interactive:
 	@poetry run python src/scripts/fix_dot_env_file.py --non-interactive
 
 setup-git:
+	@git config --global init.defaultBranch main
 	@git init
 	@git config --local user.name ${GIT_NAME}
 	@git config --local user.email ${GIT_EMAIL}
