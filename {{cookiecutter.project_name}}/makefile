@@ -63,7 +63,7 @@ install-gpg:
 	fi
 
 generate-gpg-key:
-	@if [ "$(shell gpg --list-secret-keys --keyid-format=long | grep sec | sed -E 's/.*\/([^ ]+).*/\1/'" = "" ]; then \
+	@if [ "$(shell gpg --list-secret-keys --keyid-format=long | grep sec | sed -E 's/.*\/([^ ]+).*/\1/')" = "" ]; then \
 		echo "Generating a new GPG key - please follow the prompts."; \
 		gpg --full-generate-key; \
 	fi
