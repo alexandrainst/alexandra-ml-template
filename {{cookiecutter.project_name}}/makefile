@@ -74,8 +74,8 @@ install-pipx:
 		uname=$$(uname); \
 			case $${uname} in \
 				(*Darwin*) installCmd='brew install pipx'; ;; \
-				(*CYGWIN*) installCmd='py -3 -m pip install --user pipx'; ;; \
-				(*) installCmd='python3 -m pip install --user pipx'; ;; \
+				(*CYGWIN*) installCmd='py -3 -m pip install --upgrade --user pipx'; ;; \
+				(*) installCmd='python3 -m pip install --upgrade --user pipx'; ;; \
 			esac; \
 			$${installCmd}; \
 		pipx ensurepath --force; \
