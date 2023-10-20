@@ -146,26 +146,4 @@ docker:  ## Build Docker image and run container
 	@docker run -it --rm {{ cookiecutter.project_name }}
 
 tree:  ## Print directory tree
-	@tree -a \
-		-I .git \
-		-I .mypy_cache \
-		-I .env \
-		-I .venv \
-		-I poetry.lock \
-		-I .ipynb_checkpoints \
-		-I dist \
-		-I .gitkeep \
-		-I docs \
-		-I .pytest_cache \
-		-I outputs \
-		-I .DS_Store \
-		-I .cache \
-		-I raw \
-		-I processed \
-		-I final \
-		-I checkpoint-* \
-		-I .coverage* \
-		-I .DS_Store \
-		-I __pycache__ \
-		-I .ruff_cache \
-		.
+	@tree -a --gitignore .

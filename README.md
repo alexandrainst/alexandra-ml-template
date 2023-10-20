@@ -70,7 +70,6 @@ browser.
 │       ├── ci.yaml
 │       └── docs.yaml
 ├── .gitignore
-├── .name_and_email
 ├── .pre-commit-config.yaml
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
@@ -84,11 +83,22 @@ browser.
 │       └── job_logging
 │           └── custom.yaml
 ├── data
+│   ├── final
+│   │   └── .gitkeep
+│   ├── processed
+│   │   └── .gitkeep
+│   └── raw
+│       └── .gitkeep
+├── docs
+│   └── .gitkeep
 ├── gfx
+│   ├── .gitkeep
 │   └── alexandra_logo.png
 ├── makefile
 ├── models
+│   └── .gitkeep
 ├── notebooks
+│   └── .gitkeep
 ├── poetry.toml
 ├── pyproject.toml
 ├── src
