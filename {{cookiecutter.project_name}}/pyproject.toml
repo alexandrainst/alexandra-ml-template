@@ -21,6 +21,10 @@ pdoc = "^14.0.1"
 readme-coverage-badger = ">=0.1.2,<1.0.0"
 click = "^8.1.7"
 
+[[tool.poetry.source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+
 [tool.pytest.ini_options]
 minversion = "7.0"
 addopts = [
