@@ -40,7 +40,7 @@ install: ## Install dependencies
 	@echo "Installed the '{{ cookiecutter.project_name }}' project."
 
 install-brew:
-	@if [ $$(uname) == "Darwin" ] && [ "$(shell which brew)" = "" ]; then \
+	@if [ $$(uname) = "Darwin" ] && [ "$(shell which brew)" = "" ]; then \
 		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
 		echo "Installed Homebrew."; \
 	fi
