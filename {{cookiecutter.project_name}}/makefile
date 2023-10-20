@@ -90,7 +90,7 @@ install-poetry:
 	fi
 
 setup-poetry:
-	@poetry env use python{{ cookiecutter.python_version }} && poetry install --quiet
+	@poetry env use python{{ cookiecutter.python_version }} && poetry install
 
 setup-environment-variables:
 	@poetry run python src/scripts/fix_dot_env_file.py
