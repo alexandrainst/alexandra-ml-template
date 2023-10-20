@@ -51,11 +51,11 @@ install-gpg:
 			case $${uname} in \
 				(*Linux*) distro=$$(lsb_release -i | sed 's/Distributor ID:\t//'); \
 					case $${distro} in \
-						(*Ubuntu*) installCmd='apt-get update && apt-get install -y gnupg'; ;; \
-						(*CentOS*) installCmd='yum install -y gnupg'; ;; \
+						(*Ubuntu*) installCmd='apt-get update && apt-get install -y gnupg gpg-agent'; ;; \
+						(*CentOS*) installCmd='yum install -y gnupg gpg-agent'; ;; \
 						(*) echo 'Could not automatically install gnupg for the $${distro} distribution. Please manually install gnupg and try again.'; exit 2; ;; \
 					esac; ;; \
-				(*Darwin*) installCmd='brew install gnupg'; ;; \
+				(*Darwin*) installCmd='brew install gnupg pinentry-mac'; ;; \
 				(*) echo 'Could not automatically install gnupg. Please manually install gnupg and try again.'; exit 2; ;; \
 			esac; \
 			"$${installCmd}"; \
