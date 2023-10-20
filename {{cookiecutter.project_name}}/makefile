@@ -46,7 +46,7 @@ install-brew:
 	fi
 
 install-gpg:
-	@if [ "$(shell which gpg)" = "" ]; then \
+	@if [ "$(shell which gpg)" = "" ] || [ "$(shell which gpg-agent)" = "" ]; then \
 		uname=$$(uname); \
 			case $${uname} in \
 				(*Linux*) distro=$$(lsb_release -i | sed 's/Distributor ID:\t//'); \
