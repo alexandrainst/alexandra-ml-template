@@ -146,4 +146,4 @@ docker:  ## Build Docker image and run container
 	@docker run -it --rm {{ cookiecutter.project_name }}
 
 tree:  ## Print directory tree
-	@tree -a --gitignore .
+	@tree -a --gitignore -I .git .
