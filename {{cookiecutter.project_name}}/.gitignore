@@ -116,3 +116,6 @@ models/*
 
 # Linting cache
 .ruff_cache/
+
+# Python cache
+**/__pycache__/
