@@ -124,8 +124,8 @@ setup-git:
 add-repo-to-git:
 	@export GPG_TTY=$(tty)
 	@gpgconf --kill gpg-agent
-	@git add .
-	@if [ ! "$(shell git status --short)" = "" ]; then \
+	@if [ ! "$(shell git status --short)" = "" ] && [ "$(shell git log --all)" = "" ]; then \
+		git add .
 		git commit --quiet -m "Initial commit"; \
 	fi
 	@if [ "$(shell git remote)" = "" ]; then \
