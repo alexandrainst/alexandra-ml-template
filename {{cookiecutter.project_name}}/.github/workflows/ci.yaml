@@ -16,7 +16,7 @@ jobs:
   pytest:
     strategy:
         matrix:
-            os: [{{'windows-latest, macos-latest, ' if cookiecutter.open_source else ''}}ubuntu-latest]
+            os: [{{'windows-latest, macos-latest, ' if cookiecutter.open_source == 'y' else ''}}ubuntu-latest]
             python-version: ["{{ cookiecutter.python_version }}"]
     runs-on: {% raw %}${{ matrix.os }}{% endraw %}
     steps:
