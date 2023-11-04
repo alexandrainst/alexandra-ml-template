@@ -4,14 +4,10 @@
 {{cookiecutter.project_description}}
 
 ______________________________________________________________________
-[![Documentation](https://img.shields.io/badge/docs-passing-green)](https://alexandrainst.github.io/{{ cookiecutter.project_name }}/{{ cookiecutter.project_name }}.html)
-[![License](https://img.shields.io/github/license/alexandrainst/{{ cookiecutter.project_name }})](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/blob/main/LICENSE)
-[![LastCommit](https://img.shields.io/github/last-commit/alexandrainst/{{ cookiecutter.project_name }})](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/commits/main)
-[![Code Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg)](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/tree/main/tests)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/blob/main/CODE_OF_CONDUCT.md)
+[![Code Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg)](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/tree/main/tests){{ '\n[![Documentation](https://img.shields.io/badge/docs-passing-green)](https://alexandrainst.github.io/{{ cookiecutter.project_name }}/{{ cookiecutter.project_name }}.html)\n[![License](https://img.shields.io/github/license/alexandrainst/{{ cookiecutter.project_name }})](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/blob/main/LICENSE)\n[![LastCommit](https://img.shields.io/github/last-commit/alexandrainst/{{ cookiecutter.project_name }})](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/commits/main)\n[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/blob/main/CODE_OF_CONDUCT.md)' if cookiecutter.open_source == 'y' else ''}}
 
 
-Developers:
+Developer(s):
 
 - {{cookiecutter.author_name}} ({{cookiecutter.email}})
 
@@ -117,15 +113,11 @@ browser.
 ├── .devcontainer
 │   └── devcontainer.json
 ├── .github
-│   └── workflows
-│       ├── ci.yaml
+│   └── workflows{{'\n│       ├── ci.yaml' if cookiecutter.open_source == 'y' else ''}}
 │       └── docs.yaml
 ├── .gitignore
-├── .pre-commit-config.yaml
-├── CODE_OF_CONDUCT.md
-├── CONTRIBUTING.md
-├── Dockerfile
-├── LICENSE
+├── .pre-commit-config.yaml{{'\n├── CODE_OF_CONDUCT.md\n├── CONTRIBUTING.md' if cookiecutter.open_source == 'y' else ''}}
+├── Dockerfile{{'\n├── LICENSE' if cookiecutter.open_source == 'y' else ''}}
 ├── README.md
 ├── config
 │   ├── __init__.py
