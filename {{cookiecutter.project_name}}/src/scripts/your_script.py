@@ -6,7 +6,6 @@ Usage:
 
 import hydra
 from omegaconf import DictConfig
-
 from {{ cookiecutter.project_name }}.your_module import example_function
 
 
