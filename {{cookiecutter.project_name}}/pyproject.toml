@@ -5,8 +5,7 @@ description = "{{cookiecutter.project_description}}"
 authors = [
     "{{cookiecutter.author_name}} <{{cookiecutter.email}}>",
 ]
-readme = "README.md"
-{{'license = "MIT"' if cookiecutter.open_source == "y" else ""}}
+readme = "README.md"{{'\nlicense = "MIT"' if cookiecutter.open_source == "y" else ""}}
 
 [tool.poetry.dependencies]
 python = ">={{ cookiecutter.python_version }},<3.13"
