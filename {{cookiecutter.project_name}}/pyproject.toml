@@ -43,6 +43,14 @@ extend-select = [
     "I",
 ]
 
+[tool.ruff.extend-per-file-ignores]
+"__init__.py" = [
+    "F401",
+]
+"src/scripts/your_script.py" = [
+    "I",
+]
+
 [tool.pytest.ini_options]
 minversion = "7.0"
 addopts = [
@@ -66,12 +74,4 @@ log_cli_level = "info"
 testpaths = [
     "tests",
     "src/{{cookiecutter.project_name}}",
-]
-
-[tool.ruff.extend-per-file-ignores]
-"__init__.py" = [
-    "F401",
-]
-"src/scripts/your_script.py" = [
-    "I",
 ]
