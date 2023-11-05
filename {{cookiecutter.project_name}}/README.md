@@ -24,17 +24,17 @@ Developer(s):
 To install new PyPI packages, run:
 
 ```
-poetry add <package-name>
+{{'poetry add' if cookiecutter.dependency_manager != 'pip' else 'pip install'}} <package-name>
 ```
 
 To remove them again, run:
 ```
-poetry remove <package-name>
+{{'poetry remove' if cookiecutter.dependency_manager != 'pip' else 'pip uninstall'}} <package-name>
 ```
 
 To show all installed packages, run:
 ```
-poetry show
+{{'poetry show' if cookiecutter.dependency_manager != 'pip' else 'pip list'}}
 ```
 
 
@@ -141,8 +141,7 @@ browser.
 ├── models
 │   └── .gitkeep
 ├── notebooks
-│   └── .gitkeep
-├── poetry.toml
+│   └── .gitkeep{{'\n├── poetry.toml' if cookiecutter.dependency_manager != 'pip' else ''}}
 ├── pyproject.toml
 ├── src
 │   ├── scripts
