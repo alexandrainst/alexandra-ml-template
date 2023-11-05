@@ -23,7 +23,7 @@ class TomlSplitListsEncoder(toml.TomlEncoder):
         dump = super().dump_value(v)
         if isinstance(v, str) and "\\n" in dump:
             dump = dump.replace("\\n", "\n")
-            retval = ''''\n'
+            retval = "'''\n"
             for line in v.splitlines():
                 retval += line + "\n"
             retval += "'''"
