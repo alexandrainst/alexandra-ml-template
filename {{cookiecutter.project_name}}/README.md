@@ -21,16 +21,7 @@ Developer(s):
 
 ### Adding and Removing Packages
 
-To install new PyPI packages, run:
-
-```
-{{'poetry add' if cookiecutter.dependency_manager != 'pip' else 'pip install'}} <package-name>
-```
-
-To remove them again, run:
-```
-{{'poetry remove' if cookiecutter.dependency_manager != 'pip' else 'pip uninstall'}} <package-name>
-```
+{{'To install new PyPI packages, run:\n\n```\npoetry add <package-name>\n```\n\nTo remove them again, run:\n```\npoetry remove <package-name>\n```' if cookiecutter.dependency_manager != 'pip' else 'To install new PyPI packages, the safest way is to modify the `dependencies` section in the `pyproject.toml` file, and then running\n```\npip install -e .[dev]\n```\n\nYou *can* also just use `pip install <package-name> and `pip uninstall <package-name>`, but note that `pyproject.toml` won't be updated in that case, and other people won't be able to install your project.'}}
 
 To show all installed packages, run:
 ```
