@@ -1,7 +1,7 @@
 {{'[tool.poetry]' if cookiecutter.dependency_manager != 'pip' else '[project]'}}
 name = "{{cookiecutter.project_name}}"
-version = "0.0.0"
 description = "{{cookiecutter.project_description}}"
+version = "0.0.0"
 authors = [
     {{'' if cookiecutter.dependency_manager != 'pip' else '{name = '}}"{{cookiecutter.author_name}}{{' <' if cookiecutter.dependency_manager != 'pip' else '", email = "'}}{{cookiecutter.email}}{{'>",' if cookiecutter.dependency_manager != 'pip' else '"},'}}
 ]
