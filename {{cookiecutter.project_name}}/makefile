@@ -32,7 +32,7 @@ install: ## Install dependencies
 	@$(MAKE) --quiet install-dependencies
 	@$(MAKE) --quiet setup-environment-variables
 	@$(MAKE) --quiet setup-git
-	@$(MAKE) --quiet add-repo-to-git
+	@$(MAKE) --quiet add-repo-to-git{{'\n\t@$(MAKE) --quiet freeze' if cookiecutter.dependency_manager == 'pip'}}
 	@echo "Installed the '{{ cookiecutter.project_name }}' project."
 	@echo "Note that this is a {{'Poetry' if cookiecutter.dependency_manager != 'pip' else 'pip'}} project - see the readme for more info regarding adding and removing packages."
 
