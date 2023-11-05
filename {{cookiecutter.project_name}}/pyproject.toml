@@ -2,8 +2,7 @@
 name = "{{cookiecutter.project_name}}"
 description = "{{cookiecutter.project_description}}"
 version = "0.0.0"{{'\nauthors = [\n    "' if cookiecutter.dependency_manager != 'pip'}}{{cookiecutter.author_name if cookiecutter.dependency_manager != 'pip'}}{{' <' if cookiecutter.dependency_manager != 'pip'}}{{cookiecutter.email if cookiecutter.dependency_manager != 'pip'}}{{'>",\n]' if cookiecutter.dependency_manager != 'pip'}}
-readme = "README.md"
-license = {{'"MIT"' if cookiecutter.open_source == "y" and cookiecutter.dependency_manager != 'pip'}}{{'"Proprietary"' if cookiecutter.open_source != "y" and cookiecutter.dependency_manager != 'pip'}}{{'\n\n[tool.poetry.dependencies]' if cookiecutter.dependency_manager != 'pip'}}
+readme = "README.md"{{'\nlicense = ' if cookiecutter.dependency_manager != 'pip'}}{{'"MIT"' if cookiecutter.open_source == "y" and cookiecutter.dependency_manager != 'pip'}}{{'"Proprietary"' if cookiecutter.open_source != "y" and cookiecutter.dependency_manager != 'pip'}}{{'\n\n[tool.poetry.dependencies]' if cookiecutter.dependency_manager != 'pip'}}
 {{'python' if cookiecutter.dependency_manager != 'pip' else 'requires-python'}} = ">={{ cookiecutter.python_version }},<3.13"{{'' if cookiecutter.dependency_manager != 'pip' else '\ndependencies = ['}}
 {{'hydra-core = "^1.3.2"' if cookiecutter.dependency_manager != 'pip' else ' "hydra-core==1.3.2",\n]'}}{{'' if cookiecutter.dependency_manager != 'pip' else '\n[[project.authors]]\nname = "'}}{{cookiecutter.author_name if cookiecutter.dependency_manager == 'pip'}}{{'"\nemail = "' if cookiecutter.dependency_manager == 'pip'}}{{cookiecutter.email if cookiecutter.dependency_manager == 'pip'}}{{'"' if cookiecutter.dependency_manager == 'pip'}}
 
@@ -12,7 +11,7 @@ requires = [
     "{{'poetry-core>=1.0.0' if cookiecutter.dependency_manager != 'pip' else 'setuptools>=68.0.0'}}"
 ]
 build-backend = "{{'poetry.core.masonry.api' if cookiecutter.dependency_manager != 'pip' else 'setuptools.build_meta'}}"
-{{'\n[project.license]\nfile = "LICENSE"\n\n' if cookiecutter.dependency_manager == 'pip'}}
+{{'\n[project.license]\nfile = "LICENSE"\n' if cookiecutter.dependency_manager == 'pip'}}
 {{'[tool.poetry.group.dev.dependencies]' if cookiecutter.dependency_manager != 'pip' else '[project.optional-dependencies]\ndev = ['}}
 {{'pytest = "^7.4.3"' if cookiecutter.dependency_manager != 'pip' else '    "pytest==7.4.3",'}}
 {{'pytest-xdist = "^3.3.1"' if cookiecutter.dependency_manager != 'pip' else '    "pytest-xdist==3.3.1",'}}
