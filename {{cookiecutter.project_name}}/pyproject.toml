@@ -59,7 +59,7 @@ exclude = '''
 
 [tool.ruff]
 target-version = "{{'py312' if cookiecutter.python_version == '3.12' else ''}}{{'py311' if cookiecutter.python_version == '3.11' else ''}}{{'py310' if cookiecutter.python_version == '3.10' else ''}}{{'py39' if cookiecutter.python_version == '3.9' else ''}}{{'py38' if cookiecutter.python_version == '3.8' else ''}}{{'py37' if cookiecutter.python_version == '3.7' else ''}}"
-extend-select = ["I"]  # Enable the `isort` rules for sorting imports
+extend-select = ["I"]
 
 [tool.ruff.extend-per-file-ignores]
 "__init__.py" = ["F401"]
