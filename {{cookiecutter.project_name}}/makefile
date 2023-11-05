@@ -132,7 +132,7 @@ view-docs:  ## View documentation
 test:  ## Run tests
 	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}pytest && {{'poetry run ' if cookiecutter.dependency_manager != 'pip'}}readme-cov
 
-docker:  ## Build Docker image and run container
+docker:  ## Build Docker image and run container{{'\n\t@$(MAKE) --quiet freeze' if cookiecutter.dependency_manager == 'pip'}}
 	@docker build -t {{ cookiecutter.project_name }} .
 	@docker run -it --rm {{ cookiecutter.project_name }}
 
