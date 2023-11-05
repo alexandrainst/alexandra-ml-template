@@ -1,17 +1,17 @@
-[tool.poetry]
+{{'[tool.poetry]' if cookiecutter.dependency_manager != 'pip' else '[project]'}}
 name = "{{cookiecutter.project_name}}"
 version = "0.0.0"
 description = "{{cookiecutter.project_description}}"
 authors = [
-    "{{cookiecutter.author_name}} <{{cookiecutter.email}}>",
+    {{"{{cookiecutter.author_name}} <{{cookiecutter.email}}>", if cookiecutter.dependency_manager != 'pip' else '{name = "{{cookiecutter.author_name}}", email = "{{cookiecutter.email}}"},'}}
 ]
 readme = "README.md"{{'\nlicense = "MIT"' if cookiecutter.open_source == "y" else ""}}
+{{'\n[tool.poetry.dependencies]' if cookiecutter.dependency_manager != 'pip' else ''}}
+{{'python' if cookiecutter.dependency_manager != 'pip' else 'requires-python'}} = ">={{
+cookiecutter.python_version }},<3.13"{{'\ndependencies = [' if cookiecutter.dependency_manager != 'pip' else ''}}
+{{'hydra-core = "^1.3.2"' if cookiecutter.dependency_manager != 'pip' else ' "hydra-core>=1.3.2,<2.0.0",'}}
 
-[tool.poetry.dependencies]
-python = ">={{ cookiecutter.python_version }},<3.13"
-hydra-core = "^1.3.2"
-
-[tool.poetry.group.dev.dependencies]
+{{'[tool.poetry.group.dev.dependencies]' if cookiecutter.dependency_manager != 'pip' else '[project.optional-dependencies]\ndev = ['}}
 pytest = "^7.4.2"
 pytest-xdist = "^3.3.1"
 pytest-cov = "^4.1.0"
@@ -19,10 +19,7 @@ pre-commit = "^3.4.0"
 pdoc = "^14.0.1"
 readme-coverage-badger = ">=0.1.2,<1.0.0"
 click = "^8.1.7"
-
-[[tool.poetry.source]]
-name = "pypi"
-
+{{'\n[[tool.poetry.source]]\nname = "pypi"' if cookiecutter.dependency_manager != 'pip' else ''}}
 [tool.pytest.ini_options]
 minversion = "7.0"
 addopts = [
@@ -69,5 +66,5 @@ extend-select = ["I"]  # Enable the `isort` rules for sorting imports
 "__init__.py" = ["F401"]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["{{'poetry-core>=1.0.0' if cookiecutter.dependency_manager != 'pip' else 'setuptools>=68.0.0'}}"]
+build-backend = "{{'poetry.core.masonry.api' if cookiecutter.dependency_manager != 'pip' else 'setuptools.build_meta'}}"
