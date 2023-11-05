@@ -8,4 +8,4 @@ COPY . /project
 {{'RUN poetry env use python{{ cookiecutter.python_version }}\nRUN poetry install --no-interaction --no-cache --without dev' if cookiecutter.dependency_manager != 'pip' else 'RUN pip install .'}}
 
 # Run the script
-CMD {{'poetry run ' if cookiecutter.dependency_manager != 'pip' else ''}}python{{cookiecutter.python_version}} src/scripts/your_script.py
+CMD {{'poetry run ' if cookiecutter.dependency_manager != 'pip' else ''}}python src/scripts/your_script.py
