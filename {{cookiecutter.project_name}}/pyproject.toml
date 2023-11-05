@@ -23,10 +23,9 @@ build-backend = "{{'poetry.core.masonry.api' if cookiecutter.dependency_manager 
 {{'\n[[tool.poetry.source]]\nname = "pypi"\n\n' if cookiecutter.dependency_manager != 'pip'}}
 [tool.black]
 line-length = 88
-include = '\.pyi?$'
 exclude = '''
 /(
-	\.git
+\.git
 | \.hg
 | \.mypy_cache
 | \.tox
