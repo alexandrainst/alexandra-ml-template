@@ -31,8 +31,8 @@ install: ## Install dependencies
 	@$(MAKE) --quiet generate-gpg-key{{'\n	@$(MAKE) --quiet install-pipx\n	@$(MAKE) --quiet install-poetry' if cookiecutter.dependency_manager != 'pip'}}
 	@$(MAKE) --quiet install-dependencies
 	@$(MAKE) --quiet setup-environment-variables
-	@$(MAKE) --quiet setup-git
-	@$(MAKE) --quiet add-repo-to-git{{'\n\t@$(MAKE) --quiet freeze' if cookiecutter.dependency_manager == 'pip'}}
+	@$(MAKE) --quiet setup-git{{'\n\t@$(MAKE) --quiet freeze' if cookiecutter.dependency_manager == 'pip'}}
+	@$(MAKE) --quiet add-repo-to-git
 	@echo "Installed the '{{ cookiecutter.project_name }}' project. You can now activate your virtual environment with 'source .venv/bin/activate'."
 	@echo "Note that this is a {{'Poetry' if cookiecutter.dependency_manager != 'pip' else 'pip'}} project. Use '{{'poetry add <package>' if cookiecutter.dependency_manager != 'pip' else 'pip install <package>'}}' to install new dependencies and '{{'poetry remove <package>' if cookiecutter.dependency_manager != 'pip' else 'pip uninstall <package>'}}' to remove them.{{' Freeze your dependencies into pyproject.toml with \'make freeze\'.' if cookiecutter.dependency_manager == 'pip'}}"
 
