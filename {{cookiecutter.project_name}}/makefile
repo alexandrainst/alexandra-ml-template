@@ -80,7 +80,7 @@ install-pipx:
 	fi
 {{'\ninstall-poetry:\n\t@if [ ! "$(shell poetry --version)" = "Poetry (version 1.5.1)" ]; then \\\n        python3 -m pip uninstall -y poetry poetry-core poetry-plugin-export; \\\n        pipx install --force poetry==1.5.1; \\\n        echo "Installed Poetry."; \\\n    fi\n' if cookiecutter.dependency_manager != 'pip' else ''}}
 install-dependencies:
-	{{'@poetry env use python' if cookiecutter.dependency_manager != 'pip' else '@python'}}{{cookiecutter.python_version}}{{' && poetry install' if cookiecutter.dependency_manager != 'pip' else ' -m venv .venv\n\t@. .venv/bin/activate && pip install -qe .[dev]'}}
+	{{'@poetry env use python' if cookiecutter.dependency_manager != 'pip' else '@python'}}{{cookiecutter.python_version}}{{' && poetry install' if cookiecutter.dependency_manager != 'pip' else ' -m venv .venv\n\t@. .venv/bin/activate && pip install -qU pip && pip install -qe .[dev]'}}
 
 setup-environment-variables:
 	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py
