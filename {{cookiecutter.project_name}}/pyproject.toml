@@ -3,11 +3,10 @@ name = "{{cookiecutter.project_name}}"
 version = "0.0.0"
 description = "{{cookiecutter.project_description}}"
 authors = [
-    {{'' if cookiecutter.dependency_manager != 'pip' else '{name = '}}"{{cookiecutter.author_name}}{{' <' if cookiecutter.dependency_manager != 'pip' else '", email = "'}}{{cookiecutter.email}}{{'>",' if cookiecutter.dependency_manager != 'pip' else '"},'}}}
+    {{'' if cookiecutter.dependency_manager != 'pip' else '{name = '}}"{{cookiecutter.author_name}}{{' <' if cookiecutter.dependency_manager != 'pip' else '", email = "'}}{{cookiecutter.email}}{{'>",' if cookiecutter.dependency_manager != 'pip' else '"},'}
 ]
 readme = "README.md"
-license = {{'"MIT"' if cookiecutter.open_source == "y" and cookiecutter.dependency_manager != 'pip' else ''}}{{'"Proprietary"' if cookiecutter.open_source != "y" and cookiecutter.dependency_manager != 'pip' else ''}}{{'' if cookiecutter.dependency_manager != 'pip' else '{file = "LICENSE"}'}}
-{{'\n[tool.poetry.dependencies]' if cookiecutter.dependency_manager != 'pip' else ''}}
+license = {{'"MIT"' if cookiecutter.open_source == "y" and cookiecutter.dependency_manager != 'pip' else ''}}{{'"Proprietary"' if cookiecutter.open_source != "y" and cookiecutter.dependency_manager != 'pip' else ''}}{{'' if cookiecutter.dependency_manager != 'pip' else '{file = "LICENSE"}'}}{{'\n[tool.poetry.dependencies]' if cookiecutter.dependency_manager != 'pip' else ''}}
 {{'python' if cookiecutter.dependency_manager != 'pip' else 'requires-python'}} = ">={{ cookiecutter.python_version }},<3.13"{{'' if cookiecutter.dependency_manager != 'pip' else '\ndependencies = ['}}
 {{'hydra-core = "^1.3.2"' if cookiecutter.dependency_manager != 'pip' else '    "hydra-core>=1.3.2,<2.0.0",\n]'}}
 
