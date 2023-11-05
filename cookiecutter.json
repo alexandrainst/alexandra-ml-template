@@ -1,9 +1,9 @@
 {
     "project_name": "Project name, in snake_case",
     "project_description": "Short description of the project",
-    "open_source": "Is this a public open source project? [y/N]",
     "author_name": "Your full name",
     "email": "<name>@alexandra.dk",
+    "open_source": "Is this a public open source project? [y/N]",
     "python_version": "Your Python version, written as 3.xx",
     "dependency_manager": "Which dependency manager do you use? [pip/POETRY]",
     "_copy_without_render": []
