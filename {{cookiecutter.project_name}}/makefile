@@ -113,7 +113,7 @@ add-repo-to-git:
 	@if [ "$(shell git remote)" = "" ]; then \
 		git remote add origin git@github.com:alexandrainst/{{ cookiecutter.project_name }}.git; \
 	fi
-
+{{'\nfreeze:  ## Freeze dependencies\n\t@. .venv/bin/activate && python src/scripts/freeze_dependencies.py\n' if cookiecutter.dependency_manager == 'pip'}}
 docs:  ## Generate documentation
 	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}pdoc --docformat google src/{{cookiecutter.project_name}} -o docs
 	@echo "Saved documentation."
