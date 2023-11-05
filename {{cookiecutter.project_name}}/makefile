@@ -39,7 +39,7 @@ install: ## Install dependencies
 	@$(MAKE) --quiet install-brew
 	@$(MAKE) --quiet install-gpg
 	@$(MAKE) --quiet generate-gpg-key{{'\n	@$(MAKE) --quiet install-pipx\n	@$(MAKE) --quiet install-poetry' if cookiecutter.dependency_manager != 'pip' else ''}}
-	@$(MAKE) --quiet install-project
+	@$(MAKE) --quiet install-dependencies
 	@$(MAKE) --quiet setup-environment-variables
 	@$(MAKE) --quiet setup-git
 	@$(MAKE) --quiet add-repo-to-git
@@ -95,8 +95,8 @@ install-poetry:
 		echo "Installed Poetry."; \
 	fi
 
-install-project:
-	{{'@poetry env use python{{ cookiecutter.python_version }} && poetry install' if cookiecutter.dependency_manager != 'pip' else '@python{{cookiecutter.python_version}} -m venv .venv\n    @. .venv/bin/activate; if [ -f requirements.txt ] && [ -f requirements-dev.txt ] && [ -f dist/*.whl ]; then \\\n        pip install -r requirements-dev.txt && pip install dist/*.whl; \\\n    else \\\n        pip install .; \\\n        pip freeze > requirements.txt; \\\n        pip install .[dev]; \\\n        pip freeze > requirements-dev.txt; \\\n        build .; \\\n    fi'}}
+install-dependencies:
+	{{'@poetry env use python' if cookiecutter.dependency_manager != 'pip' else '@python'}}{{cookiecutter.python_version}}{{' && poetry install' if cookiecutter.dependency_manager != 'pip' else ' -m venv .venv\n\t@. .venv/bin/activate && pip install -e .'}}
 
 setup-environment-variables:
 	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py
