@@ -3,9 +3,9 @@ name = "{{cookiecutter.project_name}}"
 description = "{{cookiecutter.project_description}}"
 version = "0.0.0"{{'\nauthors = [\n    "' if cookiecutter.dependency_manager != 'pip'}}{{cookiecutter.author_name if cookiecutter.dependency_manager != 'pip'}}{{' <' if cookiecutter.dependency_manager != 'pip'}}{{cookiecutter.email if cookiecutter.dependency_manager != 'pip'}}{{'>",\n]' if cookiecutter.dependency_manager != 'pip'}}
 readme = "README.md"
-license = {{'"MIT"' if cookiecutter.open_source == "y" and cookiecutter.dependency_manager != 'pip' else ''}}{{'"Proprietary"' if cookiecutter.open_source != "y" and cookiecutter.dependency_manager != 'pip' else ''}}{{'' if cookiecutter.dependency_manager != 'pip' else '{file = "LICENSE"}'}}{{'\n\n[tool.poetry.dependencies]' if cookiecutter.dependency_manager != 'pip' else ''}}
+license = {{'"MIT"' if cookiecutter.open_source == "y" and cookiecutter.dependency_manager != 'pip'}}{{'"Proprietary"' if cookiecutter.open_source != "y" and cookiecutter.dependency_manager != 'pip'}}{{'' if cookiecutter.dependency_manager != 'pip' else '{file = "LICENSE"}'}}{{'\n\n[tool.poetry.dependencies]' if cookiecutter.dependency_manager != 'pip'}}
 {{'python' if cookiecutter.dependency_manager != 'pip' else 'requires-python'}} = ">={{ cookiecutter.python_version }},<3.13"{{'' if cookiecutter.dependency_manager != 'pip' else '\ndependencies = ['}}
-{{'hydra-core = "^1.3.2"' if cookiecutter.dependency_manager != 'pip' else ' "hydra-core==1.3.2",\n]'}}{{'' if cookiecutter.dependency_manager != 'pip' else '\n[[project.authors]]\nname = "{{cookiecutter.author_name}}"\nemail = "{{cookiecutter.email}}"'}}
+{{'hydra-core = "^1.3.2"' if cookiecutter.dependency_manager != 'pip' else ' "hydra-core==1.3.2",\n]'}}{{'' if cookiecutter.dependency_manager != 'pip' else '\n[[project.authors]]\nname = "'}}{{cookiecutter.author_name if cookiecutter.dependency_manager == 'pip'}}{{'"\nemail = "' if cookiecutter.dependency_manager == 'pip'}}{{cookiecutter.email if cookiecutter.dependency_manager == 'pip'}}{{'"' if cookiecutter.dependency_manager == 'pip'}}
 
 {{'[tool.poetry.group.dev.dependencies]' if cookiecutter.dependency_manager != 'pip' else '[project.optional-dependencies]\ndev = ['}}
 {{'pytest = "^7.4.3"' if cookiecutter.dependency_manager != 'pip' else '    "pytest==7.4.3",'}}
@@ -15,7 +15,7 @@ license = {{'"MIT"' if cookiecutter.open_source == "y" and cookiecutter.dependen
 {{'pdoc = "^14.1.0"' if cookiecutter.dependency_manager != 'pip' else '    "pdoc==14.1.0",'}}
 {{'' if cookiecutter.dependency_manager != 'pip' else '    "coverage[toml]==5.5",'}}{{'readme-coverage-badger = ">=0.1.2,<1.0.0"' if cookiecutter.dependency_manager != 'pip' else '\n    "readme-coverage-badger==0.1.2",'}}
 {{'click = "^8.1.7"' if cookiecutter.dependency_manager != 'pip' else '    "click==8.1.7",\n]'}}
-{{'\n[[tool.poetry.source]]\nname = "pypi"\n\n' if cookiecutter.dependency_manager != 'pip' else ''}}
+{{'\n[[tool.poetry.source]]\nname = "pypi"\n\n' if cookiecutter.dependency_manager != 'pip'}}
 [tool.pytest.ini_options]
 minversion = "7.0"
 addopts = [
@@ -55,7 +55,7 @@ exclude = '''
 '''
 
 [tool.ruff]
-target-version = "{{'py312' if cookiecutter.python_version == '3.12' else ''}}{{'py311' if cookiecutter.python_version == '3.11' else ''}}{{'py310' if cookiecutter.python_version == '3.10' else ''}}{{'py39' if cookiecutter.python_version == '3.9' else ''}}{{'py38' if cookiecutter.python_version == '3.8' else ''}}{{'py37' if cookiecutter.python_version == '3.7' else ''}}"
+target-version = "{{'py312' if cookiecutter.python_version == '3.12'}}{{'py311' if cookiecutter.python_version == '3.11'}}{{'py310' if cookiecutter.python_version == '3.10'}}{{'py39' if cookiecutter.python_version == '3.9'}}{{'py38' if cookiecutter.python_version == '3.8'}}{{'py37' if cookiecutter.python_version == '3.7'}}"
 extend-select = ["I"]
 
 [tool.ruff.extend-per-file-ignores]

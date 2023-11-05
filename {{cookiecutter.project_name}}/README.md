@@ -4,7 +4,7 @@
 {{cookiecutter.project_description}}
 
 ______________________________________________________________________
-[![Code Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg)](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/tree/main/tests){{ '\n[![Documentation](https://img.shields.io/badge/docs-passing-green)](https://alexandrainst.github.io/{{ cookiecutter.project_name }}/{{ cookiecutter.project_name }}.html)\n[![License](https://img.shields.io/github/license/alexandrainst/{{ cookiecutter.project_name }})](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/blob/main/LICENSE)\n[![LastCommit](https://img.shields.io/github/last-commit/alexandrainst/{{ cookiecutter.project_name }})](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/commits/main)\n[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/blob/main/CODE_OF_CONDUCT.md)' if cookiecutter.open_source == 'y' else ''}}
+[![Code Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg)](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/tree/main/tests){{ '\n[![Documentation](https://img.shields.io/badge/docs-passing-green)](https://alexandrainst.github.io/{{ cookiecutter.project_name }}/{{ cookiecutter.project_name }}.html)\n[![License](https://img.shields.io/github/license/alexandrainst/{{ cookiecutter.project_name }})](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/blob/main/LICENSE)\n[![LastCommit](https://img.shields.io/github/last-commit/alexandrainst/{{ cookiecutter.project_name }})](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/commits/main)\n[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](https://github.com/alexandrainst/{{ cookiecutter.project_name }}/blob/main/CODE_OF_CONDUCT.md)' if cookiecutter.open_source == 'y'}}
 
 
 Developer(s):
@@ -104,11 +104,11 @@ browser.
 ├── .devcontainer
 │   └── devcontainer.json
 ├── .github
-│   └── workflows{{'\n│       ├── ci.yaml' if cookiecutter.open_source == 'y' else ''}}
+│   └── workflows{{'\n│       ├── ci.yaml' if cookiecutter.open_source == 'y'}}
 │       └── docs.yaml
 ├── .gitignore
-├── .pre-commit-config.yaml{{'\n├── CODE_OF_CONDUCT.md\n├── CONTRIBUTING.md' if cookiecutter.open_source == 'y' else ''}}
-├── Dockerfile{{'\n├── LICENSE' if cookiecutter.open_source == 'y' else ''}}
+├── .pre-commit-config.yaml{{'\n├── CODE_OF_CONDUCT.md\n├── CONTRIBUTING.md' if cookiecutter.open_source == 'y'}}
+├── Dockerfile{{'\n├── LICENSE' if cookiecutter.open_source == 'y'}}
 ├── README.md
 ├── config
 │   ├── __init__.py
@@ -132,7 +132,7 @@ browser.
 ├── models
 │   └── .gitkeep
 ├── notebooks
-│   └── .gitkeep{{'\n├── poetry.toml' if cookiecutter.dependency_manager != 'pip' else ''}}
+│   └── .gitkeep{{'\n├── poetry.toml' if cookiecutter.dependency_manager != 'pip'}}
 ├── pyproject.toml
 ├── src
 │   ├── scripts

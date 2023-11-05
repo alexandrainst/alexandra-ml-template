@@ -1,5 +1,5 @@
 FROM python:{{ cookiecutter.python_version }}-slim-bookworm
-{{'\n# Install poetry\nRUN pip install "poetry==1.5.1"\n\n' if cookiecutter.dependency_manager != 'pip' else ''}}
+{{'\n# Install poetry\nRUN pip install "poetry==1.5.1"\n\n' if cookiecutter.dependency_manager != 'pip'}}
 # Move the files into the container
 WORKDIR /project
 COPY . /project
@@ -8,4 +8,4 @@ COPY . /project
 {{'RUN poetry env use python{{ cookiecutter.python_version }}\nRUN poetry install --no-interaction --no-cache --without dev' if cookiecutter.dependency_manager != 'pip' else 'RUN pip install .'}}
 
 # Run the script
-CMD {{'poetry run ' if cookiecutter.dependency_manager != 'pip' else ''}}python src/scripts/your_script.py
+CMD {{'poetry run ' if cookiecutter.dependency_manager != 'pip'}}python src/scripts/your_script.py
