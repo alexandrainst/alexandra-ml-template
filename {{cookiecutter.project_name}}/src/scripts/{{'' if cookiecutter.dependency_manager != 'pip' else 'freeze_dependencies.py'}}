@@ -11,9 +11,6 @@ class TomlSplitListsEncoder(toml.TomlEncoder):
     def dump_list(self, v: list) -> str:
         if len(v) == 0:
             return "[]"
-        elif len(v) == 1:
-            value = self.dump_value(v[0])
-            return f"[{value}]"
         else:
             retval = "["
             for u in v:
