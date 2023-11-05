@@ -52,6 +52,11 @@ included with a configuration file for running code spaces on Github. When hoste
 add a code space to get started, which will open a VSCode window directly in your
 browser.
 
+### Flexibility in Packaging Backend
+
+The cookiecutter allows the user to choose between `poetry` and `pip` for managing
+dependencies. In both cases, `pyproject.toml` will be used for all dependencies.
+
 
 ## Tools used in this project
 * [Poetry](https://towardsdatascience.com/how-to-effortlessly-publish-your-python-package-to-pypi-using-poetry-44b305362f9f): Dependency management
