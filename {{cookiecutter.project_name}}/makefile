@@ -9,13 +9,7 @@
 ifeq (,$(wildcard .env))
   $(shell touch .env)
 endif
-
-# Create poetry env file if it does not already exist
-ifeq (,$(wildcard ${HOME}/.poetry/env))
-  $(shell mkdir ${HOME}/.poetry)
-  $(shell touch ${HOME}/.poetry/env)
-endif
-
+{{'\n# Create poetry env file if it does not already exist\nifeq (,$(wildcard ${HOME}/.poetry/env))\n  $(shell mkdir ${HOME}/.poetry)\n  $(shell touch ${HOME}/.poetry/env)\nendif\n' if cookiecutter.dependency_manager != 'pip' else ''}}
 # Includes environment variables from the .env file
 include .env
 
@@ -23,14 +17,10 @@ include .env
 export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 
-# Ensure that `pipx` and `poetry` will be able to run, since `pip` and `brew` put these
+# Ensure that `pipx`{{' and `poetry`' if cookiecutter.dependency_manager != 'pip' else ''}} will be able to run, since `pip` and `brew` put these
 # in the following folders on Unix systems
 export PATH := ${HOME}/.local/bin:/opt/homebrew/bin:$(PATH)
-
-# Prevent DBusErrorResponse during `poetry install`
-# (see https://stackoverflow.com/a/75098703 for more information)
-export PYTHON_KEYRING_BACKEND := keyring.backends.null.Keyring
-
+{{'\n# Prevent DBusErrorResponse during `poetry install`\n#(see https://stackoverflow.com/a/75098703 for more information)\nexport PYTHON_KEYRING_BACKEND := keyring.backends.null.Keyring\n' if cookiecutter.dependency_manager != 'pip' else ''}}
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
@@ -87,14 +77,7 @@ install-pipx:
 		pipx ensurepath --force; \
 		echo "Installed pipx."; \
 	fi
-
-install-poetry:
-	@if [ ! "$(shell poetry --version)" = "Poetry (version 1.5.1)" ]; then \
-		python3 -m pip uninstall -y poetry poetry-core poetry-plugin-export; \
-		pipx install --force poetry==1.5.1; \
-		echo "Installed Poetry."; \
-	fi
-
+{{'\ninstall-poetry:\n\t@if [ ! "$(shell poetry --version)" = "Poetry (version 1.5.1)" ]; then \\\n        python3 -m pip uninstall -y poetry poetry-core poetry-plugin-export; \\\n        pipx install --force poetry==1.5.1; \\\n        echo "Installed Poetry."; \\\n    fi\n' if cookiecutter.dependency_manager != 'pip' else ''}}
 install-dependencies:
 	{{'@poetry env use python' if cookiecutter.dependency_manager != 'pip' else '@python'}}{{cookiecutter.python_version}}{{' && poetry install' if cookiecutter.dependency_manager != 'pip' else ' -m venv .venv\n\t@. .venv/bin/activate && pip install -e .[dev]'}}
 
