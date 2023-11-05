@@ -34,7 +34,7 @@ install: ## Install dependencies
 	@$(MAKE) --quiet setup-git
 	@$(MAKE) --quiet add-repo-to-git
 	@echo "Installed the '{{ cookiecutter.project_name }}' project."
-	@echo "Note that this is a {{'Poetry' if cookiecutter.dependency_manager != 'pip' else 'Pip'}} project, so to add new dependencies you should run '{{'poetry add' if cookiecutter.dependency_manager != 'pip' else 'pip install'}} <package>', and run '{{'poetry remove' if cookiecutter.dependency_manager != 'pip' else 'pip uninstall'}} <package>' to remove them. See the readme for more info."
+	@echo "Note that this is a {{'Poetry' if cookiecutter.dependency_manager != 'pip' else 'pip'}} project, so to add new dependencies you should run '{{'poetry add' if cookiecutter.dependency_manager != 'pip' else 'pip install'}} <package>', and run '{{'poetry remove' if cookiecutter.dependency_manager != 'pip' else 'pip uninstall'}} <package>' to remove them. See the readme for more info."
 
 install-brew:
 	@if [ $$(uname) = "Darwin" ] && [ "$(shell which brew)" = "" ]; then \
