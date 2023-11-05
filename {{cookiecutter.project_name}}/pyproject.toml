@@ -3,11 +3,13 @@ name = "{{cookiecutter.project_name}}"
 version = "0.0.0"
 description = "{{cookiecutter.project_description}}"
 authors = [
-    {{'"{{cookiecutter.author_name}} <{{cookiecutter.email}}>",' if cookiecutter.dependency_manager != 'pip' else '{name = "{{cookiecutter.author_name}}", email = "{{cookiecutter.email}}"},'}}
+    {{'' if cookiecutter.dependency_manager != 'pip' else '{name = '}}"{{cookiecutter.author_name}}{{' <' if cookiecutter.dependency_manager != 'pip' else '", email = "'}}{{cookiecutter.email}}{{'>",' if cookiecutter.dependency_manager != 'pip' else '"},'}}}
 ]
-readme = "README.md"{{'\nlicense = "MIT"' if cookiecutter.open_source == "y" else ""}}{{'\n[tool.poetry.dependencies]' if cookiecutter.dependency_manager != 'pip' else ''}}
+readme = "README.md"
+license = {{'"MIT"' if cookiecutter.open_source == "y" and cookiecutter.dependency_manager != 'pip' else ''}}{{'"Proprietary"' if cookiecutter.open_source != "y" and cookiecutter.dependency_manager != 'pip' else ''}}{{'' if cookiecutter.dependency_manager != 'pip' else '{file = "LICENSE"}'}}
+{{'\n[tool.poetry.dependencies]' if cookiecutter.dependency_manager != 'pip' else ''}}
 {{'python' if cookiecutter.dependency_manager != 'pip' else 'requires-python'}} = ">={{ cookiecutter.python_version }},<3.13"{{'' if cookiecutter.dependency_manager != 'pip' else '\ndependencies = ['}}
-{{'hydra-core = "^1.3.2"' if cookiecutter.dependency_manager != 'pip' else '    "hydra-core>=1.3.2,<2.0.0",'}}
+{{'hydra-core = "^1.3.2"' if cookiecutter.dependency_manager != 'pip' else '    "hydra-core>=1.3.2,<2.0.0",\n]'}}
 
 {{'[tool.poetry.group.dev.dependencies]' if cookiecutter.dependency_manager != 'pip' else '[project.optional-dependencies]\ndev = ['}}
 {{'pytest = "^7.4.2"' if cookiecutter.dependency_manager != 'pip' else '    "pytest>=7.4.1,<8.0.0",'}}
@@ -16,8 +18,8 @@ readme = "README.md"{{'\nlicense = "MIT"' if cookiecutter.open_source == "y" els
 {{'pre-commit = "^3.4.0"' if cookiecutter.dependency_manager != 'pip' else '    "pre-commit>=3.4.0,<4.0.0",'}}
 {{'pdoc = "^14.0.1"' if cookiecutter.dependency_manager != 'pip' else '    "pdoc>=14.0.1,<15.0.0",'}}
 {{'readme-coverage-badger = ">=0.1.2,<1.0.0"' if cookiecutter.dependency_manager != 'pip' else '    "readme-coverage-badger>=0.1.2,<1.0.0",'}}
-{{'click = "^8.1.7"' if cookiecutter.dependency_manager != 'pip' else '    "click>=8.1.7,<9.0.0",'}}
-{{'\n[[tool.poetry.source]]\nname = "pypi"' if cookiecutter.dependency_manager != 'pip' else ''}}
+{{'click = "^8.1.7"' if cookiecutter.dependency_manager != 'pip' else '    "click>=8.1.7,<9.0.0",\n]'}}
+{{'\n[[tool.poetry.source]]\nname = "pypi"\n\n' if cookiecutter.dependency_manager != 'pip' else ''}}
 [tool.pytest.ini_options]
 minversion = "7.0"
 addopts = [
