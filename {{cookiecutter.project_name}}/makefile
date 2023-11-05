@@ -38,10 +38,8 @@ install: ## Install dependencies
 	@echo "Installing the '{{ cookiecutter.project_name }}' project..."
 	@$(MAKE) --quiet install-brew
 	@$(MAKE) --quiet install-gpg
-	@$(MAKE) --quiet generate-gpg-key
-	@$(MAKE) --quiet install-pipx
-	@$(MAKE) --quiet install-poetry
-	@$(MAKE) --quiet setup-poetry
+	@$(MAKE) --quiet generate-gpg-key{{'\n	@$(MAKE) --quiet install-pipx\n	@$(MAKE) --quiet install-poetry' if cookiecutter.dependency_manager != 'pip' else ''}}
+	@$(MAKE) --quiet install-project
 	@$(MAKE) --quiet setup-environment-variables
 	@$(MAKE) --quiet setup-git
 	@$(MAKE) --quiet add-repo-to-git
@@ -91,20 +89,20 @@ install-pipx:
 	fi
 
 install-poetry:
-	@if [ ! "$(shell poetry --version)" = "Poetry (version {{ cookiecutter.poetry_version }})" ]; then \
+	@if [ ! "$(shell poetry --version)" = "Poetry (version 1.5.1)" ]; then \
 		python3 -m pip uninstall -y poetry poetry-core poetry-plugin-export; \
-		pipx install --force poetry=={{ cookiecutter.poetry_version }}; \
+		pipx install --force poetry==1.5.1; \
 		echo "Installed Poetry."; \
 	fi
 
-setup-poetry:
-	@poetry env use python{{ cookiecutter.python_version }} && poetry install
+install-project:
+	{{'@poetry env use python{{ cookiecutter.python_version }} && poetry install' if cookiecutter.dependency_manager != 'pip' else '@python3 -m venv .venv && .venv pip install -U pip && .venv pip install -r requirements.txt && .venv pip install dist/*.whl'}}
 
 setup-environment-variables:
-	@poetry run python src/scripts/fix_dot_env_file.py
+	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else ''}}python src/scripts/fix_dot_env_file.py
 
 setup-environment-variables-non-interactive:
-	@poetry run python src/scripts/fix_dot_env_file.py --non-interactive
+	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else ''}}python src/scripts/fix_dot_env_file.py --non-interactive
 
 setup-git:
 	@git config --global init.defaultBranch main
@@ -119,7 +117,7 @@ setup-git:
 		git config --local user.signingkey ${GPG_KEY_ID}; \
 		echo "Signed with GPG key ID ${GPG_KEY_ID}."; \
 	fi
-	@poetry run pre-commit install
+	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else ''}}pre-commit install
 
 add-repo-to-git:
 	@export GPG_TTY=$(tty)
@@ -133,7 +131,7 @@ add-repo-to-git:
 	fi
 
 docs:  ## Generate documentation
-	@poetry run pdoc --docformat google src/{{cookiecutter.project_name}} -o docs
+	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else ''}}pdoc --docformat google src/{{cookiecutter.project_name}} -o docs
 	@echo "Saved documentation."
 
 view-docs:  ## View documentation
@@ -148,7 +146,7 @@ view-docs:  ## View documentation
 		"$${openCmd}" docs/{{ cookiecutter.project_name }}.html
 
 test:  ## Run tests
-	@poetry run pytest && poetry run readme-cov
+	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else ''}}pytest && {{'poetry run ' if cookiecutter.dependency_manager != 'pip' else ''}}readme-cov
 
 docker:  ## Build Docker image and run container
 	@docker build -t {{ cookiecutter.project_name }} .
