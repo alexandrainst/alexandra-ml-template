@@ -4,10 +4,9 @@ Usage:
     python src/scripts/your_script.py <config_key>=<config_value> ...
 """
 
-from {{ cookiecutter.project_name }}.your_module import example_function
-
 import hydra
 from omegaconf import DictConfig
+from {{ cookiecutter.project_name }}.your_module import example_function
 
 
 @hydra.main(config_path="../../config", config_name="config", version_base=None)
