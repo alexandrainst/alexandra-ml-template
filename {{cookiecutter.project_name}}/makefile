@@ -34,7 +34,7 @@ install: ## Install dependencies
 	@$(MAKE) --quiet setup-git
 	@$(MAKE) --quiet add-repo-to-git{{'\n\t@$(MAKE) --quiet freeze' if cookiecutter.dependency_manager == 'pip'}}
 	@echo "Installed the '{{ cookiecutter.project_name }}' project."
-	@echo "Note that this is a {{'Poetry' if cookiecutter.dependency_manager != 'pip' else 'pip'}} project - see the readme for more info regarding adding and removing packages."
+	@echo "Note that this is a {{'Poetry' if cookiecutter.dependency_manager != 'pip' else 'pip'}} project. Use {{'`poetry add <package>`' if cookiecutter.dependency_manager != 'pip' else '`pip install <package>`'}} to install new dependencies and {{'`poetry remove <package>` if cookiecutter.dependency_manager != 'pip' else '`pip install <package>`'}} to remove them.{{' Freeze your dependencies into pyproject.toml with `make freeze`.' if cookiecutter.dependency_manager == 'pip'}}
 
 install-brew:
 	@if [ $$(uname) = "Darwin" ] && [ "$(shell which brew)" = "" ]; then \
