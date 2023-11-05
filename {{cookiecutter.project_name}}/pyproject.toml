@@ -16,7 +16,7 @@ license = {{'"MIT"' if cookiecutter.open_source == "y" and cookiecutter.dependen
 {{'pytest-cov = "^4.1.0"' if cookiecutter.dependency_manager != 'pip' else '    "pytest-cov==4.1.0",'}}
 {{'pre-commit = "^3.5.0"' if cookiecutter.dependency_manager != 'pip' else '    "pre-commit==3.5.0",'}}
 {{'pdoc = "^14.1.0"' if cookiecutter.dependency_manager != 'pip' else '    "pdoc==14.1.0",'}}
-{{'readme-coverage-badger = ">=0.1.2,<1.0.0"' if cookiecutter.dependency_manager != 'pip' else '    "readme-coverage-badger==0.1.2",'}}
+{{'readme-coverage-badger = ">=0.1.2,<1.0.0"' if cookiecutter.dependency_manager != 'pip' else '    "readme-coverage-badger==0.1.2",'}}{{'' if cookiecutter.dependency_manager != 'pip' else '\n    "coverage==5.5",'}}
 {{'click = "^8.1.7"' if cookiecutter.dependency_manager != 'pip' else '    "click==8.1.7",\n]'}}
 {{'\n[[tool.poetry.source]]\nname = "pypi"\n\n' if cookiecutter.dependency_manager != 'pip' else ''}}
 [tool.pytest.ini_options]
