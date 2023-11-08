@@ -22,7 +22,7 @@ export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 export PATH := ${HOME}/.local/bin:/opt/homebrew/bin:$(PATH)
 {{'\n# Prevent DBusErrorResponse during `poetry install`\n#(see https://stackoverflow.com/a/75098703 for more information)\nexport PYTHON_KEYRING_BACKEND := keyring.backends.null.Keyring\n' if cookiecutter.dependency_manager != 'pip'}}
 help:
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 install: ## Install dependencies
 	@echo "Installing the '{{ cookiecutter.project_name }}' project..."
