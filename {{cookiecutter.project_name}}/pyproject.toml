@@ -20,7 +20,6 @@ build-backend = "{{'poetry.core.masonry.api' if cookiecutter.dependency_manager 
 {{'pdoc = "^14.1.0"' if cookiecutter.dependency_manager != 'pip' else '    "pdoc==14.1.0",'}}
 {{'' if cookiecutter.dependency_manager != 'pip' else '    "coverage[toml]==5.5",'}}{{'readme-coverage-badger = ">=0.1.2,<1.0.0"' if cookiecutter.dependency_manager != 'pip' else '\n    "readme-coverage-badger==0.1.2",'}}
 {{'click = "^8.1.7"' if cookiecutter.dependency_manager != 'pip' else '    "click==8.1.7",\n]'}}
-{{'pylic = "^3.5.0"' if cookiecutter.dependency_manager != "pip" else     "pylic==3.5.0",'}}
 {{'\n[[tool.poetry.source]]\nname = "pypi"\n' if cookiecutter.dependency_manager != 'pip'}}
 [tool.black]
 line-length = 88
