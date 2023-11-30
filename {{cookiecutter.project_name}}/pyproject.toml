@@ -74,7 +74,7 @@ testpaths = [
     "tests",
     "src/{{cookiecutter.project_name}}",
 ]
-{%- if cookiecutter.license-checker == "y" -%}
+{%- if cookiecutter.license_checker == "y" -%}
 [tool.pylic]
 safe_licenses = [
     "1-clause BSD License",
