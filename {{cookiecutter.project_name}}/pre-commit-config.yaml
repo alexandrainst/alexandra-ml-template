@@ -18,7 +18,7 @@ repos:
     hooks:
     -   id: mypy
         args: [--install-types, --non-interactive, --ignore-missing-imports, --show-error-codes]
-        
+
 {%- if cookiecutter.license_checker != "n" -%}
 -   repo: https://github.com/ubersan/pylic
     rev: v3.5.0
