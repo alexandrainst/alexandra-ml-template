@@ -40,7 +40,11 @@ exclude = '''
 target-version = "{{'py312' if cookiecutter.python_version == '3.12'}}{{'py311' if cookiecutter.python_version == '3.11'}}{{'py310' if cookiecutter.python_version == '3.10'}}{{'py39' if cookiecutter.python_version == '3.9'}}{{'py38' if cookiecutter.python_version == '3.8'}}{{'py37' if cookiecutter.python_version == '3.7'}}"
 extend-select = [
     "I",
+    "D",
 ]
+
+[tool.ruff.pydocstyle]
+convention = "google"
 
 [tool.ruff.extend-per-file-ignores]
 "__init__.py" = [
