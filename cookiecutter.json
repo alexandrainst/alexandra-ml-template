@@ -6,5 +6,6 @@
     "open_source": "Is this a public open source project? [y/N]",
     "python_version": "Your Python version, written as 3.xx",
     "dependency_manager": "Which dependency manager do you use? [pip/POETRY]",
+    "license_checker": "Do you want to check that your dependencies are only using open source licenses? [Y/n]",
     "_copy_without_render": []
 }
