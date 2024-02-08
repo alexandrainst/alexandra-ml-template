@@ -78,7 +78,7 @@ install-pipx:
 		pipx ensurepath --force; \
 		echo "Installed pipx."; \
 	fi
-{{'\ninstall-poetry:\n\t@if [ ! "$(shell poetry --version)" = "Poetry (version 1.5.1)" ]; then \\\n        python3 -m pip uninstall -y poetry poetry-core poetry-plugin-export; \\\n        pipx install --force poetry==1.5.1; \\\n        echo "Installed Poetry."; \\\n    fi\n' if cookiecutter.dependency_manager != 'pip'}}
+{{'\ninstall-poetry:\n\t@if [ ! "$(shell poetry --version)" = "Poetry (version 1.7.1)" ]; then \\\n        python3 -m pip uninstall -y poetry poetry-core poetry-plugin-export; \\\n        pipx install --force poetry==1.7.1; \\\n        echo "Installed Poetry."; \\\n    fi\n' if cookiecutter.dependency_manager != 'pip'}}
 install-dependencies:
 	{{'@poetry env use python' if cookiecutter.dependency_manager != 'pip' else '@python'}}{{cookiecutter.python_version}}{{' && poetry install' if cookiecutter.dependency_manager != 'pip' else ' -m venv .venv\n\t@. .venv/bin/activate && pip install -qU pip && pip install -qe .[dev]'}}
 
