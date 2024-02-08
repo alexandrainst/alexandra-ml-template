@@ -6,7 +6,7 @@ Usage:
 
 import hydra
 from omegaconf import DictConfig
-from {{ cookiecutter.project_name }}.your_module import example_function
+from {{ cookiecutter.library_name }}.your_module import example_function
 
 
 @hydra.main(config_path="../../config", config_name="config", version_base=None)

@@ -1,5 +1,7 @@
 {
     "project_name": "Project name, in snake_case",
+    "library_name": "Project nickname (used to name the loadable library)",
+    "class_prefix": "PRefix used to name pytorch classes related to this project",
     "project_description": "Short description of the project",
     "author_name": "Your full name",
     "email": "<name>@alexandra.dk",
