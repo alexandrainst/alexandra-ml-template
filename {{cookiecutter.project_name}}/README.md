@@ -18,6 +18,11 @@ Developer(s):
 
 1. Run `make install`, which sets up a virtual environment and all Python dependencies therein.
 2. Run `source .venv/bin/activate` to activate the virtual environment.
+3. Define in your `.env` file credentials for:
+    * grafana (GF_SECURITY_ADMIN_PASSWORD)
+    * timescale (POSTGRES_PASSWORD)
+4. Initialize a new instance of the toolbox by calling `docker-compose up -d`.
+
 
 ### Adding and Removing Packages
 
