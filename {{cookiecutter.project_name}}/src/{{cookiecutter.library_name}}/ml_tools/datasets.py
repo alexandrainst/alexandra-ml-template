@@ -15,10 +15,7 @@ logger = logging.getLogger("ml_tools.datasets")
 # We iterate through this list of keys to
 # ensure the ordering stays consistent.
 # this might be superfluous
-ORDERED_VARIABLES = [
-"y",
-"state"
-]
+ORDERED_VARIABLES = ["y", "state"]
 
 class {{ cookiecutter.class_prefix }}Dataset(Dataset):
     def __init__(
@@ -67,8 +64,6 @@ class {{ cookiecutter.class_prefix }}Dataset(Dataset):
 #########################
 def retrieve_data_from_sql(start_date: str, end_date: str) -> Any:
     """Function that extracts raw data from postgres"""
-
-    # # connect to database
     session = load_session()
 
     statement = text(
@@ -128,7 +123,6 @@ def produce_snippets(
         a list of the values defined as the "current" value
         associated with the snippet
     """
-
     n_data_points = len(df[list(df.keys())[0]])
 
     i = 0

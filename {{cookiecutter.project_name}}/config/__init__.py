@@ -1,2 +1,1 @@
-"""Placeholder file
-"""
+"""Placeholder file"""
