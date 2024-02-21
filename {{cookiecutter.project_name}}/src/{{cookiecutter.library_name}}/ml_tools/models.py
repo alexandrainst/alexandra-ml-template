@@ -24,10 +24,10 @@ class {{ cookiecutter.class_prefix }}LSTM(nn.Module):
 		---
 
 		lookback_window: int
-			number of earlier time steps per sequence
+				number of earlier time steps per sequence
 
 		predict_window: int
-			number of steps ahead the prediciton must cover
+				number of steps ahead the prediciton must cover
 		"""
 		super({{ cookiecutter.class_prefix }}LSTM, self).__init__()
 
