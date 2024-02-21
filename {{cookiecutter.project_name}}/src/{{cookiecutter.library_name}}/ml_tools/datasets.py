@@ -1,15 +1,14 @@
-""" File defining the different variants of 
+"""File defining the different variants of 
 pytorch datasets used for training in this case.
 """
-import os
 import logging
+import os
 from typing import Any
 
-import numpy as np
 import torch
+from {{cookiecutter.library_name}}.utils.sql import load_session
 from sqlalchemy.sql import text
 from torch.utils.data import Dataset
-from {{cookiecutter.library_name}}.utils.sql import load_session
 
 logger = logging.getLogger("ml_tools.datasets")
 
@@ -17,6 +16,7 @@ logger = logging.getLogger("ml_tools.datasets")
 # ensure the ordering stays consistent.
 # this might be superfluous
 ORDERED_VARIABLES = ["y", "state"]
+
 
 class {{ cookiecutter.class_prefix }}Dataset(Dataset):
     def __init__(
@@ -64,7 +64,7 @@ class {{ cookiecutter.class_prefix }}Dataset(Dataset):
 
 #########################
 def retrieve_data_from_sql(start_date: str, end_date: str) -> Any:
-    """Function that extracts raw data from postgres"""
+    """Function that extracts raw data from postgres."""
     session = load_session()
 
     statement = text(
@@ -91,12 +91,11 @@ def retrieve_data_from_sql(start_date: str, end_date: str) -> Any:
     return data
 
 
-
 def produce_snippets(
     df: dict, time_window: int, include_keys: list = ORDERED_VARIABLES
 ) -> Any:
     """This function takes a historical dataset, and cuts it into
-    snippets of specified dimensions
+    snippets of specified dimensions.
 
     The snippets can be taken defined as past or future observation,
     depending on the sign of the time_window variable. In both cases,
@@ -114,9 +113,8 @@ def produce_snippets(
                     a list of keys we want to include in the
                     snippet
 
-    Returns
+    Returns:
     ---
-
     snippets : list
         a list of produced snippets of data
 
@@ -165,12 +163,13 @@ def produce_snippets(
 
 
 def normalize_data(df: dict[Any, Any]) -> dict[Any, Any]:
-    """Placeholder function
+    """Placeholder function.
 
     Use this function to apply simple 
     transformation to your data like 
     normalizing values between -1 and 1
     """
     return df
+
 
 #########################
