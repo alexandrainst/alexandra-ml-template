@@ -1,11 +1,11 @@
 """Example test script for the project's
-dataset class
+dataset class.
 """
 
 from {{ cookiecutter.library_name }}.ml_tools.datasets import {{ cookiecutter.class_prefix }}Dataset
 
-def test_datasets():
 
+def test_datasets():
 	# DEfine some model parameters
 	model_params = {"input_dims": 2, "input_window": 10}
 
@@ -19,5 +19,5 @@ def test_datasets():
 		break
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
 	test_datasets()
