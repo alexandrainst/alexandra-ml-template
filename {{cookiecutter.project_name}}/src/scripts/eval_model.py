@@ -9,10 +9,13 @@ import hydra
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
-from {{cookiecutter.library_name}}.ml_tools.datasets import {{cookiecutter.class_prefix}}Dataset
+from {{cookiecutter.library_name}}.ml_tools.datasets import (
+    retrieve_data_from_sql,
+    {{cookiecutter.class_prefix}}Dataset,
+    produce_snippets
+    )
 from {{cookiecutter.library_name}}.ml_tools.models import {{cookiecutter.class_prefix}}AE, {{cookiecutter.class_prefix}}ARIMA, {{cookiecutter.class_prefix}}LSTM
 from omegaconf import DictConfig
-
 
 project_path = Path(__file__).parents[2]
 

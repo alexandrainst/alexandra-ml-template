@@ -1,6 +1,5 @@
 """ File defining the different variants of 
 pytorch datasets used for training in this case.
-
 """
 import os
 import logging
@@ -8,7 +7,9 @@ from typing import Any
 
 import numpy as np
 import torch
+from sqlalchemy.sql import text
 from torch.utils.data import Dataset
+from {{cookiecutter.library_name}}.utils.sql import load_session
 
 logger = logging.getLogger("ml_tools.datasets")
 
