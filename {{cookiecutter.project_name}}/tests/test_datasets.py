@@ -9,14 +9,14 @@ def test_datasets():
 	# DEfine some model parameters
 	model_params = {"input_dims": 2, "input_window": 10}
 
-    d = {{ cookiecutter.class_prefix }}Dataset(
-        model_params=model_params,
-        dataset_path="./path_to_your_dataset",
-    )
-    print(len(d))
-    for e in d:
-        print(e)
-        break
+	d = {{ cookiecutter.class_prefix }}Dataset(
+		model_params=model_params,
+		dataset_path="./path_to_your_dataset",
+	)
+	print(len(d))
+	for e in d:
+		print(e)
+		break
 
 
 if __name__=='__main__':

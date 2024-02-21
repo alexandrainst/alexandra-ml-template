@@ -78,7 +78,9 @@ install-pipx:
 		pipx ensurepath --force; \
 		echo "Installed pipx."; \
 	fi
+
 {{'\ninstall-poetry:\n\t@if [ ! "$(shell poetry --version)" = "Poetry (version 1.7.1)" ]; then \\\n        python3 -m pip uninstall -y poetry poetry-core poetry-plugin-export; \\\n        pipx install --force poetry==1.7.1; \\\n        echo "Installed Poetry."; \\\n    fi\n' if cookiecutter.dependency_manager != 'pip'}}
+
 install-dependencies:
 	{{'@poetry env use python' if cookiecutter.dependency_manager != 'pip' else '@python'}}{{cookiecutter.python_version}}{{' && poetry install' if cookiecutter.dependency_manager != 'pip' else ' -m venv .venv\n\t@. .venv/bin/activate && pip install -qU pip && pip install -qe .[dev]'}}
 
@@ -113,7 +115,9 @@ add-repo-to-git:
 	@if [ "$(shell git remote)" = "" ]; then \
 		git remote add origin git@github.com:alexandrainst/{{ cookiecutter.project_name }}.git; \
 	fi
+
 {{'\nfreeze:  ## Freeze dependencies\n\t@. .venv/bin/activate && python src/scripts/freeze_dependencies.py\n\t@echo "Updated dependencies in pyproject.toml."\n' if cookiecutter.dependency_manager == 'pip'}}
+
 docs:  ## Generate documentation
 	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}pdoc --docformat google src/{{cookiecutter.project_name}} -o docs
 	@echo "Saved documentation."

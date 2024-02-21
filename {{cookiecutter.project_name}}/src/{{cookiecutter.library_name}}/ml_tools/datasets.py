@@ -16,7 +16,8 @@ class {{ cookiecutter.class_prefix }}Dataset(Dataset):
         model_params: dict[str, Any],
         dataset_path: str,
     ) -> None:
-        """
+        """Initialize the dataset class.
+
         Parameter
         -------
         model_type: str
@@ -55,7 +56,9 @@ class {{ cookiecutter.class_prefix }}Dataset(Dataset):
 
 #########################
 def normalize_data(df: dict[Any, Any]) -> dict[Any, Any]:
-    """Use this function to apply simple 
+    """Placeholder function
+
+    Use this function to apply simple 
     transformation to your data like 
     normalizing values between -1 and 1
     """
