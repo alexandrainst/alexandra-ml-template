@@ -8,3 +8,95 @@ dirs:
   processed: processed
   final: final
   models: models
+
+# Define several types of ml model trainings
+ml_trainings:
+  - anomaly_encoder:
+      name: "anomaly_encoder_all_variables"
+      model: 
+        name: "{{cookiecutter.class_prefix}}AE"
+        model_params:
+          input_dims: 16
+          input_window: -10
+          latent_dims: 33
+      loss: "{{cookiecutter.class_prefix}}Loss"
+      training_params:
+        learning_rate: 0.00001
+        batch_size: 1
+        n_epochs: 10
+
+
+  - output_predictor:
+      name: "lstm_prediction_input_to_outputs"
+      model:
+        name: "{{cookiecutter.class_prefix}}LSTM"
+        model_params:
+          n_hidden: 285
+          input_dims: 8
+          input_window: -10
+          input_variables:
+            0: "input_p"
+            1: "input_t"
+          predict_dims: 8
+          predict_window: 1
+          predict_variables:
+            0: "output_p"
+            1: "output_t"
+      training_params:
+        learning_rate: 0.001
+        batch_size: 30
+        n_epochs: 11
+
+  - output_predictor:
+      name: "lstm_prediction_1D"
+      model:
+        name: "{{cookiecutter.class_prefix}}LSTM"
+        model_params:
+          n_hidden: 285
+          input_dims: 1
+          input_window: -10
+          input_variables:
+            0: "output_flow"
+          predict_dims: 1
+          predict_window: 1
+          predict_variables:
+            0: "output_flow"
+      training_params:
+        learning_rate: 0.001
+        batch_size: 30
+        n_epochs: 11
+
+  - output_predictor:
+      name: "arima_prediction_1d"
+      model:
+        name: "{{cookiecutter.class_prefix}}ARIMA"
+        model_params:
+          p: 5
+          d: 1
+          q: 0
+          input_window: 10
+          input_variables:
+            0: "output_flow"
+          predict_window: 1
+          predict_variables:
+            0: "output_flow"
+      training_params:
+        learning_rate: 0.001
+        batch_size: 3
+        n_epochs: 25
+
+# define data set periods 
+datasets:
+  - dataset:
+      name: "train"
+      sql_table: "{{cookiecutter.library_name}}"
+      time_periods:
+        start: "2023-05-28 00:00:00+00"
+        end: "2023-06-15T23:59:00+02"
+
+  - dataset:
+      name: "test_anomaly"
+      sql_table: "{{cookiecutter.library_name}}"
+      time_periods:
+        start: "2023-06-24 00:00:00+02"
+        end: "2023-06-25 23:00:00+02"

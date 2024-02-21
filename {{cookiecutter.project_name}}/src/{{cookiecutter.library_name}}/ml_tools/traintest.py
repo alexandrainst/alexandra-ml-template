@@ -1,13 +1,14 @@
-""" File containing the training and testing
+""" File contaiing the training and testing
 class used to schedule and coordinate an ML
 training phase
 
 """
+
 import torch
 from torch.utils.data import DataLoader
-import numpy as np
 
 
+# Generic Train Test class. avoid changing this as much as possible
 class AlgoTrainTest:
     def __init__(self, model, optimizer, loss_fn, device="cuda"):
         self.model = model.to(device)
@@ -43,19 +44,16 @@ class AlgoTrainTest:
     def _train_one_epoch(self):
         for databatch in self.datasets[self.current_dataset]:
             # get data onto computing device
-            sequence, output = databatch
-            sequence = sequence.to(self.device)
-            output = output.to(self.device)
+            data = databatch.to(self.device)
 
             # reset optimizer
             self.optim.zero_grad()
 
             # Reconstruct tensor
-            expectation = self.model(sequence)
+            predictions = self.model(data)
 
             # Compute the Loss
-            # TODO: input to loss function is not generic
-            loss = self.loss(expectation, output)  # , sequence)
+            loss = self.loss(data, predictions)
             self.loss_history.append(loss.item())
             loss.backward()
 
@@ -69,7 +67,7 @@ class AlgoTrainTest:
         self.gradients_history = []
 
         for i in range(n_epochs):
-            if (i + 1) % 100 == 0:
+            if (i + 1) % 10 == 0:
                 print(f"Epoch: {i}")
                 print("-------------------------")
             self._train_one_epoch()
@@ -78,7 +76,7 @@ class AlgoTrainTest:
         if autosave:
             self.save_trained_model()
 
-    def save_trained_model(self):
+    def save_trained_model(self, output_name: str | None = None) -> None:
         """TODO, include in the name:
 
         - batch size
@@ -91,18 +89,61 @@ class AlgoTrainTest:
         loss_name = type(self.loss).__name__
         optim_name = type(self.optim).__name__
 
-        full_name = f"{model_name}_{loss_name}_{optim_name}"
-        full_name += f"_trained_on_{self.current_dataset}.pt"
+        if output_name is None:
+            full_name = f"{model_name}_{loss_name}_{optim_name}_\
+            trained_on_{self.current_dataset}.pt"
+        else:
+            full_name = output_name
+
         torch.save(self.model.state_dict(), full_name)
-        return full_name
 
-    def predict(self, x):
-        """Not relevant for this model"""
-        pass
 
-    def eval_model(self, dataset_label="test"):
-        """Define how you want to evaluate the model
-        following the training
+#####################################################
+# Project specific class. This is where you can adapt
+# the training algorithm to your needs
+
+
+class DynflexTrainTest(AlgoTrainTest):
+    def __init__(
+        self,
+        model,
+        model_type,
+        optimizer,
+        loss_fn,
+        device="cuda",
+    ):
+        AlgoTrainTest.__init__(
+            self, model=model, optimizer=optimizer, loss_fn=loss_fn, device=device
+        )
+        self.model_type = model_type
+
+    def _train_one_epoch(self):
+        """We override the generic training
+        because we need to distinguish the process
+        for the two types of models we train
         """
-        pass
+        for databatch in self.datasets[self.current_dataset]:
+            # reset optimizer
+            self.optim.zero_grad()
 
+            # This is where the change happens
+            if self.model_type == "output_predictor":
+                # get data onto computing device
+
+                inputs, outputs = databatch
+                inputs = inputs.to(self.device)
+                target = outputs.to(self.device)
+                predictions = self.model(inputs)
+
+            else:
+                inputs = databatch.to(self.device)
+                predictions = self.model(inputs)
+                target = inputs
+
+            # Compare the predicted and target values
+            loss = self.loss(target, predictions)
+            self.loss_history.append(loss.item())
+            loss.backward()
+
+            # run a step of optimization
+            self.optim.step()
