@@ -9,21 +9,14 @@ from typing import Any
 import hydra
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.decomposition import PCA
+
 import torch
-from {{cookiecutter.library_name}}.ml_tools.datasets import (
-    {{cookiecutter.class_prefix}}Dataset,
-    normalize_data,
-    produce_snippets,
-    retrieve_data_from_sql,
-)
-from dynflex.ml_tools.models import (
-    {{cookiecutter.class_prefix}}AE,
-    {{cookiecutter.class_prefix}}Loss,
-    {{cookiecutter.class_prefix}}LSTM
-    )
+from {{cookiecutter.library_name}}.ml_tools.datasets import {{cookiecutter.class_prefix}}Dataset
+from {{cookiecutter.library_name}}.ml_tools.datasets import normalize_data, produce_snippets, retrieve_data_from_sql
+from {{cookiecutter.library_name}}.ml_tools.models import {{cookiecutter.class_prefix}}AE, {{cookiecutter.class_prefix}}Loss, {{cookiecutter.class_prefix}}LSTM
 from {{cookiecutter.library_name}}.ml_tools.traintest import {{cookiecutter.class_prefix}}TrainTest
 from omegaconf import DictConfig
+from sklearn.decomposition import PCA
 
 logger = logging.getLogger("train_model")
 logger.level = logging.INFO
@@ -124,7 +117,7 @@ def plot_latent_space_pca(ds_name: str, reduced_values: np.ndarray):
 ######################################################################
 @hydra.main(version_base=None, config_path="../../config", config_name="config")
 def main(config: DictConfig) -> None:
-    """main orchestrating function
+    """main orchestrating function.
 
     given some datasets, run the training and
     evaluations that are appropriate to run
