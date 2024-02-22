@@ -101,7 +101,6 @@ def define_pca_space(model, train_data):
 #
 def plot_latent_space_pca(ds_name: str, reduced_values: np.ndarray):
     """Plot2D projection of the PCA components using matplotlib."""
-    
     fig, ax = plt.subplots(figsize=(10, 10))
     ax.set_ylim([-2, 6])
     ax.set_xlim([-5, 6])
