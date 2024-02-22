@@ -10,7 +10,11 @@ from torch.utils.data import DataLoader
 
 # Generic Train Test class. avoid changing this as much as possible
 class AlgoTrainTest:
+    """Wrapper class around training steps of a pytorch model."""
+
     def __init__(self, model, optimizer, loss_fn, device="cuda"):
+        """Initialize the training class."""
+
         self.model = model.to(device)
         self.loss = loss_fn
         self.optim = optimizer
@@ -38,10 +42,14 @@ class AlgoTrainTest:
         self.eval_results = {}
 
     def add_dataset(self, label, dataset, batch_size=10):
+        """Import new pytorch datasets and load them as DataLoders."""
+
         self.datasets[label] = DataLoader(dataset, batch_size=batch_size, shuffle=True)
         self.current_dataset = label
 
     def _train_one_epoch(self):
+        """Most important function: defines a single training step."""
+
         for databatch in self.datasets[self.current_dataset]:
             # get data onto computing device
             data = databatch.to(self.device)
@@ -61,6 +69,8 @@ class AlgoTrainTest:
             self.optim.step()
 
     def train(self, dataset_label="train", n_epochs=10, autosave=True):
+        """Function that calls the training step over a particular dataloader."""
+
         self.current_dataset = dataset_label
         self.loss_history = []
         self.rms_history = []
@@ -77,7 +87,7 @@ class AlgoTrainTest:
             self.save_trained_model()
 
     def save_trained_model(self, output_name: str | None = None) -> None:
-        """TODO, include in the name:
+        """Save the trained model to .pt format.
 
         - batch size
         - dataset name
@@ -104,6 +114,16 @@ class AlgoTrainTest:
 
 
 class DynflexTrainTest(AlgoTrainTest):
+    """In case a project requires customize training.
+
+    If the particular project needs more custom training style, it 
+    is recommended to create a seaparate project-specific test-train
+    class that inherits the basics of the AlgoTrainTest class.
+
+    One can therefter substitute basic functions with custom ones, such as
+    train_one_epoch in this case.
+    
+    """
     def __init__(
         self,
         model,
@@ -112,6 +132,8 @@ class DynflexTrainTest(AlgoTrainTest):
         loss_fn,
         device="cuda",
     ):
+        """Initialize inherited class + extra parameters."""
+        
         AlgoTrainTest.__init__(
             self, model=model, optimizer=optimizer, loss_fn=loss_fn, device=device
         )

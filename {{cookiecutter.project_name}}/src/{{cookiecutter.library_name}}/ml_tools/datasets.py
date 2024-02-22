@@ -3,7 +3,8 @@ pytorch datasets used for training in this case.
 """
 import logging
 import os
-from typing import Any
+from collections import OrderedDict
+from typing import Any, List
 
 import torch
 from {{cookiecutter.library_name}}.utils.sql import load_session
@@ -19,6 +20,8 @@ ORDERED_VARIABLES = ["y", "state"]
 
 
 class {{ cookiecutter.class_prefix }}Dataset(Dataset):
+    """Custom wrapper on torch's Dataset class."""
+
     def __init__(
         self,
         model_params: dict[str, Any],
@@ -44,10 +47,12 @@ class {{ cookiecutter.class_prefix }}Dataset(Dataset):
         self.snippets = sorted(all_files)
 
     def __len__(self):
+        """Return how many snippet file that exist."""
         return len(self.snippets)
 
     def __getitem__(self, idx):
         """Define the way we load data into the DataLoader.
+
         This example simply loads pre-saved torch tensor
         files
         """
@@ -65,6 +70,7 @@ class {{ cookiecutter.class_prefix }}Dataset(Dataset):
 #########################
 def retrieve_data_from_sql(start_date: str, end_date: str) -> Any:
     """Function that extracts raw data from postgres."""
+
     session = load_session()
 
     statement = text(
@@ -94,8 +100,7 @@ def retrieve_data_from_sql(start_date: str, end_date: str) -> Any:
 def produce_snippets(
     df: dict, time_window: int, include_keys: list = ORDERED_VARIABLES
 ) -> Any:
-    """This function takes a historical dataset, and cuts it into
-    snippets of specified dimensions.
+    """Take a historical dataset and cut it into snippets of specified dimensions.
 
     The snippets can be taken defined as past or future observation,
     depending on the sign of the time_window variable. In both cases,

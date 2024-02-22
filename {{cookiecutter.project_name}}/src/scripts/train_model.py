@@ -9,6 +9,7 @@ from typing import Any
 import hydra
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.decomposition import PCA
 import torch
 from {{cookiecutter.library_name}}.ml_tools.datasets import (
     {{cookiecutter.class_prefix}}Dataset,
@@ -35,6 +36,8 @@ def train_model(
     model_params: dict[Any, Any] = {},
     training_params: dict[Any, Any] = {},
 ) -> Any:
+    """Training script for a single model."""
+
     logger.info("training model...")
 
     if model_type == "anomaly_encoder":
@@ -73,6 +76,8 @@ def train_model(
 
 
 def return_pca_inputs(model, dataset):
+    """Compute the PCA projection of the data using the latent space of model."""
+
     train_samples = []
     for i, d in enumerate(dataset):
         # the model is expecting a batch vector,
@@ -87,7 +92,7 @@ def return_pca_inputs(model, dataset):
 
 
 def define_pca_space(model, train_data):
-    from sklearn.decomposition import PCA
+    """Fit the PCA function to a particular dataset and model."""
 
     all_samples = return_pca_inputs(model=model, dataset=train_data)
 
@@ -103,6 +108,8 @@ def define_pca_space(model, train_data):
 # Plotting functions
 #
 def plot_latent_space_pca(ds_name: str, reduced_values: np.ndarray):
+    """Plot2D projection of the PCA components using matplotlib."""
+    
     fig, ax = plt.subplots(figsize=(10, 10))
     ax.set_ylim([-2, 6])
     ax.set_xlim([-5, 6])

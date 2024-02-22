@@ -8,6 +8,7 @@ from typing import Any
 import hydra
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.decomposition import PCA
 import torch
 from {{cookiecutter.library_name}}.ml_tools.datasets import (
     retrieve_data_from_sql,
@@ -24,13 +25,15 @@ logger.level = logging.INFO
 
 
 class ModelEvaluator:
+    """Evaluation class for a model."""
+
     def __init__(
         self,
         model,
         model_type: str,
         state_dict_path: str | None = None,
     ) -> None:
-        """Provide the trained model information
+        """Provide the trained model information.
 
         Parameters:
         ---
@@ -52,9 +55,7 @@ class ModelEvaluator:
         self.model_type = model_type
 
     def evaluate(self, dataset):
-        """decide which evaluation to perform,
-        based on the model type
-        """
+        """decide which evaluation to perform based on the model type."""
 
         if self.model_type == "output_predictor":
             data = self._prediction_accuracy(dataset=dataset)
@@ -115,6 +116,8 @@ class ModelEvaluator:
         plt.show()
 
     def plot_prediction_accuracy(self, data, labels: dict[Any, Any] | None = None):
+        """compare the reconstructed time series with the original data."""
+
         n_channels = data["real"].shape[0]
         fig, axes = plt.subplots(
             n_channels, figsize=(10, 20 * n_channels), gridspec_kw={"hspace": 1.0}
@@ -141,9 +144,7 @@ class ModelEvaluator:
         plt.show()
 
     def _prediction_accuracy(self, dataset):
-        """Evaluate the accuracy of the model's prediction,
-        for a given dataset
-        """
+        """Evaluate the accuracy of the model's prediction,for a given dataset."""
         self.model.cpu()
 
         real = []
@@ -195,6 +196,8 @@ class ModelEvaluator:
 
 @hydra.main(version_base=None, config_path="../../config", config_name="config")
 def main(config: DictConfig) -> None:
+    """Run evalutation code for several trained models."""
+    
     for training_conf in config["ml_trainings"]:
         model_type = list(training_conf.keys())[0]
         training_conf = training_conf[model_type]
