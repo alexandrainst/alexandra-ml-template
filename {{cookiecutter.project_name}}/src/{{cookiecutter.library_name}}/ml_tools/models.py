@@ -18,8 +18,10 @@ logger = logging.getLogger(__name__)
 # Example LSTM Cell
 #
 class {{ cookiecutter.class_prefix }}LSTM(nn.Module):
+    """Univariate LSTM prediction model."""
+
     def __init__(self, lookback_window, predict_window, n_hidden=None):
-        """Univariate LSTM prediction model.
+        """Initialize class.
 
         Parameters:
         ---
@@ -48,8 +50,10 @@ class {{ cookiecutter.class_prefix }}LSTM(nn.Module):
 # Autoencoders for anomaly detection
 #
 class {{ cookiecutter.class_prefix }}Encoder(nn.Module):
+    """Encoder section of autoencoder model."""
+
     def __init__(self, input_dims, latent_dims):
-        """Encoder section of autoencoder model."""
+        """initialize model."""
         super({{ cookiecutter.class_prefix }}Encoder, self).__init__()
         self.linear1 = nn.Linear(input_dims, 56)
         self.linear2 = nn.Linear(56, latent_dims)
@@ -62,8 +66,10 @@ class {{ cookiecutter.class_prefix }}Encoder(nn.Module):
 
 
 class {{ cookiecutter.class_prefix }}Decoder(nn.Module):
+    """Decoder section of autoencoder model."""
+
     def __init__(self, latent_dims, output_dims):
-        """Decoder section of autoencoder model."""
+        """initialize model."""
         super({{ cookiecutter.class_prefix }}Decoder, self).__init__()
         self.linear1 = nn.Linear(latent_dims, 56)
         self.linear2 = nn.Linear(56, output_dims)
@@ -76,8 +82,10 @@ class {{ cookiecutter.class_prefix }}Decoder(nn.Module):
 
 
 class {{ cookiecutter.class_prefix }}AE(nn.Module):
+    """Autoencoder model for anomaly detection."""
+
     def __init__(self, input_dims, input_window, latent_dims):
-        """Autoencoder model for anomaly detection."""
+        """initialize model."""
         super({{ cookiecutter.class_prefix }}AE, self).__init__()
         input_size = input_dims * input_window
         self.encoder = {{ cookiecutter.class_prefix }}Encoder(input_size, latent_dims)
@@ -93,12 +101,14 @@ class {{ cookiecutter.class_prefix }}AE(nn.Module):
 # Various types of loss functions
 #
 class CustomLoss(nn.Module):
-    def __init__(self):
-        """Custom loss for output predictor.
+    """Custom loss for output predictor.
 
-        Calculate the maximum value of the last
-        three elements in the input sequence
-        """
+    Calculate the maximum value of the last
+    three elements in the input sequence.
+    """
+
+    def __init__(self):
+        """Initialize the loss function."""
         super(CustomLoss, self).__init__()
 
     def forward(self, predicted_output, input_sequence, true_output):
@@ -112,8 +122,10 @@ class CustomLoss(nn.Module):
 
 
 class AsymmetricLoss(nn.Module):
+    """Loss function that over penalizes underpredictions."""
+    
     def __init__(self):
-        """Loss function that over penalizes underpredictions."""
+        """Initialize the loss function."""
         super(AsymmetricLoss, self).__init__()
 
     def forward(self, predicted_output, input_sequence, true_output):
