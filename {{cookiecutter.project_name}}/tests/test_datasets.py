@@ -15,5 +15,5 @@ def test_datasets():
         break
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_datasets()

@@ -1,1 +1,1 @@
-"""Shutting up pylint comlaining about D104"""
+"""Shutting up pylint comlaining about D104."""
