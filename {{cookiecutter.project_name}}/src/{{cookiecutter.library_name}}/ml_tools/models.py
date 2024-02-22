@@ -98,6 +98,59 @@ class {{ cookiecutter.class_prefix }}AE(nn.Module):
 
 
 #
+# Rolling ARIMA model
+
+class DynflexARIMA:
+    """Rolling ARIMA Model.
+
+    Here we don't use an ML technique,
+    but rather provide a forecast based on
+    the statistical properties of the provided snippet.
+
+    The model is however wrapped inside a torch-like object
+    to facilitate its use on the same scripts as our ML
+    models.
+    """
+
+    def __init__(
+        self,
+        input_window: int,
+        predict_window: int,
+        p: int,
+        d: int,
+        q: int,
+        predict_variables: dict[Any, Any] | None = None,
+        input_variables: dict[Any, Any] | None = None,
+    ):
+        """Initialize model."""
+        super(DynflexARIMA, self).__init__()
+        self.p = p
+        self.d = d
+        self.q = q
+        self.predict_window = predict_window
+        self.predict_dims = 1
+        self.input_size = input_window
+
+    def eval(self):
+        """Dummy function."""
+        pass
+
+    def cpu(self):
+        """Dummy function."""
+        pass
+
+    def forward(self, x):
+        """Forward pass is actually just an local eval of ARIMA"""
+        x = x.detach().numpy().flatten()
+        self.model = ARIMA(x, order=(self.p, self.d, self.q))
+        self.fit = self.model.fit()
+        return torch.Tensor([self.fit.forecast(steps=self.predict_window)])
+
+    def __call__(self, x):
+        """Dummy link to the model's call function."""
+        return self.forward(x)
+
+#
 # Various types of loss functions
 #
 class CustomLoss(nn.Module):
@@ -119,6 +172,19 @@ class CustomLoss(nn.Module):
         loss = torch.sum((predicted_output - last_three_max) ** 2)
 
         return loss
+
+
+class SquareLoss(nn.Module):
+    def __init__(self):
+        """Initialize the loss function."""
+        super(SquareLoss, self).__init__()
+
+    def forward(self, reconstructed_ts, original_ts):
+        """Forward pass on the model."""
+        loss = ((reconstructed_ts - original_ts) ** 2.0).sum()
+
+        # Encode the loss function
+        return loss.mean()
 
 
 class AsymmetricLoss(nn.Module):

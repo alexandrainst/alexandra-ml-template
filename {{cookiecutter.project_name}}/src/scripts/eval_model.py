@@ -204,7 +204,6 @@ def main(config: DictConfig) -> None:
 
         # Get training data
         train_data = {{cookiecutter.class_prefix}}Dataset(
-            model_type=model_type,
             model_params=model_params,
             dataset_path=f"./{training_name}_train_dataset/",
         )
@@ -271,7 +270,6 @@ def main(config: DictConfig) -> None:
                     )
 
             test_dataset = {{cookiecutter.class_prefix}}Dataset(
-                model_type=model_type,
                 model_params=model_params,
                 dataset_path=dataset_path,
             )

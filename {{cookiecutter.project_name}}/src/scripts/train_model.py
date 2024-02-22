@@ -15,7 +15,7 @@ from {{cookiecutter.library_name}}.ml_tools.datasets import (
     produce_snippets,
     retrieve_data_from_sql,
 )
-from {{cookiecutter.library_name}}.ml_tools.models import {{cookiecutter.class_prefix}}AE, {{cookiecutter.class_prefix}}Loss, {{cookiecutter.class_prefix}}LSTM
+from {{cookiecutter.library_name}}.ml_tools.models import {{cookiecutter.class_prefix}}AE, SquareLoss, {{cookiecutter.class_prefix}}LSTM
 from {{cookiecutter.library_name}}.ml_tools.traintest import {{cookiecutter.class_prefix}}TrainTest
 from omegaconf import DictConfig
 from sklearn.decomposition import PCA
@@ -35,11 +35,9 @@ def train_model(
     logger.info("training model...")
 
     if model_type == "anomaly_encoder":
-        model_instance = {{cookiecutter.class_prefix}}AE(**model_params)
-        loss_instance = {{cookiecutter.class_prefix}}Loss()
+        model_instance = {{cookiecutter.class_prefix}}AE(**model_params)        
     elif model_type == "output_predictor":
         model_instance = {{cookiecutter.class_prefix}}LSTM(**model_params)
-        loss_instance = {{cookiecutter.class_prefix}}Loss()
     else:
         raise Exception("Unrecognized model type.")
 
@@ -49,7 +47,7 @@ def train_model(
         optimizer=torch.optim.Adam(
             model_instance.parameters(), lr=training_params["learning_rate"]
         ),
-        loss_fn=loss_instance,
+        loss_fn=SquareLoss(),
         device="cuda",
     )
 

@@ -1,6 +1,5 @@
-""" Potsgresql connection to IoT database
+""" Potsgresql connection to IoT database."""
 
-"""
 import os
 from pathlib import Path
 
@@ -27,13 +26,18 @@ DEFAULT_POSTGRES_DB = os.environ["POSTGRES_DB"]
 
 
 # -------------------------------------------------------------
-# Objects we might want to load directly into other code
 class Base(DeclarativeBase):
+    """SQLAlchemy Base class for ORM objects.
+
+    In case we might want to load directly into other code.
+    """
     pass
 
-
+# ------------------------------------------------------------
 def load_session(**modified_connection):
-    """Return a session object that is aware
+    """Load an SQL connection session.
+
+    Return a session object that is aware
     of all necessary tables from the database
     """
     engine = get_connection(**modified_connection)
@@ -53,7 +57,8 @@ def get_connection(
     host=DEFAULT_POSTGRES_HOST,
     port=DEFAULT_POSTGRES_PORT,
     database=DEFAULT_POSTGRES_DB,
-):
+    ):
+    """Return an sqlalchemy conenction engine."""
     return create_engine(
         url="postgresql+psycopg2://{0}:{1}@{2}:{3}/{4}".format(
             user, password, host, port, database

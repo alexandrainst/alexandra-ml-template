@@ -108,7 +108,7 @@ class AlgoTrainTest:
 # the training algorithm to your needs
 
 
-class DynflexTrainTest(AlgoTrainTest):
+class {{cookiecutter.class_prefix}}TrainTest(AlgoTrainTest):
     """In case a project requires customize training.
 
     If the particular project needs more custom training style, it
