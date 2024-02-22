@@ -53,7 +53,7 @@ class {{ cookiecutter.class_prefix }}Encoder(nn.Module):
     """Encoder section of autoencoder model."""
 
     def __init__(self, input_dims, latent_dims):
-        """initialize model."""
+        """Initialize model."""
         super({{ cookiecutter.class_prefix }}Encoder, self).__init__()
         self.linear1 = nn.Linear(input_dims, 56)
         self.linear2 = nn.Linear(56, latent_dims)
@@ -69,7 +69,7 @@ class {{ cookiecutter.class_prefix }}Decoder(nn.Module):
     """Decoder section of autoencoder model."""
 
     def __init__(self, latent_dims, output_dims):
-        """initialize model."""
+        """Initialize model."""
         super({{ cookiecutter.class_prefix }}Decoder, self).__init__()
         self.linear1 = nn.Linear(latent_dims, 56)
         self.linear2 = nn.Linear(56, output_dims)
@@ -85,7 +85,7 @@ class {{ cookiecutter.class_prefix }}AE(nn.Module):
     """Autoencoder model for anomaly detection."""
 
     def __init__(self, input_dims, input_window, latent_dims):
-        """initialize model."""
+        """Initialize model."""
         super({{ cookiecutter.class_prefix }}AE, self).__init__()
         input_size = input_dims * input_window
         self.encoder = {{ cookiecutter.class_prefix }}Encoder(input_size, latent_dims)
@@ -123,7 +123,7 @@ class CustomLoss(nn.Module):
 
 class AsymmetricLoss(nn.Module):
     """Loss function that over penalizes underpredictions."""
-    
+
     def __init__(self):
         """Initialize the loss function."""
         super(AsymmetricLoss, self).__init__()
