@@ -8,15 +8,15 @@ from typing import Any
 import hydra
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.decomposition import PCA
 import torch
 from {{cookiecutter.library_name}}.ml_tools.datasets import (
-    retrieve_data_from_sql,
     {{cookiecutter.class_prefix}}Dataset,
-    produce_snippets
-    )
+    produce_snippets,
+    retrieve_data_from_sql,
+)
 from {{cookiecutter.library_name}}.ml_tools.models import {{cookiecutter.class_prefix}}AE, {{cookiecutter.class_prefix}}ARIMA, {{cookiecutter.class_prefix}}LSTM
 from omegaconf import DictConfig
+from sklearn.decomposition import PCA
 
 project_path = Path(__file__).parents[2]
 
@@ -55,8 +55,7 @@ class ModelEvaluator:
         self.model_type = model_type
 
     def evaluate(self, dataset):
-        """decide which evaluation to perform based on the model type."""
-
+        """Decide which evaluation to perform based on the model type."""
         if self.model_type == "output_predictor":
             data = self._prediction_accuracy(dataset=dataset)
         else:
@@ -64,7 +63,8 @@ class ModelEvaluator:
         return data
 
     def plot_anomaly_latent_space(self, training_set, test_set):
-        """
+        """Plot latent space visualization.
+
         We plot the Latent space visualization of the training
         and test dataset, using the PCA decomposition function
         fitted to the train data.
@@ -116,8 +116,7 @@ class ModelEvaluator:
         plt.show()
 
     def plot_prediction_accuracy(self, data, labels: dict[Any, Any] | None = None):
-        """compare the reconstructed time series with the original data."""
-
+        """Compare the reconstructed time series with the original data."""
         n_channels = data["real"].shape[0]
         fig, axes = plt.subplots(
             n_channels, figsize=(10, 20 * n_channels), gridspec_kw={"hspace": 1.0}
@@ -197,7 +196,6 @@ class ModelEvaluator:
 @hydra.main(version_base=None, config_path="../../config", config_name="config")
 def main(config: DictConfig) -> None:
     """Run evalutation code for several trained models."""
-    
     for training_conf in config["ml_trainings"]:
         model_type = list(training_conf.keys())[0]
         training_conf = training_conf[model_type]

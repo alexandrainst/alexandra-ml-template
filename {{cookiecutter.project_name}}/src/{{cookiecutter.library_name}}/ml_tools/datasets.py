@@ -1,5 +1,7 @@
-"""File defining the different variants of 
-pytorch datasets used for training in this case.
+"""Definition of the project's pytorch datasets.
+
+File defining the pytorch datasets used
+for training in this case.
 """
 import logging
 import os
@@ -170,8 +172,8 @@ def produce_snippets(
 def normalize_data(df: dict[Any, Any]) -> dict[Any, Any]:
     """Placeholder function.
 
-    Use this function to apply simple 
-    transformation to your data like 
+    Use this function to apply simple
+    transformation to your data like
     normalizing values between -1 and 1
     """
     return df
