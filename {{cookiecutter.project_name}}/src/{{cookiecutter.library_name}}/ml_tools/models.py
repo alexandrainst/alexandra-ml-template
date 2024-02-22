@@ -49,7 +49,7 @@ class {{ cookiecutter.class_prefix }}LSTM(nn.Module):
 #
 class {{ cookiecutter.class_prefix }}Encoder(nn.Module):
     def __init__(self, input_dims, latent_dims):
-        """encoder section of autoencoder model."""
+        """Encoder section of autoencoder model."""
         super({{ cookiecutter.class_prefix }}Encoder, self).__init__()
         self.linear1 = nn.Linear(input_dims, 56)
         self.linear2 = nn.Linear(56, latent_dims)
@@ -63,7 +63,7 @@ class {{ cookiecutter.class_prefix }}Encoder(nn.Module):
 
 class {{ cookiecutter.class_prefix }}Decoder(nn.Module):
     def __init__(self, latent_dims, output_dims):
-        """decoder section of autoencoder model."""
+        """Decoder section of autoencoder model."""
         super({{ cookiecutter.class_prefix }}Decoder, self).__init__()
         self.linear1 = nn.Linear(latent_dims, 56)
         self.linear2 = nn.Linear(56, output_dims)
@@ -96,7 +96,7 @@ class CustomLoss(nn.Module):
     def __init__(self):
         """Custom loss for output predictor.
 
-        Calculate the maximum value of the last 
+        Calculate the maximum value of the last
         three elements in the input sequence
         """
         super(CustomLoss, self).__init__()
@@ -124,5 +124,3 @@ class AsymmetricLoss(nn.Module):
         loss = negative.mean() + positive.mean()
 
         return loss
-
-
