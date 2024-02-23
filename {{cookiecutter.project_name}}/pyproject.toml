@@ -1,5 +1,5 @@
 {{'[tool.poetry]' if cookiecutter.dependency_manager != 'pip' else '[project]'}}
-name = "{{cookiecutter.project_name}}"
+name = "{{cookiecutter.project_library}}"
 description = "{{cookiecutter.project_description}}"
 version = "0.0.0"{{'\nauthors = [\n    "' if cookiecutter.dependency_manager != 'pip'}}{{cookiecutter.author_name if cookiecutter.dependency_manager != 'pip'}}{{' <' if cookiecutter.dependency_manager != 'pip'}}{{cookiecutter.email if cookiecutter.dependency_manager != 'pip'}}{{'>",\n]' if cookiecutter.dependency_manager != 'pip'}}
 readme = "README.md"{{'\nlicense = ' if cookiecutter.dependency_manager != 'pip'}}{{'"MIT"' if cookiecutter.open_source == "y" and cookiecutter.dependency_manager != 'pip'}}{{'"Proprietary"' if cookiecutter.open_source != "y" and cookiecutter.dependency_manager != 'pip'}}{{'\n\n[tool.poetry.dependencies]' if cookiecutter.dependency_manager != 'pip'}}
