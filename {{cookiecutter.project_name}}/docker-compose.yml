@@ -88,7 +88,7 @@ services:
     volumes:
       - grafana-data:/var/lib/grafana
       - ./src/grafana/dashboards:/etc/grafana/provisioning/dashboards
-      - ./src/grafana/datasources:/etc/grafana/provisioning/datasrouces
+      - ./src/grafana/datasources:/etc/grafana/provisioning/datasources
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
       - GF_DASHBOARDS_MIN_REFRESH_INTERVAL=1s
