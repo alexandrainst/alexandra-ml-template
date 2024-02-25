@@ -101,8 +101,9 @@ class {{ cookiecutter.class_prefix }}AE(nn.Module):
 
 #
 # Rolling ARIMA model
+#
 
-class DynflexARIMA:
+class {{ cookiecutter.class_prefix }}ARIMA:
     """Rolling ARIMA Model.
 
     Here we don't use an ML technique,
@@ -151,6 +152,7 @@ class DynflexARIMA:
     def __call__(self, x):
         """Dummy link to the model's call function."""
         return self.forward(x)
+
 
 #
 # Various types of loss functions
