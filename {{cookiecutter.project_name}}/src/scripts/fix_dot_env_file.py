@@ -28,6 +28,7 @@ PREDEFINED_ENVIRONMENT_VARIABLES = dict(
     POSTGRES_USER="admin"
 )
 
+
 @click.command()
 @click.option(
     "--non-interactive",
@@ -70,7 +71,6 @@ def fix_dot_env_file(non_interactive: bool) -> None:
 
     # Create all the missing environment variables
     with env_path.open("a") as f:
-
         for env_key, env_var in PREDEFINED_ENVIRONMENT_VARIABLES.items():
             f.write(f'{env_key}="{env_var}"\n')
 
