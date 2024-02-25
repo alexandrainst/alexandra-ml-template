@@ -1,0 +1,24 @@
+FROM python:3.11-slim-bookworm
+
+# Upgrade pip
+RUN pip install --upgrade pip
+
+# Move the files into the container
+WORKDIR /preprocessor
+
+COPY ./preprocessor/pyproject.toml /preprocessor
+# install packages
+RUN apt update
+RUN pip install .
+RUN apt install -y curl
+
+
+COPY ./preprocessor/ /preprocessor
+COPY ./preprocessor/pyproject.toml /preprocessor
+RUN mkdir -p /preprocessor/src/{{cookiecutter.library_name}}/utils/ && mkdir -p /preprocessor/src/{{cookiecutter.library_name}}/ml_tools/
+COPY ./{{cookiecutter.library_name}}/utils/*.py /preprocessor/{{cookiecutter.library_name}}/utils/
+COPY ./{{cookiecutter.library_name}}/ml_tools/*.py /preprocessor/{{cookiecutter.library_name}}/ml_tools/
+
+
+# Run the script
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080", "--workers", "1"]

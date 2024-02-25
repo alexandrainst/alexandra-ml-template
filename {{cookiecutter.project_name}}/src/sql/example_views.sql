@@ -4,7 +4,7 @@ functionalities from timescale to fill gaps */
 /* Create a time_bucketed, gap-filled view from the otiginal table:*/
 CREATE VIEW clean_example_data AS(
 	SELECT 
-		time_bucket_gapfill('30SEC', "Time") AS time,
+		time_bucket_gapfill('30SEC', "time") AS time,
 		interpolate(y) AS y,
 		interpolate(state) AS state
 	FROM
