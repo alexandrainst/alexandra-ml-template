@@ -9,16 +9,23 @@ from pathlib import Path
 
 import click
 
-# List of all the environment variables that are desired
+# List of all the environment variables that requested via UI
 DESIRED_ENVIRONMENT_VARIABLES = dict(
     GPG_KEY_ID="Enter GPG key ID or leave empty if you do not want to use it. Type "
     "`gpg --list-secret-keys --keyid-format=long | grep sec | sed -E "
     "'s/.*\/([^ ]+).*/\\1/'` to see your key ID:\n> ",  # noqa
     GIT_NAME="Enter your full name, to be shown in Git commits:\n> ",
     GIT_EMAIL="Enter your email, as registered on your Github account:\n> ",
-    GF_INSTALL_PLUGINS="volkovlabs-echarts-panel",
+    POSTGRES_PASSWORD="Enter a Postgres superuser password for timescale:\n>",
+    GF_SECURITY_ADMIN_PASSWORD="Enter a Grafana admins password:\n>"
 )
 
+# List all predefined environment variables
+PREDEFINED_ENVIRONMENT_VARIABLES = dict(
+    GF_INSTALL_PLUGINS="volkovlabs-echarts-panel",
+    POSTGRES_DB="{{cookiecutter.library_name}}_data",
+    POSTGRES_USER="admin"
+)
 
 @click.command()
 @click.option(
@@ -62,6 +69,10 @@ def fix_dot_env_file(non_interactive: bool) -> None:
 
     # Create all the missing environment variables
     with env_path.open("a") as f:
+
+        for env_key, env_var in PREDEFINED_ENVIRONMENT_VARIABLES.items():
+            f.write(f'{env_key}="{env_var}"\n')
+
         for env_var in env_vars_missing:
             value = ""
 

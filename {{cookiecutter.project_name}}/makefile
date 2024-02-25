@@ -30,7 +30,7 @@ install: ## Install dependencies
 	@$(MAKE) --quiet install-gpg
 	@$(MAKE) --quiet generate-gpg-key{{'\n	@$(MAKE) --quiet install-pipx\n	@$(MAKE) --quiet install-poetry' if cookiecutter.dependency_manager != 'pip'}}
 	@$(MAKE) --quiet install-dependencies
-	@$(MAKE) --quiet setup-environment-variables-non-interactive
+	@$(MAKE) --quiet setup-environment-variables
 	@$(MAKE) --quiet setup-git{{'\n\t@$(MAKE) --quiet freeze' if cookiecutter.dependency_manager == 'pip'}}
 	@$(MAKE) --quiet add-repo-to-git
 	@echo "Installed the '{{ cookiecutter.project_name }}' project. You can now activate your virtual environment with 'source .venv/bin/activate'."

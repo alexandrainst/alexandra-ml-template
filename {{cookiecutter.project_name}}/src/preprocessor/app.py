@@ -5,7 +5,6 @@ that requires data preprocessing, prior to inference.
 """
 from fastapi import FastAPI
 
-
 app = FastAPI()
 
 
