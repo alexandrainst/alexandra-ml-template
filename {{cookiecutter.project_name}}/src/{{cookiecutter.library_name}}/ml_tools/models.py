@@ -103,6 +103,7 @@ class {{ cookiecutter.class_prefix }}AE(nn.Module):
 # Rolling ARIMA model
 #
 
+
 class {{ cookiecutter.class_prefix }}ARIMA:
     """Rolling ARIMA Model.
 
@@ -126,7 +127,7 @@ class {{ cookiecutter.class_prefix }}ARIMA:
         input_variables: dict[Any, Any] | None = None,
     ):
         """Initialize model."""
-        super(DynflexARIMA, self).__init__()
+        super({{ cookiecutter.class_prefix }}ARIMA, self).__init__()
         self.p = p
         self.d = d
         self.q = q
