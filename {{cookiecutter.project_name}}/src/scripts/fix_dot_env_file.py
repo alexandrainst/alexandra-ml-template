@@ -6,6 +6,7 @@ Usage:
 
 import subprocess
 from pathlib import Path
+from getpass import getpass
 
 import click
 
@@ -98,7 +99,10 @@ def fix_dot_env_file(non_interactive: bool) -> None:
                 grep.wait()
 
             if value == "" and not non_interactive:
-                value = input(DESIRED_ENVIRONMENT_VARIABLES[env_var])
+                if "PASSWORD" in value:
+                    value = getpass(DESIRED_ENVIRONMENT_VARIABLES[env_var])
+                else:
+                    value = input(DESIRED_ENVIRONMENT_VARIABLES[env_var])
 
             f.write(f'{env_var}="{value}"\n')
 

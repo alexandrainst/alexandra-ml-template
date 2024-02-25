@@ -10,7 +10,7 @@ CREATE VIEW clean_example_data AS(
 	FROM
 		example_data
 	WHERE
-		"Time" BETWEEN '2023-05-28 00:00:00+00' AND '2023-08-30 23:59:00+00'
+		"time" BETWEEN '2023-05-28 00:00:00+00' AND '2023-08-30 23:59:00+00'
 	GROUP BY 1
 	ORDER BY 1
 	);
