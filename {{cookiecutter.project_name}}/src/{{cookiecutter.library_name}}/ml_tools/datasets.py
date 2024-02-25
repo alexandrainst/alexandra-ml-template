@@ -72,7 +72,6 @@ class {{ cookiecutter.class_prefix }}Dataset(Dataset):
 #########################
 def retrieve_data_from_sql(start_date: str, end_date: str) -> Any:
     """Function that extracts raw data from postgres."""
-
     session = load_session()
 
     statement = text(

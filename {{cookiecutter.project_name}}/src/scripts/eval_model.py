@@ -1,4 +1,4 @@
-"""Script to run an evaluation of the trained models"""
+"""Script to run an evaluation of the trained models."""
 import glob
 import logging
 import os

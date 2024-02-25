@@ -15,7 +15,7 @@ from {{cookiecutter.library_name}}.ml_tools.datasets import (
     produce_snippets,
     retrieve_data_from_sql,
 )
-from {{cookiecutter.library_name}}.ml_tools.models import {{cookiecutter.class_prefix}}AE, SquareLoss, {{cookiecutter.class_prefix}}LSTM
+from {{cookiecutter.library_name}}.ml_tools.models import {{cookiecutter.class_prefix}}AE, {{cookiecutter.class_prefix}}LSTM, SquareLoss
 from {{cookiecutter.library_name}}.ml_tools.traintest import {{cookiecutter.class_prefix}}TrainTest
 from omegaconf import DictConfig
 from sklearn.decomposition import PCA
@@ -35,7 +35,7 @@ def train_model(
     logger.info("training model...")
 
     if model_type == "anomaly_encoder":
-        model_instance = {{cookiecutter.class_prefix}}AE(**model_params)        
+        model_instance = {{cookiecutter.class_prefix}}AE(**model_params)
     elif model_type == "output_predictor":
         model_instance = {{cookiecutter.class_prefix}}LSTM(**model_params)
     else:
@@ -53,7 +53,6 @@ def train_model(
 
     # add the train and valid dataset to the algo
     train_data = {{cookiecutter.class_prefix}}Dataset(
-        model_type=model_type,
         model_params=model_params,
         dataset_path=dataset_path,
     )

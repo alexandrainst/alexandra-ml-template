@@ -6,10 +6,12 @@ some models which have been previously used
 
 """
 import logging
+from typing import Any
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from typing import Any
+from statsmodels.tsa.arima.model import ARIMA
 
 logger = logging.getLogger(__name__)
 
@@ -140,7 +142,7 @@ class DynflexARIMA:
         pass
 
     def forward(self, x):
-        """Forward pass is actually just an local eval of ARIMA"""
+        """Forward pass is actually just an local eval of ARIMA."""
         x = x.detach().numpy().flatten()
         self.model = ARIMA(x, order=(self.p, self.d, self.q))
         self.fit = self.model.fit()
@@ -175,6 +177,8 @@ class CustomLoss(nn.Module):
 
 
 class SquareLoss(nn.Module):
+    """Standard squared loss function."""
+
     def __init__(self):
         """Initialize the loss function."""
         super(SquareLoss, self).__init__()
