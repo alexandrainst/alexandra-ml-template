@@ -6,10 +6,10 @@ some models which have been previously used
 
 """
 import logging
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from typing import Any
 
 logger = logging.getLogger(__name__)
 

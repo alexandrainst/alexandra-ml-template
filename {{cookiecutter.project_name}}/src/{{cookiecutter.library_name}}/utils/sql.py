@@ -1,4 +1,4 @@
-""" Potsgresql connection to IoT database."""
+"""PostgreSQL connection to IoT database."""
 
 import os
 from pathlib import Path
@@ -31,7 +31,9 @@ class Base(DeclarativeBase):
 
     In case we might want to load directly into other code.
     """
+
     pass
+
 
 # ------------------------------------------------------------
 def load_session(**modified_connection):
@@ -57,7 +59,7 @@ def get_connection(
     host=DEFAULT_POSTGRES_HOST,
     port=DEFAULT_POSTGRES_PORT,
     database=DEFAULT_POSTGRES_DB,
-    ):
+):
     """Return an sqlalchemy conenction engine."""
     return create_engine(
         url="postgresql+psycopg2://{0}:{1}@{2}:{3}/{4}".format(
