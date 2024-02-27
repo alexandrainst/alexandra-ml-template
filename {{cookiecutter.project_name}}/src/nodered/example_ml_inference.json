@@ -1,0 +1,1020 @@
+[
+    {
+        "id": "7696df9d8b05d0a0",
+        "type": "tab",
+        "label": "Model inference",
+        "disabled": false,
+        "info": "We have trained a torch model.\n\nIt takes in some numpy tensor as input.\n\nHere we either:\n\n- evaluate the model on all historical data OR\n- automatically evaluate model when new data comes in \n",
+        "env": []
+    },
+    {
+        "id": "9dd4295de6995ac1",
+        "type": "postgresql",
+        "z": "7696df9d8b05d0a0",
+        "name": "Query time bins preceding current timestamp",
+        "query": "SELECT \n    time_bucket('{{{ msg.aggregation }}}',time) AS \"time\",\n\tSTDDEV(y) AS \"y\",\n\tMAX(state::integer) as \"state\"\nFROM\n    example_data\nWHERE \n    time BETWEEN  (TIMESTAMP WITH TIME ZONE '{{{ msg.eval_time }}}' - INTERVAL '{{{ msg.timeinterval }}}MIN')  AND '{{{ msg.eval_time }}}'\nGROUP BY 1\nORDER BY 1;",
+        "postgreSQLConfig": "e9b8aa192277607f",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 530,
+        "y": 960,
+        "wires": [
+            [
+                "582cc4d095fad7bf",
+                "93ca56bea59ec6b7",
+                "7f9a6363a20d48bd"
+            ]
+        ]
+    },
+    {
+        "id": "4a876b5243bee22a",
+        "type": "inject",
+        "z": "7696df9d8b05d0a0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "aggregation",
+                "v": "10MIN",
+                "vt": "str"
+            },
+            {
+                "p": "timeinterval",
+                "v": "2000",
+                "vt": "str"
+            },
+            {
+                "p": "eval_time",
+                "v": "2023-05-30 05:50:00+02",
+                "vt": "str"
+            },
+            {
+                "p": "model_name",
+                "v": "example_encoder",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 960,
+        "wires": [
+            [
+                "9dd4295de6995ac1",
+                "201b63d87b126c92"
+            ]
+        ]
+    },
+    {
+        "id": "582cc4d095fad7bf",
+        "type": "debug",
+        "z": "7696df9d8b05d0a0",
+        "name": "DEBUG C1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "201b63d87b126c92",
+        "type": "debug",
+        "z": "7696df9d8b05d0a0",
+        "name": "DEBUG B1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 230,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "7f9a6363a20d48bd",
+        "type": "function",
+        "z": "7696df9d8b05d0a0",
+        "name": "Preprocessing module",
+        "func": "function processData(returned) {\n    const data = {\n        time: [],\n        y: [],\n        state: []\n    };\n\n    for (const x of returned) {\n        data.time.push(x.time);\n        data.y.push(x.y !== null ? x.y : 0);\n        data.state.push(x.state !== null ? x.state : 0);\n    }\n\n    return data;\n}\ndata = processData(msg.payload)\n\n\nif (data.y.length<100 || data.state<100) {\n    throw new Error(\"Not enough historical data for this timestamp\")\n}\n\n\n\n// Take log + divide by the scaler found in training\ndata.y = data.y.map(x => Math.log(1 + x) / 3.0);\ndata.state= data.state.map(Number);\n\n//Store the latest timestamp of the array, to remember the timestamp the inference is associated with\nconsole.log(data.time[0])\nconsole.log(data.time[data.time.length - 1])\nmsg.eval_time = data.time[data.time.length - 1].toISOString().replace('T', ' ');\n\n// Construct the desired tensor from the data\nconst nsamples = 100/* specify the value of nsamples */;\nconst output = [...data.state.slice(0, nsamples), ...data.y.slice(0, nsamples)];\n\n// Add a bunch of extra dimensions\nconst reshapedOutput = [[output]];\n\n// Convert to float32\nconst float32Output = reshapedOutput.map(subArray => subArray.map(item => item.map(value => parseFloat(value))));\n\nmsg.payload=float32Output\n\n//msg.payload=data\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 1200,
+        "wires": [
+            [
+                "b1a8fd1d6fd7fde4",
+                "bb6e0d9750683cc4"
+            ]
+        ]
+    },
+    {
+        "id": "b1a8fd1d6fd7fde4",
+        "type": "debug",
+        "z": "7696df9d8b05d0a0",
+        "name": "DEBUG C2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "6bddae292cdbb182",
+        "type": "http request",
+        "z": "7696df9d8b05d0a0",
+        "name": "Get reconstructed vector from autoencoder",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "factory_ml-example_ae-1:8080/v2/models/example_ae/infer",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            },
+            {
+                "keyType": "Accept",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 1350,
+        "y": 1360,
+        "wires": [
+            [
+                "55e7811a941b507d"
+            ]
+        ]
+    },
+    {
+        "id": "bb6e0d9750683cc4",
+        "type": "function",
+        "z": "7696df9d8b05d0a0",
+        "name": "Prepare post request",
+        "func": "\n// Insert input data into a V2 protocol for MLServer\nconst requestData = {'inputs': \n                                [\n                                    { 'name': 'data', \n                                    'datatype': 'FP32',\n                                    'shape': [-1,200],\n                                    'parameters': { 'content_type': 'np' },\n                                    'data':  msg.payload }] }\n\n// Store the input data in another part of the message, to retrieve it later\nmsg.input_data = msg.payload\n\n\n// Define the \"body\" part of the POST request\nmsg.payload = JSON.stringify(requestData)\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 1360,
+        "wires": [
+            [
+                "6bddae292cdbb182",
+                "c81c20281726514e",
+                "1a60ded9b8895a07"
+            ]
+        ]
+    },
+    {
+        "id": "55e7811a941b507d",
+        "type": "function",
+        "z": "7696df9d8b05d0a0",
+        "name": "compute loss",
+        "func": "//Parse payload\nconst responsePayload = JSON.parse(msg.payload);\n\n// Catch errors from the model inference'\n// Return an error of 0\nif ('error' in responsePayload){\n    msg.payload=0.0\n}\nelse {\n\n    // Extract the output vector returned by the inference module\n    const outputData = responsePayload.outputs[0].data;\n    msg.output_data = outputData\n\n    // Calculate the mean squared error between output and input_data\n    const errorOutput = outputData.reduce((acc, val, index) => {\n        const squaredError = Math.pow(val - msg.input_data.flat().flat()[index], 2.0);\n        return acc + squaredError;\n    }, 0);\n\n    msg.payload = errorOutput;\n    console.log(msg.eval_time)\n    console.log(typeof msg.eval_time)\n\n\n}\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1610,
+        "y": 1360,
+        "wires": [
+            [
+                "29f7de2c06f21d04"
+            ]
+        ]
+    },
+    {
+        "id": "c81c20281726514e",
+        "type": "debug",
+        "z": "7696df9d8b05d0a0",
+        "name": "DEBUG C3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1230,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "1eddc376bf6ae2bf",
+        "type": "postgresql",
+        "z": "7696df9d8b05d0a0",
+        "name": "Add the new inference result to the DB",
+        "query": "INSERT INTO ai_model (time, model_output)\nVALUES\n    ('{{{ msg.eval_time }}}', '{{{ msg.payload }}}');",
+        "postgreSQLConfig": "e9b8aa192277607f",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 2550,
+        "y": 1420,
+        "wires": [
+            [
+                "f12fc70695f3a47a",
+                "3909aa60d27944bc"
+            ]
+        ]
+    },
+    {
+        "id": "a0280ab02bac6131",
+        "type": "comment",
+        "z": "7696df9d8b05d0a0",
+        "name": "Execute model on current data",
+        "info": "Replace msg.eval_time by \"NOW()\" if you want to run live. This example uses a fixed time point because the sensors are no longer in operation",
+        "x": 290,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "3909aa60d27944bc",
+        "type": "debug",
+        "z": "7696df9d8b05d0a0",
+        "name": "DEBUG C5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2930,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "07be85661ea1a46b",
+        "type": "catch",
+        "z": "7696df9d8b05d0a0",
+        "name": "Catch postgres write error",
+        "scope": [
+            "1eddc376bf6ae2bf"
+        ],
+        "uncaught": false,
+        "x": 2510,
+        "y": 1380,
+        "wires": [
+            [
+                "88b0802699a29caf"
+            ]
+        ]
+    },
+    {
+        "id": "88b0802699a29caf",
+        "type": "switch",
+        "z": "7696df9d8b05d0a0",
+        "name": "Check if error caused by existing value",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "error: duplicate key value violates unique constraint",
+                "vt": "str",
+                "case": true
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 2810,
+        "y": 1320,
+        "wires": [
+            [
+                "f1bb50024f5a69ff",
+                "f12fc70695f3a47a"
+            ],
+            [
+                "331154e5ce232eda"
+            ]
+        ]
+    },
+    {
+        "id": "f1bb50024f5a69ff",
+        "type": "debug",
+        "z": "7696df9d8b05d0a0",
+        "name": "avoid writing to the table since timestamp already exists",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3270,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "331154e5ce232eda",
+        "type": "function",
+        "z": "7696df9d8b05d0a0",
+        "name": "raise Error",
+        "func": "class UnknownError extends Error {\n    constructor(message) {\n        super(message);\n        this.name = \"UnknownError\";\n    }\n}\n\n\nthrow new UnknownError('An unrecognized error has occurred: '+ msg.payload);",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3130,
+        "y": 1400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3a1db469bd6e983b",
+        "type": "comment",
+        "z": "7696df9d8b05d0a0",
+        "name": "Single model evaluation",
+        "info": "",
+        "x": 780,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "19ead94fbc829df1",
+        "type": "postgresql",
+        "z": "7696df9d8b05d0a0",
+        "name": "Query historical data",
+        "query": "SELECT \n    time_bucket('{{{ msg.aggregation }}}', a.time) AS \"time\",\n    MAX(b.time) AS \"btime\"\nFROM\n    example_data a \nLEFT JOIN ai_model b\nON\n    time_bucket('{{{ msg.aggregation }}}', a.time)=b.time\nWHERE b.time IS NULL\nGROUP BY 1\nORDER BY 1 DESC\nLIMIT 1000\n;",
+        "postgreSQLConfig": "e9b8aa192277607f",
+        "split": true,
+        "rowsPerMsg": "1",
+        "outputs": 1,
+        "x": 1580,
+        "y": 940,
+        "wires": [
+            [
+                "d50ff26639e27586",
+                "08021a1946ba5f31"
+            ]
+        ]
+    },
+    {
+        "id": "b21735801dc0f16c",
+        "type": "comment",
+        "z": "7696df9d8b05d0a0",
+        "name": "Run on historical data",
+        "info": "",
+        "x": 1580,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "bad97b2fb36e232f",
+        "type": "inject",
+        "z": "7696df9d8b05d0a0",
+        "name": "",
+        "props": [
+            {
+                "p": "aggregation",
+                "v": "10MIN",
+                "vt": "str"
+            },
+            {
+                "p": "timeinterval",
+                "v": "2000",
+                "vt": "str"
+            },
+            {
+                "p": "model_name",
+                "v": "example_ae",
+                "vt": "str"
+            }
+        ],
+        "repeat": "120",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.1",
+        "topic": "",
+        "x": 1350,
+        "y": 940,
+        "wires": [
+            [
+                "19ead94fbc829df1"
+            ]
+        ]
+    },
+    {
+        "id": "f12fc70695f3a47a",
+        "type": "function",
+        "z": "7696df9d8b05d0a0",
+        "name": "send batch completion message to psql",
+        "func": "msg.tick = true\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3220,
+        "y": 1360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "af363b37364b956d",
+        "type": "function",
+        "z": "7696df9d8b05d0a0",
+        "name": "pass timestamp to main processing loop",
+        "func": "const timestamp = msg.payload.time\nconst timestamp_string = timestamp.toISOString()\nconsole.log(timestamp_string)\nconsole.log(typeof timestamp_string)\nmsg.eval_time = timestamp_string\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 640,
+        "wires": [
+            [
+                "95f9ef74684f6d02",
+                "9dd4295de6995ac1"
+            ]
+        ]
+    },
+    {
+        "id": "95f9ef74684f6d02",
+        "type": "debug",
+        "z": "7696df9d8b05d0a0",
+        "name": "DEBUG A2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1830,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "d50ff26639e27586",
+        "type": "switch",
+        "z": "7696df9d8b05d0a0",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1790,
+        "y": 940,
+        "wires": [
+            [
+                "af363b37364b956d"
+            ],
+            [
+                "df10aff062998d8f"
+            ]
+        ]
+    },
+    {
+        "id": "df10aff062998d8f",
+        "type": "debug",
+        "z": "7696df9d8b05d0a0",
+        "name": "FINISHED",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1950,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "44270b2b2b1a6cea",
+        "type": "catch",
+        "z": "7696df9d8b05d0a0",
+        "name": "Catch error when early data is insufficient",
+        "scope": [
+            "7f9a6363a20d48bd"
+        ],
+        "uncaught": false,
+        "x": 840,
+        "y": 1160,
+        "wires": [
+            [
+                "683f5f17214222f7",
+                "f24f9cbfc3615723"
+            ]
+        ]
+    },
+    {
+        "id": "683f5f17214222f7",
+        "type": "function",
+        "z": "7696df9d8b05d0a0",
+        "name": "activate the tick",
+        "func": "msg.tick=true\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1160,
+        "y": 1160,
+        "wires": [
+            [
+                "19ead94fbc829df1"
+            ]
+        ]
+    },
+    {
+        "id": "1a60ded9b8895a07",
+        "type": "http request",
+        "z": "7696df9d8b05d0a0",
+        "name": "Get latent space vector",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "factory_ml-example_encoder-1:8080/v2/models/example_encoder/infer",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            },
+            {
+                "keyType": "Accept",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 1290,
+        "y": 1420,
+        "wires": [
+            [
+                "c0eee43ee8bae2a3",
+                "f210d4426125ebfb"
+            ]
+        ]
+    },
+    {
+        "id": "c0eee43ee8bae2a3",
+        "type": "function",
+        "z": "7696df9d8b05d0a0",
+        "name": "Return the latent space vector",
+        "func": "//Parse payload\nconst responsePayload = JSON.parse(msg.payload);\n\n// Catch errors from the model inference'\n// Return an error of 0\nif ('error' in responsePayload){\n    msg.payload=0.0\n}\nelse {\n\n    // Extract the output vector returned by the inference module\n    const outputData = responsePayload.outputs[0].data;\n    msg.payload = outputData\n    msg.output_data = outputData;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1550,
+        "y": 1420,
+        "wires": [
+            [
+                "6ac96516cd5b79d5"
+            ]
+        ]
+    },
+    {
+        "id": "6ac96516cd5b79d5",
+        "type": "change",
+        "z": "7696df9d8b05d0a0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "latent_space_vector",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1790,
+        "y": 1420,
+        "wires": [
+            [
+                "0126cbe05dbe6edb"
+            ]
+        ]
+    },
+    {
+        "id": "0126cbe05dbe6edb",
+        "type": "join",
+        "z": "7696df9d8b05d0a0",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1990,
+        "y": 1420,
+        "wires": [
+            [
+                "2d08d40a2e93c778",
+                "5e91bf7fe73880ec"
+            ]
+        ]
+    },
+    {
+        "id": "29f7de2c06f21d04",
+        "type": "change",
+        "z": "7696df9d8b05d0a0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "squared_error",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1790,
+        "y": 1360,
+        "wires": [
+            [
+                "0126cbe05dbe6edb"
+            ]
+        ]
+    },
+    {
+        "id": "2d08d40a2e93c778",
+        "type": "function",
+        "z": "7696df9d8b05d0a0",
+        "name": "Serialize the payload into JSON",
+        "func": "msg.payload = JSON.stringify(msg.payload)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2230,
+        "y": 1420,
+        "wires": [
+            [
+                "1eddc376bf6ae2bf"
+            ]
+        ]
+    },
+    {
+        "id": "8a95ae1067d47eee",
+        "type": "http request",
+        "z": "7696df9d8b05d0a0",
+        "name": "Test python server connectivity",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "python_serve:8080/",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            },
+            {
+                "keyType": "Accept",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 830,
+        "y": 1740,
+        "wires": [
+            [
+                "e51678e4a46d112c"
+            ]
+        ]
+    },
+    {
+        "id": "a46c110ec14ac813",
+        "type": "inject",
+        "z": "7696df9d8b05d0a0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 500,
+        "y": 1740,
+        "wires": [
+            [
+                "8a95ae1067d47eee"
+            ]
+        ]
+    },
+    {
+        "id": "e51678e4a46d112c",
+        "type": "debug",
+        "z": "7696df9d8b05d0a0",
+        "name": "debug 14",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1240,
+        "y": 1740,
+        "wires": []
+    },
+    {
+        "id": "fa2356fa6e506e3f",
+        "type": "http request",
+        "z": "7696df9d8b05d0a0",
+        "name": "Latent space 2D projection",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "python_serve:8080/eval_2d_latent_space/",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            },
+            {
+                "keyType": "Accept",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 1560,
+        "y": 1480,
+        "wires": [
+            [
+                "bcdb7ed80ca33895"
+            ]
+        ]
+    },
+    {
+        "id": "5e91bf7fe73880ec",
+        "type": "debug",
+        "z": "7696df9d8b05d0a0",
+        "name": "DEBUG C4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2150,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "f210d4426125ebfb",
+        "type": "function",
+        "z": "7696df9d8b05d0a0",
+        "name": "format output as new input",
+        "func": "//Parse payload\nconst responsePayload = JSON.parse(msg.payload);\n\n// Catch errors from the model inference'\n// Return an error of 0\nif ('error' in responsePayload){\n    msg.payload=0.0\n}\nelse {\n\n    // Extract the output vector returned by the inference module\n    const outputData = responsePayload.outputs[0].data;\n    msg.payload = outputData\n    msg.output_data = outputData;\n    msg.payload = JSON.stringify({\"inputs\": [{'data': outputData}]})\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1300,
+        "y": 1480,
+        "wires": [
+            [
+                "fa2356fa6e506e3f"
+            ]
+        ]
+    },
+    {
+        "id": "947d5b6ea6e5ed0a",
+        "type": "change",
+        "z": "7696df9d8b05d0a0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "pca_components",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1790,
+        "y": 1480,
+        "wires": [
+            [
+                "0126cbe05dbe6edb"
+            ]
+        ]
+    },
+    {
+        "id": "bcdb7ed80ca33895",
+        "type": "function",
+        "z": "7696df9d8b05d0a0",
+        "name": "mini processing",
+        "func": "//Parse payload\nconst responsePayload = JSON.parse(msg.payload);\n\n// Catch errors from the model inference'\n// Return an error of 0\nif ('error' in responsePayload){\n    msg.payload=0.0\n}\nelse {\n\n    // Extract the output vector returned by the inference module\n    const outputData = responsePayload.pca_components\n    msg.payload = outputData\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1580,
+        "y": 1520,
+        "wires": [
+            [
+                "947d5b6ea6e5ed0a"
+            ]
+        ]
+    },
+    {
+        "id": "93ca56bea59ec6b7",
+        "type": "function",
+        "z": "7696df9d8b05d0a0",
+        "name": "activate the tick",
+        "func": "msg.tick=true\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 840,
+        "wires": [
+            [
+                "19ead94fbc829df1"
+            ]
+        ]
+    },
+    {
+        "id": "08021a1946ba5f31",
+        "type": "debug",
+        "z": "7696df9d8b05d0a0",
+        "name": "DEBUG A1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1970,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "f24f9cbfc3615723",
+        "type": "debug",
+        "z": "7696df9d8b05d0a0",
+        "name": "DEBUG C0",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "e9b8aa192277607f",
+        "type": "postgreSQLConfig",
+        "name": "timescale",
+        "host": "timescale",
+        "hostFieldType": "str",
+        "port": "5432",
+        "portFieldType": "num",
+        "database": "iot",
+        "databaseFieldType": "str",
+        "ssl": "false",
+        "sslFieldType": "bool",
+        "applicationName": "",
+        "applicationNameType": "str",
+        "max": "10",
+        "maxFieldType": "num",
+        "idle": "1000",
+        "idleFieldType": "num",
+        "connectionTimeout": "10000",
+        "connectionTimeoutFieldType": "num",
+        "user": "admin",
+        "userFieldType": "str",
+        "password": "sijufefatifu",
+        "passwordFieldType": "str"
+    }
+]

@@ -12,13 +12,17 @@ volumes:
 services:
 
   preprocessing:
-    build: .
+    build:
+      context: ./src
+      dockerfile: preprocessor_dockerfile
     restart: unless-stopped
     networks:
       - {{cookiecutter.library_name}}-iotml-network
 
   nodered:
-    image: nodered/node-red:latest
+    build:
+      context: ./src
+      dockerfile: nodered_dockerfile
     restart: unless-stopped
     mem_limit: 9G
     depends_on:
