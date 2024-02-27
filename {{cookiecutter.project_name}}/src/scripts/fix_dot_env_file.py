@@ -18,14 +18,14 @@ DESIRED_ENVIRONMENT_VARIABLES = dict(
     GIT_NAME="Enter your full name, to be shown in Git commits:\n> ",
     GIT_EMAIL="Enter your email, as registered on your Github account:\n> ",
     POSTGRES_PASSWORD="Enter a Postgres superuser password for timescale:\n>",
-    GF_SECURITY_ADMIN_PASSWORD="Enter a Grafana admins password:\n>"
+    GF_SECURITY_ADMIN_PASSWORD="Enter a Grafana admins password:\n>",
 )
 
 # List all predefined environment variables
 PREDEFINED_ENVIRONMENT_VARIABLES = dict(
     GF_INSTALL_PLUGINS="volkovlabs-echarts-panel",
     POSTGRES_DB="{{cookiecutter.library_name}}_data",
-    POSTGRES_USER="admin"
+    POSTGRES_USER="admin",
 )
 
 

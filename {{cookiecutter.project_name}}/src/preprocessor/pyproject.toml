@@ -5,10 +5,9 @@ version = "0.0.0"
 requires-python = ">=3.11,<3.13"
 dependencies = [
     "fastapi",
-    "python-dotenv"
+    "python-dotenv",
     "numpy==1.26.3",
     "requests==2.31.0",
-
     ]
 [[project.authors]]
 name = "{{cookiecutter.author_name}}"
