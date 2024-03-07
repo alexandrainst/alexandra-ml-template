@@ -3,16 +3,19 @@
 They classes are used to schedule and coordinate an ML
 training phase.
 """
-
+import logging
 import torch
 from torch.utils.data import DataLoader
+from typing import Any
 
+logger = logging.getLogger("ml_tools.traintest")
 
 # Generic Train Test class. avoid changing this as much as possible
-class AlgoTrainTest:
+class AlgoTraining:
     """Wrapper class around training steps of a pytorch model."""
 
-    def __init__(self, model, optimizer, loss_fn, device="cuda"):
+    def __init__(self,
+        model, optimizer, loss_fn, device):
         """Initialize the training class."""
         self.model = model.to(device)
         self.loss = loss_fn
@@ -20,25 +23,20 @@ class AlgoTrainTest:
         self.device = device
         self.datasets = {}
         self.current_dataset = None
-        self.rms_history = []
-        self.gradients_history = []
 
         # In debug mode, fix the random seed
-        # torch.manual_seed(0)
-        # also avoid using non-deterministic algorithms when running  fx. convolutions:
-        # torch.use_deterministic_algorithms(True)
+        if logger.level==logging.DEBUG:
+            logger.debug("Running in debug mode. Avoiding randomness as much as possible...")
+            torch.manual_seed(0)
+            # also avoid using non-deterministic algorithms when running  fx. convolutions:
+            torch.use_deterministic_algorithms(True)
 
         # record historic evolution of the training
+        self._setup_training_logs()
+
+    def _setup_training_logs(self):
+        """Setup structure of training results and specific variables to track."""
         self.loss_history = []
-        self.weights_history = []
-        self.bias_history = []
-
-        # Linear layer weights
-        self.linweights = []
-        self.linbias = []
-
-        # store results of an evaluation
-        self.eval_results = {}
 
     def add_dataset(self, label, dataset, batch_size=10):
         """Import new pytorch datasets and load them as DataLoders."""
@@ -69,8 +67,6 @@ class AlgoTrainTest:
         """Function that calls the training step over a particular dataloader."""
         self.current_dataset = dataset_label
         self.loss_history = []
-        self.rms_history = []
-        self.gradients_history = []
 
         for i in range(n_epochs):
             if (i + 1) % 10 == 0:
@@ -82,25 +78,31 @@ class AlgoTrainTest:
         if autosave:
             self.save_trained_model()
 
-    def save_trained_model(self, output_name: str | None = None) -> None:
-        """Save the trained model to .pt format.
+    def record_session(self, output_prefix: str | None=None):
+        """Save model + training metadata to file."""
 
-        - batch size
-        - dataset name
-        - learning rate
-        - n_epochs
-        """
-        model_name = type(self.model).__name__
-        loss_name = type(self.loss).__name__
-        optim_name = type(self.optim).__name__
+        if output_prefix is None:
+            model_name = type(self.model).__name__
+            loss_name = type(self.loss).__name__
+            optim_name = type(self.optim).__name__
+            output_prefix = f"{model_name}_{loss_name}_{optim_name}_\
+            trained_on_{self.current_dataset}"
 
-        if output_name is None:
-            full_name = f"{model_name}_{loss_name}_{optim_name}_\
-            trained_on_{self.current_dataset}.pt"
-        else:
-            full_name = output_name
+        self.save_trained_model(output_name=output_prefix+'.pt')
+        self.save_training_metadata(output_name=output_prefix+'_metadata.pt')
 
-        torch.save(self.model.state_dict(), full_name)
+
+    def save_trained_model(self, output_name: str) -> None:
+        """Save the trained model to .pt format."""
+        torch.save(self.model.state_dict(), output_name)
+        logger.info(f"Saved model to {output_name}.")
+
+    def save_training_metadata(self, output_name: str)-> None:
+        """Save the training metadata (fx. the loss function history)."""
+        metadata = {"loss_history": self.loss_history}
+        torch.save(metadata, output_name)
+        logger.info(f"Saved model metadata to {output_name}.")
+
 
 
 #####################################################
@@ -108,7 +110,7 @@ class AlgoTrainTest:
 # the training algorithm to your needs
 
 
-class {{cookiecutter.class_prefix}}TrainTest(AlgoTrainTest):
+class {{cookiecutter.class_prefix}}Training(AlgoTraining):
     """In case a project requires customize training.
 
     If the particular project needs more custom training style, it
@@ -129,10 +131,13 @@ class {{cookiecutter.class_prefix}}TrainTest(AlgoTrainTest):
         device="cuda",
     ):
         """Initialize inherited class + extra parameters."""
-        AlgoTrainTest.__init__(
+        AlgoTraining.__init__(
             self, model=model, optimizer=optimizer, loss_fn=loss_fn, device=device
         )
         self.model_type = model_type
+        # Example where we want to record PCA fits of an encoder model
+        self.pca_fit = None
+        self.pca_data = []
 
     def _train_one_epoch(self):
         """Override of the generic training.
@@ -166,3 +171,46 @@ class {{cookiecutter.class_prefix}}TrainTest(AlgoTrainTest):
 
             # run a step of optimization
             self.optim.step()
+
+    def fit_pca_to_dataset(self, dataset_label: str="train") -> dict[Any, Any]:
+        """Perform Principal Component Analysis of a dataset."""
+        from sklearn.decomposition import PCA
+        import numpy as np
+
+        latent_data = []
+        self.model.to("cpu")
+        self.model.eval()
+        
+        #Extract the latent output from the encoder part of the model
+        for d in self.datasets[dataset_label]:
+            latent_representation = self.model.encoder(d)
+            array = latent_representation.cpu().detach().numpy()
+            latent_data.append(array)
+
+        latent_data = np.vstack(latent_data)
+
+        #
+        # Determine the PCA of the training sample in latent space
+        #
+        pca = PCA(n_components=2, svd_solver="full")
+        self.pca_fit = pca.fit(latent_data)
+        self.pca_data = self.pca_fit.transform(latent_data)
+
+    def record_session(self, output_prefix: str):
+        """Save model + training metadata to file."""
+        if output_prefix is None:
+            model_name = type(self.model).__name__
+            loss_name = type(self.loss).__name__
+            optim_name = type(self.optim).__name__
+            output_prefix = f"{model_name}_{loss_name}_{optim_name}_\
+            trained_on_{self.current_dataset}"
+
+        self.save_trained_model(output_name=output_prefix+'.pt')
+        self.save_training_metadata(output_name=output_prefix+'_metadata.pt')
+        self.save_pca(output_name=output_prefix+'_pca.pt')
+
+    def save_pca(self, output_name: str)-> None:
+        """Save the PCA fit + data from the training set"""
+        self.fit_pca_to_dataset(dataset_label="train")
+        torch.save([self.pca_fit, self.pca_data], output_name)
+        logger.info(f"Saved PCA data to {output_name}.")

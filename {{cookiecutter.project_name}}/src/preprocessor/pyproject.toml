@@ -8,6 +8,7 @@ dependencies = [
     "python-dotenv",
     "numpy==1.26.3",
     "requests==2.31.0",
+    "uvicorn",
     ]
 [[project.authors]]
 name = "{{cookiecutter.author_name}}"
