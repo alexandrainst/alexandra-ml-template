@@ -1,1 +1,1 @@
-"""Shutting up pylint comlaining about D104."""
+"""Unit tests for the project."""
