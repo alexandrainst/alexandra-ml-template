@@ -2,5 +2,5 @@
 
 
 def test_dummy() -> None:
-    """Dummy Test module."""
+    """Dummy test function."""
     assert True
