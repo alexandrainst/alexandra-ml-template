@@ -31,7 +31,7 @@ class TomlSplitListsEncoder(toml.TomlEncoder):
                 
         Returns:
             A string representation of the object.
-        """"
+        """
         dump = super().dump_value(v)
         if isinstance(v, str) and "\\n" in dump:
             dump = dump.replace("\\n", "\n")
