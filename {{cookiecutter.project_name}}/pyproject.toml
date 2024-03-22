@@ -59,6 +59,9 @@ convention = "google"
 "src/scripts/your_script.py" = [
     "I",
 ]
+"src/{{cookiecutter.library_name}}/ml_tools/datasets.py" = [
+    "I",
+]
 
 [tool.pytest.ini_options]
 minversion = "7.0"
