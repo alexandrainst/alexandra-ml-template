@@ -9,14 +9,14 @@ import hydra
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
+from omegaconf import DictConfig
+from sklearn.decomposition import PCA
 from {{cookiecutter.library_name}}.ml_tools.datasets import (
     {{cookiecutter.class_prefix}}Dataset,
     produce_snippets,
     retrieve_data_from_sql,
 )
 from {{cookiecutter.library_name}}.ml_tools.models import {{cookiecutter.class_prefix}}AE, {{cookiecutter.class_prefix}}ARIMA, {{cookiecutter.class_prefix}}LSTM
-from omegaconf import DictConfig
-from sklearn.decomposition import PCA
 
 project_path = Path(__file__).parents[2]
 
