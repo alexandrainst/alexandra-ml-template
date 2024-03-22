@@ -147,7 +147,7 @@ def gather_dataset_statistics(df: dict[Any, Any]) -> dict[Any, Any]:
             "std": np.nanstd(v, ddof=1),
             "min": np.nanmin(v),
             "max": np.nanmax(v),
-            "median":np.nanmedian(v)
+            "median": np.nanmedian(v),
         }
 
     return static_values
@@ -240,7 +240,6 @@ def normalize_data(df: dict[Any, Any], static_values: dict[Any, Any]) -> dict[An
         dictionary of precalculated normalization values,
         usually based on the training dataset
     """
-
     for k, v in df.items():
         if k == "time":
             continue

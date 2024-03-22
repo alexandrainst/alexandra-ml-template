@@ -8,7 +8,6 @@ import logging
 import numpy as np
 import torch
 from sklearn.decomposition import PCA
-
 from torch.utils.data import DataLoader
 
 logger = logging.getLogger("ml_tools.traintest")
@@ -96,7 +95,6 @@ class AlgoTraining:
 
         self.save_trained_model(output_name=output_prefix + ".pt")
         self.save_training_metadata(output_name=output_prefix + "_metadata.pt")
-
 
     def save_trained_model(self, output_name: str) -> None:
         """Save the trained model to .pt format."""
