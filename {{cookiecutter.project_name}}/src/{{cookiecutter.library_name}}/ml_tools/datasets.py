@@ -13,7 +13,6 @@ from sqlalchemy.sql import text
 from {{cookiecutter.library_name}}.utils.sql import load_session
 from torch.utils.data import Dataset
 
-
 logger = logging.getLogger("ml_tools.datasets")
 
 
@@ -134,7 +133,6 @@ def gather_dataset_statistics(df: dict[Any, Any]) -> dict[Any, Any]:
     This function looks at all dataset variables, and saves some of their properties in
     static_values, which can later be used alongside the normalizing function.
     """
-
     static_values: dict[str, Any] = {}
 
     for k, v in df.items():
