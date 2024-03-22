@@ -17,8 +17,8 @@ DESIRED_ENVIRONMENT_VARIABLES = dict(
     "'s/.*\/([^ ]+).*/\\1/'` to see your key ID:\n> ",  # noqa
     GIT_NAME="Enter your full name, to be shown in Git commits:\n> ",
     GIT_EMAIL="Enter your email, as registered on your Github account:\n> ",
-    POSTGRES_PASSWORD="Enter a Postgres superuser password for timescale:\n>",
-    GF_SECURITY_ADMIN_PASSWORD="Enter a Grafana admins password:\n>",
+    POSTGRES_PASSWORD="Enter a PostgreSQL superuser password for timescale:\n> ",
+    GF_SECURITY_ADMIN_PASSWORD="Enter a Grafana admins password:\n> ",
 )
 
 # List all predefined environment variables
@@ -99,7 +99,7 @@ def fix_dot_env_file(non_interactive: bool) -> None:
                 grep.wait()
 
             if value == "" and not non_interactive:
-                if "PASSWORD" in value:
+                if "PASSWORD" in env_var.upper():
                     value = getpass(DESIRED_ENVIRONMENT_VARIABLES[env_var])
                 else:
                     value = input(DESIRED_ENVIRONMENT_VARIABLES[env_var])
