@@ -4,10 +4,12 @@ They classes are used to schedule and coordinate an ML training phase.
 """
 
 import logging
-import torch
-from torch.utils.data import DataLoader
-from sklearn.decomposition import PCA
+
 import numpy as np
+import torch
+from sklearn.decomposition import PCA
+
+from torch.utils.data import DataLoader
 
 
 logger = logging.getLogger("ml_tools.traintest")
@@ -27,7 +29,7 @@ class AlgoTraining:
         self.current_dataset = None
 
         # In debug mode, fix the random seed
-        if logger.level==logging.DEBUG:
+        if logger.level == logging.DEBUG:
             logger.debug(
                 "Running in debug mode. Avoiding randomness as much as possible..."
             )
@@ -84,7 +86,7 @@ class AlgoTraining:
         if autosave:
             self.save_trained_model()
 
-    def record_session(self, output_prefix: str | None=None):
+    def record_session(self, output_prefix: str | None = None):
         """Save model + training metadata to file."""
 
         if output_prefix is None:
@@ -94,8 +96,8 @@ class AlgoTraining:
             output_prefix = f"{model_name}_{loss_name}_{optim_name}_\
             trained_on_{self.current_dataset}"
 
-        self.save_trained_model(output_name=output_prefix+'.pt')
-        self.save_training_metadata(output_name=output_prefix+'_metadata.pt')
+        self.save_trained_model(output_name=output_prefix + '.pt')
+        self.save_training_metadata(output_name=output_prefix + '_metadata.pt')
 
 
     def save_trained_model(self, output_name: str) -> None:
@@ -103,7 +105,7 @@ class AlgoTraining:
         torch.save(self.model.state_dict(), output_name)
         logger.info(f"Saved model to {output_name}.")
 
-    def save_training_metadata(self, output_name: str)-> None:
+    def save_training_metadata(self, output_name: str) -> None:
         """Save the training metadata (fx. the loss function history)."""
         metadata = {"loss_history": self.loss_history}
         torch.save(metadata, output_name)
@@ -126,6 +128,7 @@ class {{cookiecutter.class_prefix}}Training(AlgoTraining):
     One can therefter substitute basic functions with custom ones, such as
     train_one_epoch in this case.
     """
+
     def __init__(self, model, model_type, optimizer, loss_fn, device="cuda"):
         """Initialize inherited class + extra parameters."""
         AlgoTraining.__init__(
@@ -169,7 +172,7 @@ class {{cookiecutter.class_prefix}}Training(AlgoTraining):
             # Run a step of optimization
             self.optim.step()
 
-    def fit_pca_to_dataset(self, dataset_label: str="train") -> None:
+    def fit_pca_to_dataset(self, dataset_label: str = "train") -> None:
         """Perform Principal Component Analysis of a dataset."""
         latent_data = []
         self.model.to("cpu")
@@ -188,7 +191,7 @@ class {{cookiecutter.class_prefix}}Training(AlgoTraining):
         self.pca_fit = pca.fit(latent_data)
         self.pca_data = self.pca_fit.transform(latent_data)
 
-    def record_session(self, output_prefix: str | None):
+    def record_session(self, output_prefix: str | None = None):
         """Save model + training metadata to file."""
         if output_prefix is None:
             model_name = type(self.model).__name__
@@ -199,9 +202,9 @@ class {{cookiecutter.class_prefix}}Training(AlgoTraining):
                 f"{self.current_dataset}"
             )
 
-        self.save_trained_model(output_name=output_prefix+'.pt')
-        self.save_training_metadata(output_name=output_prefix+'_metadata.pt')
-        self.save_pca(output_name=output_prefix+'_pca.pt')
+        self.save_trained_model(output_name=output_prefix + '.pt')
+        self.save_training_metadata(output_name=output_prefix + '_metadata.pt')
+        self.save_pca(output_name=output_prefix + '_pca.pt')
 
     def save_pca(self, output_name: str) -> None:
         """Save the PCA fit + data from the training set"""

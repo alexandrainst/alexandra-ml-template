@@ -5,8 +5,8 @@ Usage:
 """
 
 import subprocess
-from pathlib import Path
 from getpass import getpass
+from pathlib import Path
 
 import click
 
