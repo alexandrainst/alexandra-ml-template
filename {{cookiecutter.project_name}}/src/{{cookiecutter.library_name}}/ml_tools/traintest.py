@@ -1,21 +1,23 @@
 """File containing the training and testing classes.
 
-They classes are used to schedule and coordinate an ML
-training phase.
+They classes are used to schedule and coordinate an ML training phase.
 """
+
 import logging
 import torch
 from torch.utils.data import DataLoader
-from typing import Any
+from sklearn.decomposition import PCA
+import numpy as np
+
 
 logger = logging.getLogger("ml_tools.traintest")
+
 
 # Generic Train Test class. avoid changing this as much as possible
 class AlgoTraining:
     """Wrapper class around training steps of a pytorch model."""
 
-    def __init__(self,
-        model, optimizer, loss_fn, device):
+    def __init__(self, model, optimizer, loss_fn, device):
         """Initialize the training class."""
         self.model = model.to(device)
         self.loss = loss_fn
@@ -26,12 +28,16 @@ class AlgoTraining:
 
         # In debug mode, fix the random seed
         if logger.level==logging.DEBUG:
-            logger.debug("Running in debug mode. Avoiding randomness as much as possible...")
+            logger.debug(
+                "Running in debug mode. Avoiding randomness as much as possible..."
+            )
             torch.manual_seed(0)
-            # also avoid using non-deterministic algorithms when running  fx. convolutions:
+
+            # Also avoid using non-deterministic algorithms when running, e.g.,
+            # convolutions:
             torch.use_deterministic_algorithms(True)
 
-        # record historic evolution of the training
+        # Record historic evolution of the training
         self._setup_training_logs()
 
     def _setup_training_logs(self):
@@ -119,22 +125,14 @@ class {{cookiecutter.class_prefix}}Training(AlgoTraining):
 
     One can therefter substitute basic functions with custom ones, such as
     train_one_epoch in this case.
-
     """
-
-    def __init__(
-        self,
-        model,
-        model_type,
-        optimizer,
-        loss_fn,
-        device="cuda",
-    ):
+    def __init__(self, model, model_type, optimizer, loss_fn, device="cuda"):
         """Initialize inherited class + extra parameters."""
         AlgoTraining.__init__(
             self, model=model, optimizer=optimizer, loss_fn=loss_fn, device=device
         )
         self.model_type = model_type
+
         # Example where we want to record PCA fits of an encoder model
         self.pca_fit = None
         self.pca_data = []
@@ -147,13 +145,12 @@ class {{cookiecutter.class_prefix}}Training(AlgoTraining):
         for the two types of models we train.
         """
         for databatch in self.datasets[self.current_dataset]:
-            # reset optimizer
+            # Reset optimizer
             self.optim.zero_grad()
 
             # This is where the change happens
             if self.model_type == "output_predictor":
                 # get data onto computing device
-
                 inputs, outputs = databatch
                 inputs = inputs.to(self.device)
                 target = outputs.to(self.device)
@@ -169,19 +166,16 @@ class {{cookiecutter.class_prefix}}Training(AlgoTraining):
             self.loss_history.append(loss.item())
             loss.backward()
 
-            # run a step of optimization
+            # Run a step of optimization
             self.optim.step()
 
-    def fit_pca_to_dataset(self, dataset_label: str="train") -> dict[Any, Any]:
+    def fit_pca_to_dataset(self, dataset_label: str="train") -> None:
         """Perform Principal Component Analysis of a dataset."""
-        from sklearn.decomposition import PCA
-        import numpy as np
-
         latent_data = []
         self.model.to("cpu")
         self.model.eval()
-        
-        #Extract the latent output from the encoder part of the model
+
+        # Extract the latent output from the encoder part of the model
         for d in self.datasets[dataset_label]:
             latent_representation = self.model.encoder(d)
             array = latent_representation.cpu().detach().numpy()
@@ -189,27 +183,27 @@ class {{cookiecutter.class_prefix}}Training(AlgoTraining):
 
         latent_data = np.vstack(latent_data)
 
-        #
         # Determine the PCA of the training sample in latent space
-        #
         pca = PCA(n_components=2, svd_solver="full")
         self.pca_fit = pca.fit(latent_data)
         self.pca_data = self.pca_fit.transform(latent_data)
 
-    def record_session(self, output_prefix: str):
+    def record_session(self, output_prefix: str | None):
         """Save model + training metadata to file."""
         if output_prefix is None:
             model_name = type(self.model).__name__
             loss_name = type(self.loss).__name__
             optim_name = type(self.optim).__name__
-            output_prefix = f"{model_name}_{loss_name}_{optim_name}_\
-            trained_on_{self.current_dataset}"
+            output_prefix = (
+                f"{model_name}_{loss_name}_{optim_name}_trained_on_"
+                f"{self.current_dataset}"
+            )
 
         self.save_trained_model(output_name=output_prefix+'.pt')
         self.save_training_metadata(output_name=output_prefix+'_metadata.pt')
         self.save_pca(output_name=output_prefix+'_pca.pt')
 
-    def save_pca(self, output_name: str)-> None:
+    def save_pca(self, output_name: str) -> None:
         """Save the PCA fit + data from the training set"""
         self.fit_pca_to_dataset(dataset_label="train")
         torch.save([self.pca_fit, self.pca_data], output_name)
