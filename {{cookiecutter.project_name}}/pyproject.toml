@@ -50,6 +50,12 @@ convention = "google"
 "__init__.py" = [
     "F401",
 ]
+"src/scripts/eval_model.py" = [
+    "I",
+]
+"src/scripts/train_model.py" = [
+    "I",
+]
 "src/scripts/your_script.py" = [
     "I",
 ]
