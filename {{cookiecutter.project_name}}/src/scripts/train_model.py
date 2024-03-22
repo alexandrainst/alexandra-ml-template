@@ -9,16 +9,16 @@ import hydra
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
+from omegaconf import DictConfig
+from sklearn.decomposition import PCA
 from {{cookiecutter.library_name}}.ml_tools.datasets import (
     {{cookiecutter.class_prefix}}Dataset,
     normalize_data,
     produce_snippets,
     retrieve_data_from_sql,
 )
-from {{cookiecutter.library_name}}.ml_tools.models import {{cookiecutter.class_prefix}}AE, {{cookiecutter.class_prefix}}LSTM, SquareLoss
+from {{cookiecutter.library_name}}.ml_tools.models import SquareLoss, {{cookiecutter.class_prefix}}AE, {{cookiecutter.class_prefix}}LSTM
 from {{cookiecutter.library_name}}.ml_tools.traintest import {{cookiecutter.class_prefix}}TrainTest
-from omegaconf import DictConfig
-from sklearn.decomposition import PCA
 
 logger = logging.getLogger("train_model")
 logger.level = logging.INFO

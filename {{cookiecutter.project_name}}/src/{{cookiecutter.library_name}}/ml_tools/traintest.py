@@ -11,7 +11,6 @@ from sklearn.decomposition import PCA
 
 from torch.utils.data import DataLoader
 
-
 logger = logging.getLogger("ml_tools.traintest")
 
 
@@ -88,7 +87,6 @@ class AlgoTraining:
 
     def record_session(self, output_prefix: str | None = None):
         """Save model + training metadata to file."""
-
         if output_prefix is None:
             model_name = type(self.model).__name__
             loss_name = type(self.loss).__name__
@@ -96,8 +94,8 @@ class AlgoTraining:
             output_prefix = f"{model_name}_{loss_name}_{optim_name}_\
             trained_on_{self.current_dataset}"
 
-        self.save_trained_model(output_name=output_prefix + '.pt')
-        self.save_training_metadata(output_name=output_prefix + '_metadata.pt')
+        self.save_trained_model(output_name=output_prefix + ".pt")
+        self.save_training_metadata(output_name=output_prefix + "_metadata.pt")
 
 
     def save_trained_model(self, output_name: str) -> None:
@@ -110,7 +108,6 @@ class AlgoTraining:
         metadata = {"loss_history": self.loss_history}
         torch.save(metadata, output_name)
         logger.info(f"Saved model metadata to {output_name}.")
-
 
 
 #####################################################
@@ -202,12 +199,12 @@ class {{cookiecutter.class_prefix}}Training(AlgoTraining):
                 f"{self.current_dataset}"
             )
 
-        self.save_trained_model(output_name=output_prefix + '.pt')
-        self.save_training_metadata(output_name=output_prefix + '_metadata.pt')
-        self.save_pca(output_name=output_prefix + '_pca.pt')
+        self.save_trained_model(output_name=output_prefix + ".pt")
+        self.save_training_metadata(output_name=output_prefix + "_metadata.pt")
+        self.save_pca(output_name=output_prefix + "_pca.pt")
 
     def save_pca(self, output_name: str) -> None:
-        """Save the PCA fit + data from the training set"""
+        """Save the PCA fit + data from the training set."""
         self.fit_pca_to_dataset(dataset_label="train")
         torch.save([self.pca_fit, self.pca_data], output_name)
         logger.info(f"Saved PCA data to {output_name}.")

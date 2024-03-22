@@ -1,7 +1,6 @@
 """Definition of the project's pytorch datasets.
 
-File defining the pytorch datasets used
-for training in this case.
+File defining the pytorch datasets used for training in this case.
 """
 import logging
 import os
@@ -10,15 +9,16 @@ from typing import Any, List
 
 import numpy as np
 import torch
-from {{cookiecutter.library_name}}.utils.sql import load_session
 from sqlalchemy.sql import text
+from {{cookiecutter.library_name}}.utils.sql import load_session
 from torch.utils.data import Dataset
+
 
 logger = logging.getLogger("ml_tools.datasets")
 
-# We iterate through this list of keys to
-# ensure the ordering stays consistent.
-# this might be superfluous
+
+# We iterate through this list of keys to ensure the ordering stays consistent.
+# This might be superfluous
 ORDERED_VARIABLES = ["y", "state"]
 
 
@@ -67,8 +67,8 @@ class {{ cookiecutter.class_prefix }}Dataset(Dataset):
 
         # The snippet tensor dimension should have size
         data = torch.load(os.path.join(self.dataset_path, self.snippets[idx]))
-        
-        # normalize data
+
+        # Normalize data
         normalized_data = normalize_data(data, static_values=self.static_values)
         normalized_data = torch.Tensor(np.array(list(normalized_data.values())))
         out = normalized_data.flatten()
@@ -78,16 +78,16 @@ class {{ cookiecutter.class_prefix }}Dataset(Dataset):
 ###############################################################
 # Data extraction and preprocessing
 
+
 def retrieve_data_from_sql(sql_table: str, start_date: str, end_date: str) -> Any:
     """Function that extracts raw data from postgres.
 
-    In addition to the variables extracted from postgres,
-    This function also creates separate variables for time
-    components such as the second, minute, hour and day
-    of the week.
+    In addition to the variables extracted from postgres, This function also creates
+    separate variables for time components such as the second, minute, hour and day of
+    the week.
 
-    Feel free to add / remove these depending on the 
-    resolution and periodicity of your time series.
+    Feel free to add / remove these depending on the resolution and periodicity of your
+    time series.
     """
     session = load_session()
 
@@ -97,7 +97,7 @@ def retrieve_data_from_sql(sql_table: str, start_date: str, end_date: str) -> An
                 y
             FROM
                 {sql_table}
-            WHERE 
+            WHERE
                 time BETWEEN '{start_date}' AND '{end_date}'
             ORDER BY 1;
         """
@@ -124,34 +124,34 @@ def retrieve_data_from_sql(sql_table: str, start_date: str, end_date: str) -> An
                 data["weekday"].append(v.weekday())
                 data["hour"].append(v.hour)
                 data["minute"].append(v.minute)
-            
+
     return data
 
 
-def gather_dataset_statistics(df: dict[Any, Any])-> dict[Any, Any]:
+def gather_dataset_statistics(df: dict[Any, Any]) -> dict[Any, Any]:
     """Compute statistical properties of individual dataset.
 
-    This function looks at all dataset variables, and saves
-    some of their properties in static_values, which can
-    later be used alongside the normalizing function
+    This function looks at all dataset variables, and saves some of their properties in
+    static_values, which can later be used alongside the normalizing function.
     """
 
-    static_values: dict[str, Any]= {}
+    static_values: dict[str, Any] = {}
 
     for k, v in df.items():
-        if k=="time":
+        if k == "time":
             continue
         v = [e if e is not None else 0.0 for e in v]
         v = np.array(v, dtype=float)
         static_values[k] = {
-        "mean": np.nanmean(v),
-        "std": np.nanstd(v, ddof=1),
-        "min": np.nanmin(v),
-        "max": np.nanmax(v),
-        "median":np.nanmedian(v)
+            "mean": np.nanmean(v),
+            "std": np.nanstd(v, ddof=1),
+            "min": np.nanmin(v),
+            "max": np.nanmax(v),
+            "median":np.nanmedian(v)
         }
 
     return static_values
+
 
 def produce_snippets(
     df: dict, time_window: int, include_keys: list = ORDERED_VARIABLES
