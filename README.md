@@ -1,9 +1,8 @@
-<a href="https://github.com/alexandrainst/{{ cookiecutter.project_name }}"><img src="https://github.com/alexandrainst/alexandra-ml-template/blob/main/%7B%7Bcookiecutter.project_name%7D%7D/gfx/alexandra_logo.png" width="239" height="175" align="right" /></a>
-# Alexandra Institute Machine Learning Repository Template
+<a href="https://github.com/alexandrainst/{{ cookiecutter.project_name }}"><img src="https://github.com/alexandrainst/alexandra-iotml-template/blob/main/%7B%7Bcookiecutter.project_name%7D%7D/gfx/alexandra_logo.png" width="239" height="175" align="right" /></a>
+# Alexandra Institute Internet of Things Repository Template
 
-This repository is a template for a Python-based data science project within the
-Alexandra Institute, and is the project structure we frequently use in our data science
-projects.
+This repository is a template for an internet of things project within the Alexandra
+Institute, and is the project structure we frequently use in such projects.
 
 ## Quickstart
 
@@ -15,17 +14,11 @@ pip3 install cookiecutter
 Create a project based on the template (the `-f` flag ensures that you use the newest
 version of the template):
 ```
-cookiecutter -f gh:alexandrainst/alexandra-ml-template
+cookiecutter -f gh:alexandrainst/alexandra-iotml-template
 ```
 
 
 ## Features
-
-### Docker Setup
-
-A Dockerfile is included in the new repositories, which by default runs
-`src/scripts/your_script.py`. You can build the Docker image and run the Docker
-container by running `make docker`.
 
 ### Automatic Documentation
 
@@ -59,6 +52,8 @@ dependencies. In both cases, `pyproject.toml` will be used for all dependencies.
 
 
 ## Tools used in this project
+* [Grafana](https://grafana.com/): Visualisation of time series
+* [PostgreSQL](https://www.postgresql.org/): Database
 * [Poetry](https://towardsdatascience.com/how-to-effortlessly-publish-your-python-package-to-pypi-using-poetry-44b305362f9f): Dependency management
 * [hydra](https://hydra.cc/): Manage configuration files
 * [pre-commit plugins](https://pre-commit.com/): Automate code reviewing formatting
@@ -70,16 +65,12 @@ dependencies. In both cases, `pyproject.toml` will be used for all dependencies.
 .
 ├── .devcontainer
 │   └── devcontainer.json
+├── .editorconfig
 ├── .github
 │   └── workflows
-│       ├── ci.yaml
-│       └── docs.yaml
+│       └── ci.yaml
 ├── .gitignore
 ├── .pre-commit-config.yaml
-├── CODE_OF_CONDUCT.md
-├── CONTRIBUTING.md
-├── Dockerfile
-├── LICENSE
 ├── README.md
 ├── config
 │   ├── __init__.py
@@ -94,6 +85,7 @@ dependencies. In both cases, `pyproject.toml` will be used for all dependencies.
 │   │   └── .gitkeep
 │   └── raw
 │       └── .gitkeep
+├── docker-compose.yml
 ├── docs
 │   └── .gitkeep
 ├── gfx
@@ -104,16 +96,41 @@ dependencies. In both cases, `pyproject.toml` will be used for all dependencies.
 │   └── .gitkeep
 ├── notebooks
 │   └── .gitkeep
+├── poetry.lock
 ├── poetry.toml
 ├── pyproject.toml
 ├── src
+│   ├── grafana
+│   │   ├── dashboards
+│   │   │   ├── example_dashboard.json
+│   │   │   └── example_provisioning.yaml
+│   │   └── datasources
+│   │       └── example_datasource_provisioning.yaml
+│   ├── nodered
+│   │   └── example_ml_inference.json
+│   ├── nodered_dockerfile
+│   ├── preprocessor
+│   │   ├── app.py
+│   │   └── pyproject.toml
+│   ├── preprocessor_dockerfile
 │   ├── scripts
+│   │   ├── eval_model.py
 │   │   ├── fix_dot_env_file.py
+│   │   ├── train_model.py
 │   │   └── your_script.py
-│   └── {{cookiecutter.project_name}}
-│       ├── __init__.py
+│   ├── sql
+│   │   ├── database_init.sql
+│   │   └── example_views.sql
+│   └── test_project
+│       ├── ml_tools
+│       │   ├── datasets.py
+│       │   ├── models.py
+│       │   └── traintest.py
+│       ├── utils
+│       │   └── sql.py
 │       └── your_module.py
 └── tests
-    ├── __init__.py
-    └── test_dummy.py
+    ├── test_datasets.py
+    ├── test_dummy.py
+    └── test_models.py
 ```
