@@ -32,7 +32,6 @@ exclude = [
     ".mypy_cache",
     ".pytest_cache",
     ".ruff_cache",
-    ".scandeval_cache",
     ".venv",
 ]
 
