@@ -89,8 +89,7 @@ def fix_dot_env_file(non_interactive: bool) -> None:
                 )
                 value = (
                     subprocess.check_output(
-                        ["sed", "-E", "s/.*\\/([^ ]+).*/\\1/"],
-                        stdin=grep.stdout,
+                        ["sed", "-E", "s/.*\\/([^ ]+).*/\\1/"], stdin=grep.stdout
                     )
                     .decode()
                     .strip("\n")
