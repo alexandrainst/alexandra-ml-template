@@ -161,10 +161,10 @@ add-rag:  ## Add RAG functionality to the project
 	fi
 	@echo "Adding RAG functionality to the project..."
 	@cd src && git clone git@github.com:alexandrainst/ragger.git && rm -rf ragger/.git && cd -
-	@cp src/ragger/src/scripts/run_demo.py src/scripts/
-	@cp src/ragger/src/scripts/run_cli.py src/scripts/
-	@cp src/ragger/config/config.yaml config/
-	@cp src/ragger/data/processed/document_store.jsonl data/processed/
+	@mv src/ragger/src/scripts/run_demo.py src/scripts/
+	@mv src/ragger/src/scripts/run_cli.py src/scripts/
+	@mv src/ragger/config/config.yaml config/
+	@mv src/ragger/data/processed/document_store.jsonl data/processed/
 	@{{'poetry add' if cookiecutter.dependency_manager != 'pip' else 'pip install'}} -e src/ragger
 	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py --include-openai
 	@git add .
