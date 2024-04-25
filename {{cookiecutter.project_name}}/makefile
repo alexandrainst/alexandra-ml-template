@@ -149,7 +149,6 @@ add-rag:  ## Add RAG functionality to the project
 	@echo "Added RAG functionality to the project."
 
 update-rag:  ## Update the RAG submodule - this requires `make add-rag` to have been run
-	# If src/ragger doesn't exist, then do nothing
 	@if [ -d src/ragger ]; then \
 		git submodule update --recursive --remote src/ragger; \
 		{{'poetry add' if cookiecutter.dependency_manager != 'pip' else 'pip install'}} -e src/ragger; \
