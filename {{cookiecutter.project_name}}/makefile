@@ -139,9 +139,11 @@ docker:  ## Build Docker image and run container{{'\n\t@$(MAKE) --quiet freeze' 
 tree:  ## Print directory tree
 	@tree -a --gitignore -I .git .
 
-add_rag:  ## Add RAG functionality to the project
+rag:  ## Add RAG functionality to the project
 	@echo "Adding RAG functionality to the project..."
 	@cd src && git submodule add git@github.com:alexandrainst/ragger.git && cd -
+	@cp src/ragger/src/scripts/run_demo.py src/scripts/run_demo.py
+	@cp src/ragger/src/scripts/run_cli.py src/scripts/run_cli.py
 	@{{'poetry add' if cookiecutter.dependency_manager != 'pip' else 'pip install'}} -e src/ragger
 	@echo "Added RAG functionality to the project."
 
