@@ -3,8 +3,8 @@
     "project_description": "Short description of the project",
     "author_name": "Your full name",
     "email": "name@alexandra.dk",
-    "open_source": "Is this a public open source project? [y/n, default: n]",
+    "open_source": "Is this a public open source project? (y/n, default: n)",
     "python_version": "3.11",
-    "dependency_manager": "Which dependency manager do you use? [pip/poetry, default: poetry]",
+    "dependency_manager": "Which dependency manager do you use? (pip/poetry, default: poetry)",
     "_copy_without_render": []
 }
