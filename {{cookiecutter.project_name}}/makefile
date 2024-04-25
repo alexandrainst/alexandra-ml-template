@@ -160,7 +160,7 @@ add-rag:  ## Add RAG functionality to the project
 		exit 1; \
 	fi
 	@echo "Adding RAG functionality to the project..."
-	@cd src && git submodule add git@github.com:alexandrainst/ragger.git && cd -
+	@cd src && git clone git@github.com:alexandrainst/ragger.git && rm -rf ragger/.git && cd -
 	@cp src/ragger/src/scripts/run_demo.py src/scripts/
 	@cp src/ragger/src/scripts/run_cli.py src/scripts/
 	@cp src/ragger/config/config.yaml config/
@@ -171,13 +171,8 @@ add-rag:  ## Add RAG functionality to the project
 
 update-rag:  ## Update the RAG submodule - this requires `make add-rag` to have been run
 	@if [ -d src/ragger ]; then \
-		git submodule update --recursive --remote --init src/ragger; \
-		{{'poetry add' if cookiecutter.dependency_manager != 'pip' else 'pip install'}} -e src/ragger; \
+		rm -rf src/ragger; \
+		$(MAKE) --quiet add-rag; \
 	else \
-		echo "RAG submodule not found. Please run 'make add-rag' first."; \
+		echo "RAG code not found. Please run 'make add-rag' first."; \
 	fi
-
-handover:  ## Handover the project, converting git submodules to regular directories
-	@echo "Initiating handover process..."
-	@cd src && git submodule deinit --all -f && cd -
-	@echo "Finished handover process."
