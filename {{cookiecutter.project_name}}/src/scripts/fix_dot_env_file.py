@@ -1,7 +1,7 @@
 """Checks related to the .env file in the repository.
 
 Usage:
-    python src/scripts/fix_dot_env_file.py [--non-interactive]
+    python src/scripts/fix_dot_env_file.py [--non-interactive] [--include-openai]
 """
 
 import subprocess
@@ -19,6 +19,11 @@ DESIRED_ENVIRONMENT_VARIABLES = dict(
 )
 
 
+OPENAI_ENVIRONMENT_VARIABLES = dict(
+    OPENAI_API_KEY="Enter your OpenAI API key:\n> ",
+)
+
+
 @click.command()
 @click.option(
     "--non-interactive",
@@ -26,11 +31,20 @@ DESIRED_ENVIRONMENT_VARIABLES = dict(
     default=False,
     help="If set, the script will not ask for user input.",
 )
-def fix_dot_env_file(non_interactive: bool) -> None:
+@click.option(
+    "--include-openai",
+    is_flag=True,
+    default=False,
+    help="If set, the script will also ask for OpenAI environment variables.",
+)
+def fix_dot_env_file(non_interactive: bool, include_openai: bool) -> None:
     """Ensures that the .env file exists and contains all desired variables.
 
     Args:
-        non_interactive: If set, the script will not ask for user input.
+        non_interactive:
+            If set, the script will not ask for user input.
+        include_openai:
+            If set, the script will also ask for OpenAI environment variables.
     """
     env_path = Path(".env")
     name_and_email_path = Path(".name_and_email")
@@ -51,11 +65,15 @@ def fix_dot_env_file(non_interactive: bool) -> None:
         line.split("=")[0]: line.split("=")[1] for line in name_and_email_file_lines
     }
 
+    desired_env_vars = DESIRED_ENVIRONMENT_VARIABLES
+    if include_openai:
+        desired_env_vars |= OPENAI_ENVIRONMENT_VARIABLES
+
     # For each of the desired environment variables, check if it exists in the .env
     # file
     env_vars_missing = [
         env_var
-        for env_var in DESIRED_ENVIRONMENT_VARIABLES.keys()
+        for env_var in desired_env_vars.keys()
         if env_var not in env_vars
     ]
 
@@ -85,7 +103,7 @@ def fix_dot_env_file(non_interactive: bool) -> None:
                 grep.wait()
 
             if value == "" and not non_interactive:
-                value = input(DESIRED_ENVIRONMENT_VARIABLES[env_var])
+                value = input(desired_env_vars[env_var])
 
             f.write(f'{env_var}="{value}"\n')
 

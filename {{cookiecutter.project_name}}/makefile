@@ -140,12 +140,18 @@ tree:  ## Print directory tree
 	@tree -a --gitignore -I .git .
 
 add-rag:  ## Add RAG functionality to the project
+	@if [ ! -d .venv ]; then \
+		echo "The project hasn't been installed yet. Please run 'make install' first."; \
+		exit 1; \
+	fi
 	@echo "Adding RAG functionality to the project..."
 	@cd src && git submodule add git@github.com:alexandrainst/ragger.git && cd -
-	@cp src/ragger/src/scripts/run_demo.py src/scripts/run_demo.py
-	@cp src/ragger/src/scripts/run_cli.py src/scripts/run_cli.py
-	@cp src/ragger/config/config.yaml config/config.yaml
+	@cp src/ragger/src/scripts/run_demo.py src/scripts/
+	@cp src/ragger/src/scripts/run_cli.py src/scripts/
+	@cp src/ragger/config/config.yaml config/
+	@cp src/ragger/data/processed/document_store.jsonl data/processed/
 	@{{'poetry add' if cookiecutter.dependency_manager != 'pip' else 'pip install'}} -e src/ragger
+	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py --include-openai
 	@echo "Added RAG functionality to the project."
 
 update-rag:  ## Update the RAG submodule - this requires `make add-rag` to have been run
