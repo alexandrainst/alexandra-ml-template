@@ -1,5 +1,5 @@
 FROM python:{{ cookiecutter.python_version }}-slim-bookworm
-{{'\n# Install poetry\nRUN pip install "poetry==1.7.1"\n' if cookiecutter.dependency_manager != 'pip'}}
+{{'\n# Install poetry\nRUN pip install "poetry==1.8.2"\n' if cookiecutter.dependency_manager != 'pip'}}
 # Move the files into the container
 WORKDIR /project
 COPY . /project
