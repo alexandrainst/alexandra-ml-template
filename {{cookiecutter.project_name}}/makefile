@@ -117,7 +117,7 @@ setup-git:
 add-repo-to-git:
 	@export GPG_TTY=$(tty)
 	@gpgconf --kill gpg-agent
-	@if [ ! "$(shell git status --short)" = "" ] && [ "$(shell git log --all)" = "" ]; then \
+	@if [ ! "$(shell git status --short)" = "" ] && [ "$(shell git --no-pager log --all | sed 's/`//g')" = "" ]; then \
 		git add .; \
 		git commit --quiet -m "Initial commit"; \
 	fi
