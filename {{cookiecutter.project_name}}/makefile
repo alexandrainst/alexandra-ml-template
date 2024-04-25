@@ -151,6 +151,10 @@ tree:  ## Print directory tree
 	@tree -a --gitignore -I .git .
 
 add-rag:  ## Add RAG functionality to the project
+	@if [ -d src/ragger ]; then \
+		echo "RAG functionality already added to the project. Skipping."; \
+		exit 0; \
+	fi
 	@if [ ! -d .venv ]; then \
 		echo "The project hasn't been installed yet. Please run 'make install' first."; \
 		exit 1; \
