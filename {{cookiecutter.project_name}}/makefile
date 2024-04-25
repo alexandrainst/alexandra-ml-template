@@ -33,6 +33,9 @@ install: ## Install dependencies
 	@$(MAKE) --quiet setup-environment-variables
 	@$(MAKE) --quiet setup-git{{'\n\t@$(MAKE) --quiet freeze' if cookiecutter.dependency_manager == 'pip'}}
 	@$(MAKE) --quiet add-repo-to-git
+	@if [ -d src/ragger ]; then \
+		$(MAKE) --quiet update-rag; \
+	fi
 	@echo "Installed the '{{ cookiecutter.project_name }}' project. You can now activate your virtual environment with 'source .venv/bin/activate'."
 	@echo "Note that this is a {{'Poetry' if cookiecutter.dependency_manager != 'pip' else 'pip'}} project. Use '{{'poetry add <package>' if cookiecutter.dependency_manager != 'pip' else 'pip install <package>'}}' to install new dependencies and '{{'poetry remove <package>' if cookiecutter.dependency_manager != 'pip' else 'pip uninstall <package>'}}' to remove them.{{' Freeze your dependencies into pyproject.toml with \'make freeze\'.' if cookiecutter.dependency_manager == 'pip'}}"
 
@@ -156,7 +159,7 @@ add-rag:  ## Add RAG functionality to the project
 
 update-rag:  ## Update the RAG submodule - this requires `make add-rag` to have been run
 	@if [ -d src/ragger ]; then \
-		git submodule update --recursive --remote src/ragger; \
+		git submodule update --recursive --remote --init src/ragger; \
 		{{'poetry add' if cookiecutter.dependency_manager != 'pip' else 'pip install'}} -e src/ragger; \
 	else \
 		echo "RAG submodule not found. Please run 'make add-rag' first."; \
