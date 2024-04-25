@@ -86,10 +86,18 @@ install-dependencies:
 	{{'@poetry env use python' if cookiecutter.dependency_manager != 'pip' else '@python'}}{{cookiecutter.python_version}}{{' && poetry install' if cookiecutter.dependency_manager != 'pip' else ' -m venv .venv\n\t@. .venv/bin/activate && pip install -qU pip && pip install -qe .[dev]'}}
 
 setup-environment-variables:
-	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py
+	@if [ -d src/ragger ]; then \
+		{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py --include-openai; \
+	else \
+		{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py; \
+	fi
 
 setup-environment-variables-non-interactive:
-	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py --non-interactive
+	@if [ -d src/ragger ]; then \
+		{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py --include-openai --non-interactive; \
+	else \
+		{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py --non-interactive; \
+	fi
 
 setup-git:
 	@git config --global init.defaultBranch main
