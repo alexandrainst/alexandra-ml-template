@@ -167,6 +167,8 @@ add-rag:  ## Add RAG functionality to the project
 	@cp src/ragger/data/processed/document_store.jsonl data/processed/
 	@{{'poetry add' if cookiecutter.dependency_manager != 'pip' else 'pip install'}} -e src/ragger
 	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py --include-openai
+	@git add .
+	@git commit -m "Add RAG functionality"
 	@echo "Added RAG functionality to the project."
 
 update-rag:  ## Update the RAG submodule - this requires `make add-rag` to have been run
