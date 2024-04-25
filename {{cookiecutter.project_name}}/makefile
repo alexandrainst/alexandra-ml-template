@@ -139,13 +139,23 @@ docker:  ## Build Docker image and run container{{'\n\t@$(MAKE) --quiet freeze' 
 tree:  ## Print directory tree
 	@tree -a --gitignore -I .git .
 
-rag:  ## Add RAG functionality to the project
+add-rag:  ## Add RAG functionality to the project
 	@echo "Adding RAG functionality to the project..."
 	@cd src && git submodule add git@github.com:alexandrainst/ragger.git && cd -
 	@cp src/ragger/src/scripts/run_demo.py src/scripts/run_demo.py
 	@cp src/ragger/src/scripts/run_cli.py src/scripts/run_cli.py
+	@cp src/ragger/config/config.yaml config/config.yaml
 	@{{'poetry add' if cookiecutter.dependency_manager != 'pip' else 'pip install'}} -e src/ragger
 	@echo "Added RAG functionality to the project."
+
+update-rag:  ## Update the RAG submodule - this requires `make add-rag` to have been run
+	# If src/ragger doesn't exist, then do nothing
+	@if [ -d src/ragger ]; then \
+		git submodule update --recursive --remote src/ragger; \
+		{{'poetry add' if cookiecutter.dependency_manager != 'pip' else 'pip install'}} -e src/ragger; \
+	else \
+		echo "RAG submodule not found. Please run 'make add-rag' first."; \
+	fi
 
 handover:  ## Handover the project, converting git submodules to regular directories
 	@echo "Initiating handover process..."
