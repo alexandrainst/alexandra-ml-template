@@ -18,10 +18,7 @@ DESIRED_ENVIRONMENT_VARIABLES = dict(
     GIT_EMAIL="Enter your email, as registered on your Github account:\n> ",
 )
 
-
-OPENAI_ENVIRONMENT_VARIABLES = dict(
-    OPENAI_API_KEY="Enter your OpenAI API key:\n> ",
-)
+OPENAI_ENVIRONMENT_VARIABLES = dict(OPENAI_API_KEY="Enter your OpenAI API key:\n> ")
 
 
 @click.command()
@@ -72,9 +69,7 @@ def fix_dot_env_file(non_interactive: bool, include_openai: bool) -> None:
     # For each of the desired environment variables, check if it exists in the .env
     # file
     env_vars_missing = [
-        env_var
-        for env_var in desired_env_vars.keys()
-        if env_var not in env_vars
+        env_var for env_var in desired_env_vars.keys() if env_var not in env_vars
     ]
 
     # Create all the missing environment variables
