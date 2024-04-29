@@ -13,7 +13,7 @@ on:
 jobs:
   lint:
     if: github.event.pull_request.draft == false
-    runs-on: ubuntu-latest
+    runs-on: {{'ubuntu-latest' if cookiecutter.open_source == 'y' else '[self-hosted, self-hosted-ubuntu-latest]'}}
     steps:
       - uses: actions/checkout@v3
       - uses: jpetrucciani/ruff-check@main
@@ -22,7 +22,7 @@ jobs:
     if: github.event.pull_request.draft == false
     strategy:
         matrix:
-            os: [{{'windows-latest, macos-latest, ' if cookiecutter.open_source == 'y'}}ubuntu-latest]
+            os: [{{'windows-latest, macos-latest, ubuntu-latest' if cookiecutter.open_source == 'y' else 'self-hosted-ubuntu-latest'}}]
             python-version: ["{{ cookiecutter.python_version }}"]
     runs-on: {% raw %}${{ matrix.os }}{% endraw %}
     steps:
@@ -30,7 +30,7 @@ jobs:
 
       - name: Install pipx on Ubuntu
         run: python3 -m pip install --upgrade --user pipx
-        if: runner.os == "Linux"
+        if: ${{ runner.os }} == 'Linux'
 {{'\n      - name: Install Poetry\n        run: pipx install poetry==1.8.2\n\n' if cookiecutter.dependency_manager != 'pip'}}
       - name: Set up Python
         uses: actions/setup-python@v4
