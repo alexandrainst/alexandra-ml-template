@@ -27,10 +27,6 @@ jobs:
     runs-on: {% raw %}${{ matrix.os }}{% endraw %}
     steps:
       - uses: actions/checkout@v3
-
-      - name: Install pipx on Ubuntu
-        run: sudo apt-get update && sudo apt-get install -y pipx && pipx ensurepath
-        if: {% raw %}${{ runner.os }}{% endraw %} == 'Linux'
 {{'\n      - name: Install Poetry\n        run: pipx install poetry==1.8.2\n\n' if cookiecutter.dependency_manager != 'pip'}}
       - name: Set up Python
         uses: actions/setup-python@v4
