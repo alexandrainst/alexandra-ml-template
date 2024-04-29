@@ -15,10 +15,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 {{'\n      - name: Install Poetry\n        run: pip3 install poetry==1.8.2\n' if cookiecutter.dependency_manager != 'pip' else ''}}
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "{{ cookiecutter.python_version }}"
           cache: {{'"poetry"' if cookiecutter.dependency_manager != 'pip' else 'pip'}}
@@ -35,7 +35,7 @@ jobs:
         run: tar --directory docs/ -hcf artifact.tar .
 
       - name: Upload documentation
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: github-pages
           path: ./artifact.tar
@@ -53,4 +53,4 @@ jobs:
       url: {% raw %}${{ steps.deployment.outputs.page_url }}{% endraw %}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
