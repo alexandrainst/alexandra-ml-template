@@ -30,7 +30,7 @@ jobs:
 
       - name: Install pipx on Ubuntu
         run: python3 -m pip install --upgrade --user pipx
-        if: ${{ runner.os }} == 'Linux'
+        if: {% raw %}${{ runner.os }}{% endraw %} == 'Linux'
 {{'\n      - name: Install Poetry\n        run: pipx install poetry==1.8.2\n\n' if cookiecutter.dependency_manager != 'pip'}}
       - name: Set up Python
         uses: actions/setup-python@v4
