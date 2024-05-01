@@ -173,16 +173,14 @@ setup-ragger:
 add-rag:  ## Add RAG functionality to the project
 	@$(MAKE) --quiet setup-ragger
 	@git add .
-	@git commit -m "Add RAG functionality"
-	@echo "Added RAG functionality to the project."
+	@echo "Added RAG functionality to the project, but haven't committed the changes yet. Please commit them manually."
 
 update-rag:  ## Update the RAG submodule - this requires `make add-rag` to have been run
 	@if [ -d src/ragger ]; then \
 		rm -rf src/ragger; \
 		$(MAKE) --quiet setup-ragger; \
 		git add .; \
-		git commit -m "Updated RAG functionality"; \
-		echo "Updated RAG functionality."; \
+		echo "Updated RAG functionality, but haven't committed the changes yet (if any). Please commit them manually."; \
 	else \
 		echo "RAG code not found. Please run 'make add-rag' first."; \
 	fi
