@@ -150,7 +150,7 @@ docker:  ## Build Docker image and run container{{'\n\t@$(MAKE) --quiet freeze' 
 tree:  ## Print directory tree
 	@tree -a --gitignore -I .git .
 
-add-rag:  ## Add RAG functionality to the project
+setup-ragger:
 	@if [ -d src/ragger ]; then \
 		echo "RAG functionality already added to the project. Skipping."; \
 		exit 1; \
@@ -161,19 +161,17 @@ add-rag:  ## Add RAG functionality to the project
 	fi
 	@echo "Adding RAG functionality to the project..."
 	@cd src && git clone git@github.com:alexandrainst/ragger.git && rm -rf ragger/.git && cd -
-	@mv src/ragger/src/scripts/run_demo.py src/scripts/
-	@mv src/ragger/src/scripts/run_cli.py src/scripts/
-	@mv src/ragger/config/ragger_config.yaml config/
-	@mv src/ragger/config/demo config/
-	@mv src/ragger/config/document_store config/
-	@mv src/ragger/config/embedder config/
-	@mv src/ragger/config/embedding_store config/
-	@mv src/ragger/config/generator config/
+	@cp src/ragger/src/scripts/run_demo.py src/scripts/
+	@cp src/ragger/src/scripts/run_cli.py src/scripts/
+	@cp -R src/ragger/config/* config/
 	@if [ ! -f data/processed/document_store.jsonl ]; then \
-		mv src/ragger/data/processed/document_store.jsonl data/processed/; \
+		cp src/ragger/data/processed/document_store.jsonl data/processed/; \
 	fi
 	@{{'poetry add' if cookiecutter.dependency_manager != 'pip' else 'pip install'}} -e src/ragger
 	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py --include-openai
+
+add-rag:  ## Add RAG functionality to the project
+	@$(MAKE) --quiet setup-ragger
 	@git add .
 	@git commit -m "Add RAG functionality"
 	@echo "Added RAG functionality to the project."
@@ -181,7 +179,10 @@ add-rag:  ## Add RAG functionality to the project
 update-rag:  ## Update the RAG submodule - this requires `make add-rag` to have been run
 	@if [ -d src/ragger ]; then \
 		rm -rf src/ragger; \
-		$(MAKE) --quiet add-rag; \
+		$(MAKE) --quiet setup-ragger; \
+		git add .; \
+		git commit -m "Updated RAG functionality"; \
+		echo "Updated RAG functionality."; \
 	else \
 		echo "RAG code not found. Please run 'make add-rag' first."; \
 	fi
