@@ -12,7 +12,6 @@ requires = [
 ]
 build-backend = "{{'poetry.core.masonry.api' if cookiecutter.dependency_manager != 'pip' else 'setuptools.build_meta'}}"
 {{'\n[project.license]\nfile = "LICENSE"\n' if cookiecutter.dependency_manager == 'pip'}}
-
 {{'[tool.poetry.group.dev.dependencies]' if cookiecutter.dependency_manager != 'pip' else '[project.optional-dependencies]\ndev = ['}}
 {{'pytest = ">=8.1.1"'     if cookiecutter.dependency_manager != 'pip' else ' "pytest==8.1.1",'}}
 {{'pytest-cov = ">=4.1.0"' if cookiecutter.dependency_manager != 'pip' else ' "pytest-cov==4.1.0",'}}
