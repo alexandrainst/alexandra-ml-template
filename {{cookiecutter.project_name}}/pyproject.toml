@@ -23,7 +23,7 @@ build-backend = "{{'poetry.core.masonry.api' if cookiecutter.dependency_manager 
 {{'mypy = ">=1.9.0"'       if cookiecutter.dependency_manager != 'pip' else ' "mypy==1.9.0",'}}
 {{'nbstripout = ">=0.7.1"' if cookiecutter.dependency_manager != 'pip' else ' "nbstripout==0.7.1",'}}
 {{''                       if cookiecutter.dependency_manager != 'pip' else ' "coverage[toml]==5.5",'}}
-{{'[[tool.poetry.source]]\nname = "pypi" if cookiecutter.dependency_manager != 'pip' else ']'}}
+{{'[[tool.poetry.source]]\nname = "pypi"' if cookiecutter.dependency_manager != 'pip' else ']'}}
 
 [tool.ruff]
 target-version = "{{'py312' if cookiecutter.python_version == '3.12'}}{{'py311' if cookiecutter.python_version == '3.11'}}{{'py310' if cookiecutter.python_version == '3.10'}}{{'py39' if cookiecutter.python_version == '3.9'}}{{'py38' if cookiecutter.python_version == '3.8'}}{{'py37' if cookiecutter.python_version == '3.7'}}"
