@@ -4,5 +4,5 @@
   "features": {
     "ghcr.io/devcontainers-contrib/features/coverage-py:2": {}
   },
-  "postCreateCommand": "{{'make install-poetry && ' if cookiecutter.dependency_manager != 'pip'}}make install-dependencies && make setup-environment-variables-non-interactive && make setup-git && make add-repo-to-git"
+  "postCreateCommand": "{{'make install-pipx && make install-poetry && ' if cookiecutter.dependency_manager != 'pip'}}make install-dependencies && make setup-environment-variables-non-interactive && make setup-git && make add-repo-to-git"
 }
