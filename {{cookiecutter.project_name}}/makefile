@@ -7,7 +7,7 @@
 
 {% if cookiecutter.open_source == 'y' -%}
 # This is a test
-{% endif -%}
+{%- endif %}
 
 # Create .env file if it does not already exist
 ifeq (,$(wildcard .env))
