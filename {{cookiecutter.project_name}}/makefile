@@ -127,7 +127,7 @@ install-dependencies:
 	{% else -%}
 	@python -m venv .venv
 	@. .venv/bin/activate && pip install -qU pip && pip install -qe .[dev]
-	{%- endif %}
+	{% endif -%}
 
 setup-environment-variables:
 	@if [ -d src/ragger ]; then \
