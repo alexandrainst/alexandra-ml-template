@@ -117,6 +117,7 @@ install-poetry:
 		pipx install --force poetry==1.8.2; \
 		echo "Installed Poetry.";
 	fi
+
 {% endif -%}
 
 install-dependencies:
@@ -125,7 +126,7 @@ install-dependencies:
 	{% else -%}
 	@python -m venv .venv
 	@. .venv/bin/activate && pip install -qU pip && pip install -qe .[dev]
-	{% endif -%}
+	{% endif %}
 
 setup-environment-variables:
 	@if [ -d src/ragger ]; then \
@@ -173,6 +174,7 @@ add-repo-to-git:
 freeze:  ## Freeze dependencies
 	@. .venv/bin/activate && python src/scripts/freeze_dependencies.py
 	@echo "Updated dependencies in pyproject.toml."
+
 {% endif -%}
 
 docs:  ## Generate documentation
@@ -196,7 +198,7 @@ test:  ## Run tests
 docker:  ## Build Docker image and run container
 	{% if cookiecutter.dependency_manager == 'pip' -%}
 	@$(MAKE) --quiet freeze
-	{% endif -%}
+	{% endif %}
 	@docker build -t {{ cookiecutter.project_name }} .
 	@docker run -it --rm {{ cookiecutter.project_name }}
 
