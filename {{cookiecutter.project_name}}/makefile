@@ -45,8 +45,8 @@ install: ## Install dependencies
 	@$(MAKE) --quiet install-brew
 	{% if cookiecutter.open_source != 'y' -%}
 	@$(MAKE) --quiet install-gpg
-	{% endif -%}
 	@$(MAKE) --quiet generate-gpg-key
+	{% endif -%}
 	{% if cookiecutter.dependency_manager != 'pip' -%}
 	@$(MAKE) --quiet install-pipx
 	@$(MAKE) --quiet install-poetry
