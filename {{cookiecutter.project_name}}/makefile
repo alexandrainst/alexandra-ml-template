@@ -5,16 +5,20 @@
 # Exports all variables defined in the makefile available to scripts
 .EXPORT_ALL_VARIABLES:
 
-{% if cookiecutter.open_source == 'y' -%}
-# This is a test
-
-{% endif -%}
-
 # Create .env file if it does not already exist
 ifeq (,$(wildcard .env))
   $(shell touch .env)
 endif
-{{'\n# Create poetry env file if it does not already exist\nifeq (,$(wildcard ${HOME}/.poetry/env))\n  $(shell mkdir ${HOME}/.poetry)\n  $(shell touch ${HOME}/.poetry/env)\nendif\n' if cookiecutter.dependency_manager != 'pip'}}
+
+{% if cookiecutter.dependency_manager != 'pip' -%}
+# Create poetry env file if it does not already exist
+ifeq (,$(wildcard ${HOME}/.poetry/env))
+	$(shell mkdir ${HOME}/.poetry)
+	$(shell touch ${HOME}/.poetry/env)
+endif
+
+{% endif -%}
+
 # Includes environment variables from the .env file
 include .env
 
@@ -25,18 +29,40 @@ export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 # Ensure that `pipx`{{' and `poetry`' if cookiecutter.dependency_manager != 'pip'}} will be able to run, since `pip` and `brew` put these
 # in the following folders on Unix systems
 export PATH := ${HOME}/.local/bin:/opt/homebrew/bin:$(PATH)
-{{'\n# Prevent DBusErrorResponse during `poetry install`\n#(see https://stackoverflow.com/a/75098703 for more information)\nexport PYTHON_KEYRING_BACKEND := keyring.backends.null.Keyring\n' if cookiecutter.dependency_manager != 'pip'}}
+
+{% if cookiecutter.dependency_manager != 'pip' -%}
+# Prevent DBusErrorResponse during `poetry install`.
+# See https://stackoverflow.com/a/75098703 for more information
+export PYTHON_KEYRING_BACKEND := keyring.backends.null.Keyring
+
+{% endif -%}
+
 help:
 	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 install: ## Install dependencies
 	@echo "Installing the '{{ cookiecutter.project_name }}' project..."
-	@$(MAKE) --quiet install-brew{{'\n\t@$(MAKE) --quiet install-gpg' if cookiecutter.open_source != 'y'}}
-	@$(MAKE) --quiet generate-gpg-key{{'\n\t@$(MAKE) --quiet install-pipx\n\t@$(MAKE) --quiet install-poetry' if cookiecutter.dependency_manager != 'pip'}}
+	@$(MAKE) --quiet install-brew
+	{% if cookiecutter.open_source != 'y' -%}
+		@$(MAKE) --quiet install-gpg
+	{%- endif %}
+	@$(MAKE) --quiet generate-gpg-key
+	{% if cookiecutter.dependency_manager != 'pip' -%}
+		@$(MAKE) --quiet install-pipx
+		@$(MAKE) --quiet install-poetry
+	{%- endif %}
 	@$(MAKE) --quiet install-dependencies
-	@$(MAKE) --quiet setup-environment-variables{{'\n\t@$(MAKE) --quiet setup-git' if cookiecutter.open_source != 'y'}}{{'\n\t@$(MAKE) --quiet freeze' if cookiecutter.dependency_manager == 'pip'}}
+	@$(MAKE) --quiet setup-environment-variables
+	{% if cookiecutter.open_source == 'y' -%}
+		@$(MAKE) --quiet setup-git
+	{%- endif %}
+	{% if cookiecutter.dependency_manager == 'pip' -%}
+		@(MAKE) --quiet freeze
+	{%- endif %}
 	@$(MAKE) --quiet add-repo-to-git
-	@echo "Installed the '{{ cookiecutter.project_name }}' project. You can now activate your virtual environment with 'source .venv/bin/activate'. If you want to use pre-commit hooks, run 'make install-pre-commit'."
+	@echo "Installed the '{{ cookiecutter.project_name }}' project!"
+	@echo "You can now activate your virtual environment with 'source .venv/bin/activate'."
+	@echo "If you want to use pre-commit hooks, run 'make install-pre-commit'."
 	@echo "Note that this is a {{'Poetry' if cookiecutter.dependency_manager != 'pip' else 'pip'}} project. Use '{{'poetry add <package>' if cookiecutter.dependency_manager != 'pip' else 'pip install <package>'}}' to install new dependencies and '{{'poetry remove <package>' if cookiecutter.dependency_manager != 'pip' else 'pip uninstall <package>'}}' to remove them.{{' Freeze your dependencies into pyproject.toml with \'make freeze\'.' if cookiecutter.dependency_manager == 'pip'}}"
 
 install-brew:
