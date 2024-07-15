@@ -7,6 +7,7 @@
 
 {% if cookiecutter.open_source == 'y' -%}
 # This is a test
+
 {% endif -%}
 
 # Create .env file if it does not already exist
