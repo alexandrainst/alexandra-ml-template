@@ -126,7 +126,7 @@ install-dependencies:
 	{% else -%}
 	@python -m venv .venv
 	@. .venv/bin/activate && pip install -qU pip && pip install -qe .[dev]
-	{% endif %}
+	{% endif -%}
 
 setup-environment-variables:
 	@if [ -d src/ragger ]; then \
@@ -198,7 +198,7 @@ test:  ## Run tests
 docker:  ## Build Docker image and run container
 	{% if cookiecutter.dependency_manager == 'pip' -%}
 	@$(MAKE) --quiet freeze
-	{% endif %}
+	{% endif -%}
 	@docker build -t {{ cookiecutter.project_name }} .
 	@docker run -it --rm {{ cookiecutter.project_name }}
 
