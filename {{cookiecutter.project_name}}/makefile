@@ -55,7 +55,7 @@ install: ## Install dependencies
 	@$(MAKE) --quiet setup-environment-variables
 	@$(MAKE) --quiet setup-git
 	{% if cookiecutter.dependency_manager == 'pip' -%}
-	@(MAKE) --quiet freeze
+	@$(MAKE) --quiet freeze
 	{% endif -%}
 	@$(MAKE) --quiet add-repo-to-git
 	@echo "Installed the '{{ cookiecutter.project_name }}' project!"
