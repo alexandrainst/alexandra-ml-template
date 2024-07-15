@@ -53,9 +53,7 @@ install: ## Install dependencies
 	{% endif -%}
 	@$(MAKE) --quiet install-dependencies
 	@$(MAKE) --quiet setup-environment-variables
-	{% if cookiecutter.open_source == 'y' -%}
 	@$(MAKE) --quiet setup-git
-	{% endif -%}
 	{% if cookiecutter.dependency_manager == 'pip' -%}
 	@(MAKE) --quiet freeze
 	{% endif -%}
