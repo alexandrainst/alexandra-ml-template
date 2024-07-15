@@ -115,7 +115,7 @@ install-poetry:
 	@if [ ! "$(shell poetry --version)" = "Poetry (version 1.8.2)" ]; then \
 		python3 -m pip uninstall -y poetry poetry-core poetry-plugin-export; \
 		pipx install --force poetry==1.8.2; \
-		echo "Installed Poetry.";
+		echo "Installed Poetry."; \
 	fi
 
 {% endif -%}
@@ -126,7 +126,7 @@ install-dependencies:
 	{% else %}
 	@python -m venv .venv
 	@. .venv/bin/activate && pip install -qU pip && pip install -qe .[dev]
-	{% endif %}
+	{% endif -%}
 
 setup-environment-variables:
 	@if [ -d src/ragger ]; then \
