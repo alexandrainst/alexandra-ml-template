@@ -44,21 +44,21 @@ install: ## Install dependencies
 	@echo "Installing the '{{ cookiecutter.project_name }}' project..."
 	@$(MAKE) --quiet install-brew
 	{% if cookiecutter.open_source != 'y' -%}
-		@$(MAKE) --quiet install-gpg
-	{%- endif %}
+	@$(MAKE) --quiet install-gpg
+	{% endif -%}
 	@$(MAKE) --quiet generate-gpg-key
 	{% if cookiecutter.dependency_manager != 'pip' -%}
-		@$(MAKE) --quiet install-pipx
-		@$(MAKE) --quiet install-poetry
-	{%- endif %}
+	@$(MAKE) --quiet install-pipx
+	@$(MAKE) --quiet install-poetry
+	{% endif -%}
 	@$(MAKE) --quiet install-dependencies
 	@$(MAKE) --quiet setup-environment-variables
 	{% if cookiecutter.open_source == 'y' -%}
-		@$(MAKE) --quiet setup-git
-	{%- endif %}
+	@$(MAKE) --quiet setup-git
+	{% endif -%}
 	{% if cookiecutter.dependency_manager == 'pip' -%}
-		@(MAKE) --quiet freeze
-	{%- endif %}
+	@(MAKE) --quiet freeze
+	{% endif -%}
 	@$(MAKE) --quiet add-repo-to-git
 	@echo "Installed the '{{ cookiecutter.project_name }}' project!"
 	@echo "You can now activate your virtual environment with 'source .venv/bin/activate'."
