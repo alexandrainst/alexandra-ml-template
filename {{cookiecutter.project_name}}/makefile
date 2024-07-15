@@ -26,14 +26,12 @@ help:
 
 install: ## Install dependencies
 	@echo "Installing the '{{ cookiecutter.project_name }}' project..."
-	@$(MAKE) --quiet install-brew
-	@$(MAKE) --quiet install-gpg
-	@$(MAKE) --quiet generate-gpg-key{{'\n	@$(MAKE) --quiet install-pipx\n	@$(MAKE) --quiet install-poetry' if cookiecutter.dependency_manager != 'pip'}}
+	@$(MAKE) --quiet install-brew{{'\n\t@$(MAKE) --quiet install-gpg' if cookiecutter.open_source != 'y'}}
+	@$(MAKE) --quiet generate-gpg-key{{'\n\t@$(MAKE) --quiet install-pipx\n\t@$(MAKE) --quiet install-poetry' if cookiecutter.dependency_manager != 'pip'}}
 	@$(MAKE) --quiet install-dependencies
-	@$(MAKE) --quiet setup-environment-variables
-	@$(MAKE) --quiet setup-git{{'\n\t@$(MAKE) --quiet freeze' if cookiecutter.dependency_manager == 'pip'}}
+	@$(MAKE) --quiet setup-environment-variables{{'\n\t@$(MAKE) --quiet setup-git' if cookiecutter.open_source != 'y'}}{{'\n\t@$(MAKE) --quiet freeze' if cookiecutter.dependency_manager == 'pip'}}
 	@$(MAKE) --quiet add-repo-to-git
-	@echo "Installed the '{{ cookiecutter.project_name }}' project. You can now activate your virtual environment with 'source .venv/bin/activate'."
+	@echo "Installed the '{{ cookiecutter.project_name }}' project. You can now activate your virtual environment with 'source .venv/bin/activate'. If you want to use pre-commit hooks, run 'make install-pre-commit'."
 	@echo "Note that this is a {{'Poetry' if cookiecutter.dependency_manager != 'pip' else 'pip'}} project. Use '{{'poetry add <package>' if cookiecutter.dependency_manager != 'pip' else 'pip install <package>'}}' to install new dependencies and '{{'poetry remove <package>' if cookiecutter.dependency_manager != 'pip' else 'pip uninstall <package>'}}' to remove them.{{' Freeze your dependencies into pyproject.toml with \'make freeze\'.' if cookiecutter.dependency_manager == 'pip'}}"
 
 install-brew:
@@ -109,6 +107,8 @@ setup-git:
 		git config --local user.signingkey ${GPG_KEY_ID}; \
 		echo "Signed with GPG key ID ${GPG_KEY_ID}."; \
 	fi
+
+install-pre-commit:  ## Install pre-commit hooks
 	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}pre-commit install
 
 add-repo-to-git:
