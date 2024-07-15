@@ -144,8 +144,6 @@ setup-environment-variables-non-interactive:
 setup-git:
 	@git config --global init.defaultBranch main
 	@git init
-	@git config --local user.name ${GIT_NAME}
-	@git config --local user.email ${GIT_EMAIL}
 	{% if cookiecutter.open_source != 'y' -%}
 	@if [ ${GPG_KEY_ID} = "" ]; then \
 		echo "No GPG key ID specified. Skipping GPG signing."; \
@@ -155,8 +153,9 @@ setup-git:
 		git config --local user.signingkey ${GPG_KEY_ID}; \
 		echo "Signed with GPG key ID ${GPG_KEY_ID}."; \
 	fi
-
 	{% endif -%}
+	@git config --local user.name ${GIT_NAME}
+	@git config --local user.email ${GIT_EMAIL}
 
 install-pre-commit:  ## Install pre-commit hooks
 	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}pre-commit install
