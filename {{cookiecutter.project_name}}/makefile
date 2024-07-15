@@ -5,6 +5,10 @@
 # Exports all variables defined in the makefile available to scripts
 .EXPORT_ALL_VARIABLES:
 
+{% if cookiecutter.open_source == 'y' %}
+# This is a test
+{% endif %}
+
 # Create .env file if it does not already exist
 ifeq (,$(wildcard .env))
   $(shell touch .env)

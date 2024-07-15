@@ -18,8 +18,7 @@ Developer(s):
 
 1. Run `make install`, which sets up a virtual environment and all Python dependencies therein.
 2. Run `source .venv/bin/activate` to activate the virtual environment.
-3. (Optional) Run `make install-pre-commit`, which installs pre-commit hooks for linting, formatting and type checking.
-4. (Optional) Run `make add-rag` to add RAG functionality from [ragger](https://github.com/alexandrainst/ragger).
+3. (Optional) Run `make install-pre-commit`, which installs pre-commit hooks for linting, formatting and type checking.{{'\n4. (Optional) Run `make add-rag` to add RAG functionality from [ragger](https://github.com/alexandrainst/ragger).' if cookiecutter.open_source != 'y'}}
 
 ### Adding and Removing Packages
 
