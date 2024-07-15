@@ -123,10 +123,10 @@ install-poetry:
 install-dependencies:
 	{% if cookiecutter.dependency_manager != 'pip' -%}
 	@poetry env use python{{cookiecutter.python_version}} && poetry install
-	{% else %}
+	{% else -%}
 	@python -m venv .venv
 	@. .venv/bin/activate && pip install -qU pip && pip install -qe .[dev]
-	{% endif -%}
+	{% endif %}
 
 setup-environment-variables:
 	@if [ -d src/ragger ]; then \
