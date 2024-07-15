@@ -155,7 +155,8 @@ setup-git:
 		git config --local user.signingkey ${GPG_KEY_ID}; \
 		echo "Signed with GPG key ID ${GPG_KEY_ID}."; \
 	fi
-	{% endif %}
+
+	{% endif -%}
 
 install-pre-commit:  ## Install pre-commit hooks
 	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}pre-commit install
