@@ -245,21 +245,21 @@ tree:  ## Print directory tree
 
 lint:  ## Lint the project
 	{% if cookiecutter.dependency_manager != 'pip' -%}
-	poetry run ruff check src --fix
+	poetry run ruff check . --fix
 	{%- else -%}
-	. .venv/bin/activate && ruff check src --fix
+	. .venv/bin/activate && ruff check . --fix
 	{%- endif %}
 
 format:  ## Format the project
 	{% if cookiecutter.dependency_manager != 'pip' -%}
-	poetry run ruff format src
+	poetry run ruff format .
 	{%- else -%}
-	. .venv/bin/activate && ruff format src
+	. .venv/bin/activate && ruff format .
 	{%- endif %}
 
 type-check:  ## Type-check the project
 	{% if cookiecutter.dependency_manager != 'pip' -%}
-	@poetry run mypy src --install-types --non-interactive --ignore-missing-imports --show-error-codes --check-untyped-defs
+	@poetry run mypy . --install-types --non-interactive --ignore-missing-imports --show-error-codes --check-untyped-defs
 	{%- else -%}
-	. .venv/bin/activate && mypy src --install-types --non-interactive --ignore-missing-imports --show-error-codes --check-untyped-defs
+	. .venv/bin/activate && mypy . --install-types --non-interactive --ignore-missing-imports --show-error-codes --check-untyped-defs
 	{%- endif %}
