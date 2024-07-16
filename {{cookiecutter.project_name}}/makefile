@@ -59,8 +59,7 @@ install: ## Install dependencies
 	@$(MAKE) --quiet freeze
 	{%- endif %}
 	@$(MAKE) --quiet add-repo-to-git
-	@echo "Installed the '{{ cookiecutter.project_name }}' project!"
-	@echo "You can now activate your virtual environment with 'source .venv/bin/activate'."
+	@echo "Installed the '{{ cookiecutter.project_name }}' project! You can now activate your virtual environment with 'source .venv/bin/activate'."
 	{%- if cookiecutter.pre_commit_hooks == 'n' %}
 	@echo "If you want to use pre-commit hooks in the future, run 'make install-pre-commit'."
 	{%- endif %}
