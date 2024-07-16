@@ -32,8 +32,8 @@ cookiecutter -f gh:alexandrainst/alexandra-ml-template
 ### Docker Setup
 
 A Dockerfile is included in the new repositories, which by default runs
-`src/scripts/your_script.py`. You can build the Docker image and run the Docker
-container by running `make docker`.
+`src/scripts/main.py`. You can build the Docker image and run the Docker container by
+running `make docker`.
 
 ### Automatic Documentation
 
