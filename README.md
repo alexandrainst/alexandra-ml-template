@@ -6,6 +6,7 @@
 	align="right"
 />
 </a>
+
 # Alexandra Institute Machine Learning Repository Template
 
 This repository is a template for a Python-based data science project within the
