@@ -250,6 +250,13 @@ lint:  ## Lint the project
 	. .venv/bin/activate && ruff check src --fix
 	{%- endif %}
 
+format:  ## Format the project
+	{% if cookiecutter.dependency_manager != 'pip' -%}
+	poetry run ruff format src
+	{%- else -%}
+	. .venv/bin/activate && ruff format src
+	{%- endif %}
+
 type-check:  ## Type-check the project
 	{% if cookiecutter.dependency_manager != 'pip' -%}
 	@poetry run mypy src --install-types --non-interactive --ignore-missing-imports --show-error-codes --check-untyped-defs

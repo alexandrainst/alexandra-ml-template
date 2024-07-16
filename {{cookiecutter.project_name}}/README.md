@@ -75,6 +75,7 @@ The project includes the following convenience commands:
 - `make install`: Install the project and its dependencies in a virtual environment.
 - `make install-pre-commit`: Install pre-commit hooks for linting, formatting and type checking.
 - `make lint`: Lint the code using `ruff`.
+- `make format`: Format the code using `ruff`.
 - `make type-check`: Type check the code using `mypy`.
 - `make test`: Run tests using `pytest` and update the coverage badge in the readme.
 - `make docker`: Build a Docker image and run the Docker container.
