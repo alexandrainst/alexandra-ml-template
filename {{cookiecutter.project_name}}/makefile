@@ -50,7 +50,7 @@ install: ## Install dependencies
 	@$(MAKE) --quiet install-poetry
 	{%- endif %}
 	@$(MAKE) --quiet install-dependencies
-	{%- if cookiecutter.pre_commit_hooks == 'y' %}
+	{%- if cookiecutter.pre_commit_hooks != 'n' %}
 	@$(MAKE) --quiet install-pre-commit
 	{%- endif %}
 	@$(MAKE) --quiet setup-environment-variables
@@ -61,7 +61,7 @@ install: ## Install dependencies
 	@$(MAKE) --quiet add-repo-to-git
 	@echo "Installed the '{{ cookiecutter.project_name }}' project!"
 	@echo "You can now activate your virtual environment with 'source .venv/bin/activate'."
-	{%- if cookiecutter.pre_commit_hooks != 'y' %}
+	{%- if cookiecutter.pre_commit_hooks == 'n' %}
 	@echo "If you want to use pre-commit hooks in the future, run 'make install-pre-commit'."
 	{%- endif %}
 	@echo "Note that this is a {{'Poetry' if cookiecutter.dependency_manager != 'pip' else 'pip'}} project. Use '{{'poetry add <package>' if cookiecutter.dependency_manager != 'pip' else 'pip install <package>'}}' to install new dependencies and '{{'poetry remove <package>' if cookiecutter.dependency_manager != 'pip' else 'pip uninstall <package>'}}' to remove them.{{' Freeze your dependencies into pyproject.toml with \'make freeze\'.' if cookiecutter.dependency_manager == 'pip'}}"
