@@ -1,11 +1,27 @@
 FROM python:{{ cookiecutter.python_version }}-slim-bookworm
-{{'\n# Install poetry\nRUN pip install "poetry==1.8.2"\n' if cookiecutter.dependency_manager != 'pip'}}
+
+{%- if cookiecutter.dependency_manager != 'pip' %}
+
+# Install Poetry
+RUN pip install "poetry=={{ cookiecutter._poetry_version }}"
+{%- endif %}
+
 # Move the files into the container
 WORKDIR /project
 COPY . /project
 
 # Install dependencies
-{{'RUN poetry env use python' if cookiecutter.dependency_manager != 'pip'}}{{cookiecutter.python_version if cookiecutter.dependency_manager != 'pip'}}{{'\nRUN poetry install --no-interaction --no-cache --without dev' if cookiecutter.dependency_manager != 'pip' else 'RUN pip install .'}}
+{% if cookiecutter.dependency_manager != 'pip' -%}
+RUN poetry env use python {{ cookiecutter.python_version }}
+RUN poetry install --no-interaction --no-cache --without dev
+{%- else -%}
+RUN python3 -m venv .venv
+RUN . .venv/bin/activate && pip install .
+{%- endif %}
 
 # Run the script
-CMD {{'poetry run ' if cookiecutter.dependency_manager != 'pip'}}python src/scripts/your_script.py
+{% if cookiecutter.dependency_manager != 'pip' -%}
+CMD poetry run python src/scripts/main.py
+{%- else -%}
+CMD . .venv/bin/activate && python src/scripts/main.py
+{%- endif %}

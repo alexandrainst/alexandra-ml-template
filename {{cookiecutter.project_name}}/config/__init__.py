@@ -1,1 +1,1 @@
-"""Config files to be used with hydra."""
+"""Config files to be used with Hydra."""

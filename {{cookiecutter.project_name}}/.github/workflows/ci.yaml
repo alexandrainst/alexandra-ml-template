@@ -13,32 +13,51 @@ on:
 jobs:
   code-check:
     if: github.event.pull_request.draft == false
-    runs-on: {{'ubuntu-latest' if cookiecutter.open_source == 'y' else '[self-hosted, self-hosted-ubuntu-latest]'}}
+    {% if cookiecutter.open_source == 'y' -%}
+    runs-on: ubuntu-latest
+    {% else -%}
+  runs-on: [self-hosted, self-hosted-ubuntu-latest]
+    {% endif -%}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-      - uses: pre-commit/action@v3.0.1
+      - uses: actions/checkout@v{{ cookiecutter._checkout_action_version }}
+      - uses: actions/setup-python@v{{ cookiecutter._setup_python_action_version }}
+      - uses: pre-commit/action@v{{ cookiecutter._pre_commit_action_version }}
 
   pytest:
     if: github.event.pull_request.draft == false
     strategy:
         matrix:
-            os: [{{'windows-latest, macos-latest, ubuntu-latest' if cookiecutter.open_source == 'y' else 'self-hosted-ubuntu-latest'}}]
+            {% if cookiecutter.open_source == 'y' -%}
+            os: [windows-latest, macos-latest, ubuntu-latest]
+            {% else -%}
+            os: [self-hosted-ubuntu-latest]
+            {% endif -%}
             python-version: ["{{ cookiecutter.python_version }}"]
     runs-on: {% raw %}${{ matrix.os }}{% endraw %}
     steps:
-      - uses: actions/checkout@v4
-{{'\n      - name: Install Poetry\n        run: pipx install poetry==1.8.2\n\n' if cookiecutter.dependency_manager != 'pip'}}
+      - uses: actions/checkout@v{{ cookiecutter._checkout_action_version }}
+      {% if cookiecutter.dependency_manager != 'pip' -%}
+      - name: Install Poetry
+        run: pipx install poetry=={{ cookiecutter._poetry_version }}
+      {% endif -%}
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v{{ cookiecutter._setup_python_action_version }}
         with:
           python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
-          cache: {{'"poetry"' if cookiecutter.dependency_manager != 'pip' else 'pip'}}
+          cache: {{'poetry' if cookiecutter.dependency_manager != 'pip' else 'pip'}}
 
       - name: Install Dependencies
         run: |
-          {{'poetry env use ' if cookiecutter.dependency_manager != 'pip' else 'python'}}{% raw %}"${{ matrix.python-version }}"{% endraw %}{{'' if cookiecutter.dependency_manager != 'pip' else ' -m venv .venv'}}
-          {{'poetry install' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && pip install .[dev]'}}
-
+          {% if cookiecutter.dependency_manager != 'pip' -%}
+          poetry env use {% raw %}"${{ matrix.python-version }}"{% endraw %}
+          poetry install
+          {% else -%}
+          python3 -m venv .venv
+          . .venv/bin/activate && pip install .[dev]
+          {% endif %}
       - name: Test with pytest
-        run: {{'poetry run' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && python -m'}} pytest
+        {% if cookiecutter.dependency_manager != 'pip' -%}
+        run: poetry run pytest
+        {% else -%}
+        run: . .venv/bin/activate && python -m pytest
+        {% endif -%}

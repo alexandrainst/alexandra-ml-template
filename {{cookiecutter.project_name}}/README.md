@@ -1,13 +1,24 @@
-<a href="https://github.com/alexandrainst/{{ cookiecutter.project_name }}"><img src="https://github.com/alexandrainst/{{ cookiecutter.project_name }}/raw/main/gfx/alexandra_logo.png" width="239" height="175" align="right" /></a>
+<a href="https://github.com/alexandrainst/{{ cookiecutter.project_name }}">
+<img
+	src="https://github.com/alexandrainst/{{ cookiecutter.project_name }}/raw/main/gfx/alexandra_logo.png"
+	width="239"
+	height="175"
+	align="right"
+/>
+</a>
 # {{cookiecutter.project_name}}
 
 {{cookiecutter.project_description}}
 
 ______________________________________________________________________
-[![Code Coverage](https://img.shields.io/badge/Coverage-0%25-red.svg)](https://github.com/alexandrainst/{{cookiecutter.project_name}}/tree/main/tests){{'\n[![Documentation](https://img.shields.io/badge/docs-passing-green)](https://alexandrainst.github.io/' if cookiecutter.open_source == 'y'}}{{cookiecutter.project_name if cookiecutter.open_source == 'y'}}{{'/' if cookiecutter.open_source == 'y'}}{{ cookiecutter.project_name if cookiecutter.open_source == 'y'}}{{'.html)\n[![License](https://img.shields.io/github/license/alexandrainst/' if cookiecutter.open_source == 'y'}}{{cookiecutter.project_name if cookiecutter.open_source == 'y'}}{{')](https://github.com/alexandrainst/' if cookiecutter.open_source == 'y'}}{{cookiecutter.project_name if cookiecutter.open_source == 'y'}}{{'/blob/main/LICENSE)\n[![LastCommit](https://img.shields.io/github/last-commit/alexandrainst/' if cookiecutter.open_source == 'y'}}{{cookiecutter.project_name if cookiecutter.open_source == 'y'}}{{')](https://github.com/alexandrainst/' if cookiecutter.open_source == 'y'}}{{cookiecutter.project_name if cookiecutter.open_source == 'y'}}{{'/commits/main)\n[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](https://github.com/alexandrainst/' if cookiecutter.open_source == 'y'}}{{cookiecutter.project_name if cookiecutter.open_source == 'y'}}{{'/blob/main/CODE_OF_CONDUCT.md)' if cookiecutter.open_source == 'y'}}
-
-
-Developer(s):
+[![Code Coverage](https://img.shields.io/badge/Coverage-0%25-red.svg)](https://github.com/alexandrainst/{{cookiecutter.project_name}}/tree/main/tests)
+{% if cookiecutter.open_source == 'y' -%}
+[![Documentation](https://img.shields.io/badge/docs-passing-green)](https://alexandrainst.github.io/{{cookiecutter.project_name}}/{{cookiecutter.project_name}}.html)
+[![License](https://img.shields.io/github/license/alexandrainst/{{cookiecutter.project_name}})](https://github.com/alexandrainst/{{cookiecutter.project_name}}/blob/main/LICENSE)
+[![LastCommit](https://img.shields.io/github/last-commit/alexandrainst/{{cookiecutter.project_name}})](https://github.com/alexandrainst/{{cookiecutter.project_name}}/commits/main)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](https://github.com/alexandrainst/{{cookiecutter.project_name}}/blob/main/CODE_OF_CONDUCT.md)
+{% endif %}
+Developer:
 
 - {{cookiecutter.author_name}} ({{cookiecutter.email}})
 
@@ -18,24 +29,44 @@ Developer(s):
 
 1. Run `make install`, which sets up a virtual environment and all Python dependencies therein.
 2. Run `source .venv/bin/activate` to activate the virtual environment.
-3. (Optional) Run `make install-pre-commit`, which installs pre-commit hooks for linting, formatting and type checking.{{'\n4. (Optional) Run `make add-rag` to add RAG functionality from [ragger](https://github.com/alexandrainst/ragger).' if cookiecutter.open_source != 'y'}}
-
+3. (Optional) Run `make install-pre-commit`, which installs pre-commit hooks for linting, formatting and type checking.
+{% if cookiecutter.open_source != 'y' -%}
+4. (Optional) Run `make add-rag` to add RAG functionality from [ragger](https://github.com/alexandrainst/ragger).
+{% endif %}
 ### Adding and Removing Packages
 
 To install new PyPI packages, run:
 ```
-{{'poetry add' if cookiecutter.dependency_manager != 'pip' else 'pip install'}} <package-name>
+{% if cookiecutter.dependency_manager != 'pip' -%}
+poetry add <package-name>
+{% else -%}
+pip install <package-name>
+{% endif -%}
 ```
 
 To remove them again, run:
 ```
-{{'poetry remove' if cookiecutter.dependency_manager != 'pip' else 'pip uninstall'}} <package-name>
-```{{'\n\nTo freeze dependencies into pyproject.toml, run:\n```\nmake freeze\n```' if cookiecutter.dependency_manager == 'pip'}}
-
+{% if cookiecutter.dependency_manager != 'pip' -%}
+poetry remove <package-name>
+{% else -%}
+pip uninstall <package-name>
+{% endif -%}
+```
+{% if cookiecutter.dependency_manager == 'pip' -%}
+To freeze dependencies into `requirements.txt`, run:
+```
+make freeze
+```
+{% endif %}
 To show all installed packages, run:
 ```
-{{'poetry show' if cookiecutter.dependency_manager != 'pip' else 'pip list'}}
+{% if cookiecutter.dependency_manager != 'pip' -%}
+poetry show
+{% else -%}
+pip list
+{% endif -%}
 ```
+
 
 ## All Built-in Commands
 
@@ -47,8 +78,10 @@ The project includes the following convenience commands:
 - `make type-check`: Type check the code using `mypy`.
 - `make test`: Run tests using `pytest` and update the coverage badge in the readme.
 - `make docker`: Build a Docker image and run the Docker container.
+{% if cookiecutter.open_source != 'y' -%}
 - `make add-rag`: Add RAG functionality from [ragger](https://github.com/alexandrainst/ragger).
 - `make update-rag`: Update RAG functionality from [ragger](https://github.com/alexandrainst/ragger).
+{% endif -%}
 - `make docs`: Generate HTML documentation using `pdoc`.
 - `make view-docs`: View the generated HTML documentation in a browser.
 - `make tree`: Show the project structure as a tree.
@@ -94,8 +127,8 @@ file is also a Python script, rather than a module.
 ### Docker Setup
 
 A Dockerfile is included in the new repositories, which by default runs
-`src/scripts/your_script.py`. You can build the Docker image and run the Docker
-container by running `make docker`.
+`src/scripts/main.py`. You can build the Docker image and run the Docker container by
+running `make docker`.
 
 ### Automatic Documentation
 

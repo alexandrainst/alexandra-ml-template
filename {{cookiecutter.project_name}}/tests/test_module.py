@@ -1,4 +1,4 @@
-"""Dummy test module."""
+"""Tests for the `module` module."""
 
 
 def test_dummy() -> None:

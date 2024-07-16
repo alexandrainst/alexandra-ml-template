@@ -15,22 +15,32 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-{{'\n      - name: Install Poetry\n        run: pip3 install poetry==1.8.2\n' if cookiecutter.dependency_manager != 'pip' else ''}}
+      - uses: actions/checkout@v{{ cookiecutter._checkout_action_version }}
+      {% if cookiecutter.dependency_manager != 'pip' -%}
+      - name: Install Poetry
+        run: pip3 install poetry=={{ cookiecutter._poetry_version }}
+      {% endif -%}
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v{{ cookiecutter._setup_python_action_version }}
         with:
           python-version: "{{ cookiecutter.python_version }}"
           cache: {{'"poetry"' if cookiecutter.dependency_manager != 'pip' else 'pip'}}
 
       - name: Install Dependencies
         run: |
-          {{'poetry env use ' if cookiecutter.dependency_manager != 'pip' else 'python'}}"{{ cookiecutter.python_version }}"{{'' if cookiecutter.dependency_manager != 'pip' else ' -m venv .venv'}}
-          {{'poetry install --no-interaction --no-cache' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && python -m pip install .[dev]'}}
-
+          {% if cookiecutter.dependency_manager != 'pip' -%}
+          poetry env use "{{ cookiecutter.python_version }}"
+          poetry install --no-interaction --no-cache
+          {% else -%}
+          python3 -m venv .venv
+          . .venv/bin/activate && python -m pip install .[dev]
+          {% endif -%}
       - name: Build documentation
-        run: {{'poetry run' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && python -m'}} pdoc --docformat google src/{{ cookiecutter.project_name }} -o docs
-
+        {% if cookiecutter.dependency_manager != 'pip' -%}
+        run: poetry run pdoc --docformat google src/{{ cookiecutter.project_name }} -o docs
+        {% else -%}
+        run: . .venv/bin/activate && python -m pdoc --docformat google src/{{ cookiecutter.project_name }} -o docs
+        {% endif -%}
       - name: Compress documentation
         run: tar --directory docs/ -hcf artifact.tar .
 
@@ -53,4 +63,4 @@ jobs:
       url: {% raw %}${{ steps.deployment.outputs.page_url }}{% endraw %}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v{{ cookiecutter._deploy_pages_action_version }}

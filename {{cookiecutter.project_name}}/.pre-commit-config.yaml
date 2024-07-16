@@ -1,16 +1,16 @@
 repos:
 -   repo: https://github.com/pre-commit/pygrep-hooks
-    rev: v1.10.0
+    rev: v{{ cookiecutter._pygrep_hooks_version }}
     hooks:
       - id: python-use-type-annotations
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v{{ cookiecutter._pre_commit_hooks_version }}
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: debug-statements
 -   repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.5.2
+    rev: v{{ cookiecutter._ruff_version }}
     hooks:
       - id: ruff
         args:
@@ -26,11 +26,11 @@ repos:
           - pyi
           - jupyter
 -   repo: https://github.com/kynan/nbstripout
-    rev: 0.7.1
+    rev: {{ cookiecutter._nbstripout_version }}
     hooks:
     -   id: nbstripout
 -   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.10.1
+    rev: v{{ cookiecutter._mypy_version }}
     hooks:
     -   id: mypy
         args:
