@@ -50,11 +50,11 @@ install: ## Install dependencies
 	@$(MAKE) --quiet install-poetry
 	{%- endif %}
 	@$(MAKE) --quiet install-dependencies
+	@$(MAKE) --quiet setup-environment-variables
+	@$(MAKE) --quiet setup-git
 	{%- if cookiecutter.pre_commit_hooks != 'n' %}
 	@$(MAKE) --quiet install-pre-commit
 	{%- endif %}
-	@$(MAKE) --quiet setup-environment-variables
-	@$(MAKE) --quiet setup-git
 	{%- if cookiecutter.dependency_manager == 'pip' %}
 	@$(MAKE) --quiet freeze
 	{%- endif %}
