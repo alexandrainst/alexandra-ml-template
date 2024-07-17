@@ -51,13 +51,13 @@ jobs:
           {% if cookiecutter.dependency_manager != 'pip' -%}
           poetry env use {% raw %}"${{ matrix.python-version }}"{% endraw %}
           poetry install
-          {% else -%}
+          {%- else -%}
           python3 -m venv .venv
           . .venv/bin/activate && pip install .[dev]
-          {% endif %}
+          {%- endif %}
       - name: Test with pytest
         {% if cookiecutter.dependency_manager != 'pip' -%}
         run: poetry run pytest
-        {% else -%}
+        {%- else -%}
         run: . .venv/bin/activate && python -m pytest
-        {% endif -%}
+        {%- endif %}

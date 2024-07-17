@@ -235,7 +235,7 @@ test:  ## Run tests
 docker:  ## Build Docker image and run container
 	{% if cookiecutter.dependency_manager == 'pip' -%}
 	@$(MAKE) --quiet freeze
-	{%- endif %}
+	{% endif -%}
 	@docker build -t {{ cookiecutter.project_name }} .
 	@docker run -it --rm {{ cookiecutter.project_name }}
 
