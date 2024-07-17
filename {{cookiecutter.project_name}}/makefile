@@ -189,7 +189,7 @@ setup-git:
 		git config --local user.signingkey ${GPG_KEY_ID}; \
 		echo "Signed with GPG key ID ${GPG_KEY_ID}."; \
 	fi
-	{%- endif %}
+	{% endif -%}
 	@git config --local user.name ${GIT_NAME}
 	@git config --local user.email ${GIT_EMAIL}
 
