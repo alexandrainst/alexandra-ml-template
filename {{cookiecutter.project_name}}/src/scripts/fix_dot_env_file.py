@@ -11,9 +11,6 @@ import click
 
 # List of all the environment variables that are desired
 DESIRED_ENVIRONMENT_VARIABLES = dict(
-    GPG_KEY_ID="Enter GPG key ID or leave empty if you do not want to use it. Type "
-    "`gpg --list-secret-keys --keyid-format=long | grep sec | sed -E "
-    "'s/.*\/([^ ]+).*/\\1/'` to see your key ID:\n> ",  # noqa
     GIT_NAME="Enter your full name, to be shown in Git commits:\n> ",
     GIT_EMAIL="Enter your email, as registered on your Github account:\n> ",
 )
@@ -79,23 +76,6 @@ def fix_dot_env_file(non_interactive: bool, include_openai: bool) -> None:
 
             if env_var in name_and_email_vars:
                 value = name_and_email_vars[env_var]
-            elif env_var == "GPG_KEY_ID":
-                gpg = subprocess.Popen(
-                    ["gpg", "--list-secret-keys", "--keyid-format=long"],
-                    stdout=subprocess.PIPE,
-                )
-                grep = subprocess.Popen(
-                    ["grep", "sec"], stdin=gpg.stdout, stdout=subprocess.PIPE
-                )
-                value = (
-                    subprocess.check_output(
-                        ["sed", "-E", "s/.*\\/([^ ]+).*/\\1/"], stdin=grep.stdout
-                    )
-                    .decode()
-                    .strip("\n")
-                )
-                gpg.wait()
-                grep.wait()
 
             if value == "" and not non_interactive:
                 value = input(desired_env_vars[env_var])
