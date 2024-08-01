@@ -8,6 +8,7 @@ authors = [
 ]
 readme = "README.md"
 license = {{'"MIT"' if cookiecutter.open_source == "y" else '"Proprietary"'}}
+repository = "https://github.com/alexandrainst/{{cookiecutter.project_name}}"
 
 [tool.poetry.dependencies]
 python = ">={{ cookiecutter.python_version }}"
@@ -39,6 +40,10 @@ requires-python = ">={{ cookiecutter.python_version }}"
 dependencies = [
     "hydra-core=={{ cookiecutter._hydra_version }}",
 ]
+
+[project.urls]
+Repository = "https://github.com/alexandrainst/{{cookiecutter.project_name}}"
+Issues = "https://github.com/alexandrainst/{{cookiecutter.project_name}}/issues"
 
 [project.license]
 file = "LICENSE"
