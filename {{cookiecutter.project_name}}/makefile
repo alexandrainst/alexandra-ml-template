@@ -69,43 +69,6 @@ install-brew:
 
 {%- if cookiecutter.open_source != 'y' %}
 
-setup-ragger:
-	@if [ -d src/ragger ]; then \
-		echo "RAG functionality already added to the project. Skipping."; \
-		exit 1; \
-	fi
-	@if [ ! -d .venv ]; then \
-		echo "The project hasn't been installed yet. Please run 'make install' first."; \
-		exit 1; \
-	fi
-	@echo "Adding RAG functionality to the project..."
-	@cd src && git clone git@github.com:alexandrainst/ragger.git && rm -rf ragger/.git && cd -
-	@mv src/ragger/src/scripts/run_demo.py src/scripts/
-	@mv src/ragger/src/scripts/run_cli.py src/scripts/
-	@cp -R src/ragger/config/* config/
-	@if [ ! -f data/processed/document_store.jsonl ]; then \
-		mv src/ragger/data/processed/document_store.jsonl data/processed/; \
-	fi
-	@{{'poetry add' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && pip install'}} -e src/ragger
-	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py --include-openai
-
-add-rag:  ## Add RAG functionality to the project
-	@$(MAKE) --quiet setup-ragger
-	@git add .
-	@echo "Added RAG functionality to the project, but haven't committed the changes yet. Please commit them manually."
-
-update-rag:  ## Update the RAG submodule - this requires `make add-rag` to have been run
-	@if [ -d src/ragger ]; then \
-		rm -rf src/ragger; \
-		$(MAKE) --quiet setup-ragger; \
-		git add .; \
-		echo "Updated RAG functionality, but haven't committed the changes yet (if any). Please commit them manually."; \
-	else \
-		echo "RAG code not found. Please run 'make add-rag' first."; \
-	fi
-{%- endif %}
-{%- if cookiecutter.dependency_manager != 'pip' %}
-
 install-pipx:
 	@if [ "$(shell which pipx)" = "" ]; then \
 		uname=$$(uname); \
@@ -136,18 +99,10 @@ install-dependencies:
 	{%- endif %}
 
 setup-environment-variables:
-	@if [ -d src/ragger ]; then \
-		{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py --include-openai; \
-	else \
-		{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py; \
-	fi
+	{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py; \
 
 setup-environment-variables-non-interactive:
-	@if [ -d src/ragger ]; then \
-		{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py --include-openai --non-interactive; \
-	else \
-		{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py --non-interactive; \
-	fi
+	{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py --non-interactive; \
 
 setup-git:
 	@git config --global init.defaultBranch main
@@ -221,4 +176,11 @@ type-check:  ## Type-check the project
 	@poetry run mypy . --install-types --non-interactive --ignore-missing-imports --show-error-codes --check-untyped-defs
 	{%- else -%}
 	. .venv/bin/activate && mypy . --install-types --non-interactive --ignore-missing-imports --show-error-codes --check-untyped-defs
+	{%- endif %}
+
+add-rag:  ## Install the Ragger package, for RAG projects
+	{% if cookiecutter.dependency_manager != 'pip' -%}
+	@poetry add git+ssh://git@github.com/alexandrainst/ragger.git --extras all
+	{%- else -%}
+	. .venv/bin/activate && pip install ragger[all]@git+ssh://git@github.com/alexandrainst/ragger.git
 	{%- endif %}
