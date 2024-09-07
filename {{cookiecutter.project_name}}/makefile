@@ -67,7 +67,7 @@ install-brew:
 		echo "Installed Homebrew."; \
 	fi
 
-{%- if cookiecutter.open_source != 'y' %}
+{%- if cookiecutter.dependency_manager != 'pip' %}
 
 install-pipx:
 	@if [ "$(shell which pipx)" = "" ]; then \
