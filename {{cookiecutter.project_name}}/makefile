@@ -107,8 +107,8 @@ setup-environment-variables-non-interactive:
 setup-git:
 	@git config --global init.defaultBranch main
 	@git init
-	@git config --local user.name ${GIT_NAME}
-	@git config --local user.email ${GIT_EMAIL}
+	@git config --local user.name "${GIT_NAME}"
+	@git config --local user.email "${GIT_EMAIL}"
 
 add-repo-to-git:
 	@if [ ! "$(shell git status --short)" = "" ] && [ "$(shell git --no-pager log --all | sed 's/`//g')" = "" ]; then \
