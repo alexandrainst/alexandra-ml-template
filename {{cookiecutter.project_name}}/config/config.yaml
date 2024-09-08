@@ -1,10 +1,3 @@
 defaults:
   - override hydra/job_logging: custom
   - _self_
-
-dirs:
-  data: data
-  raw: raw
-  processed: processed
-  final: final
-  models: models
