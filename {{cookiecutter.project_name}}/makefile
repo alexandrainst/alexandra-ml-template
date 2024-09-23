@@ -157,6 +157,8 @@ docker:  ## Build Docker image and run container
 tree:  ## Print directory tree
 	@tree -a --gitignore -I .git .
 
+clean: lint format type-check  ## Lint, format, and type-check the code
+
 lint:  ## Lint the project
 	{% if cookiecutter.dependency_manager != 'pip' -%}
 	poetry run ruff check . --fix
