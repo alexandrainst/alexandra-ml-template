@@ -120,7 +120,7 @@ add-repo-to-git:
 	fi
 
 install-pre-commit:  ## Install pre-commit hooks
-	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}pre-commit install
+	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}pre-commit install && pre-commit autoupdate
 
 {%- if cookiecutter.dependency_manager == 'pip' %}
 
