@@ -37,14 +37,14 @@ install: ## Install dependencies
 install-rust:
 	@if [ "$(shell which rustup)" = "" ]; then \
 		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y; \
-		source $HOME/.cargo/env; \
+		source "${HOME}/.cargo/env"; \
 		echo "Installed Rust."; \
 	fi
 
 install-uv:
 	@if [ "$(shell which uv)" = "" ]; then \
 		curl -LsSf https://astral.sh/uv/install.sh | sh; \
-		source $HOME/.cargo/env; \
+		source "${HOME}/.cargo/env"; \
         echo "Installed uv."; \
     fi
 	@uv self update
