@@ -30,6 +30,8 @@ Developer:
 1. Run `make install`, which sets up a virtual environment and all Python dependencies therein.
 2. Run `source .venv/bin/activate` to activate the virtual environment.
 3. (Optional) Run `make install-pre-commit`, which installs pre-commit hooks for linting, formatting and type checking.
+
+
 ### Adding and Removing Packages
 
 To install new PyPI packages, run:
@@ -59,10 +61,6 @@ The project includes the following convenience commands:
 - `make type-check`: Type check the code using `mypy`.
 - `make test`: Run tests using `pytest` and update the coverage badge in the readme.
 - `make docker`: Build a Docker image and run the Docker container.
-{% if cookiecutter.open_source != 'y' -%}
-- `make add-rag`: Add RAG functionality from [ragger](https://github.com/alexandrainst/ragger).
-- `make update-rag`: Update RAG functionality from [ragger](https://github.com/alexandrainst/ragger).
-{% endif -%}
 - `make docs`: Generate HTML documentation using `pdoc`.
 - `make view-docs`: View the generated HTML documentation in a browser.
 - `make tree`: Show the project structure as a tree.
