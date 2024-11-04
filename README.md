@@ -1,9 +1,9 @@
 <a href="https://github.com/alexandrainst/{{ cookiecutter.project_name }}">
 <img
-	src="https://github.com/alexandrainst/alexandra-ml-template/blob/main/%7B%7Bcookiecutter.project_name%7D%7D/gfx/alexandra_logo.png"
-	width="239"
-	height="175"
-	align="right"
+    src="https://github.com/alexandrainst/alexandra-ml-template/blob/main/%7B%7Bcookiecutter.project_name%7D%7D/gfx/alexandra_logo.png"
+    width="239"
+    height="175"
+    align="right"
 />
 </a>
 
