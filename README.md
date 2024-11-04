@@ -58,8 +58,3 @@ completely in the cloud, without having to do any local setup at all. This repo 
 included with a configuration file for running code spaces on Github. When hosted on
 `alexandrainst/<project-name>`, simply press the `<> Code` button and add a code space
 to get started, which will open a VSCode window directly in your browser.
-
-### Flexibility in Packaging Backend
-
-The cookiecutter allows the user to choose between `poetry` and `pip` for managing
-dependencies. In both cases, `pyproject.toml` will be used for all dependencies.

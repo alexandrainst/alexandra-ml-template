@@ -30,41 +30,21 @@ Developer:
 1. Run `make install`, which sets up a virtual environment and all Python dependencies therein.
 2. Run `source .venv/bin/activate` to activate the virtual environment.
 3. (Optional) Run `make install-pre-commit`, which installs pre-commit hooks for linting, formatting and type checking.
-{% if cookiecutter.open_source != 'y' -%}
-4. (Optional) Run `make add-rag` to add RAG functionality from [ragger](https://github.com/alexandrainst/ragger).
-{% endif %}
 ### Adding and Removing Packages
 
 To install new PyPI packages, run:
 ```
-{% if cookiecutter.dependency_manager != 'pip' -%}
-poetry add <package-name>
-{% else -%}
-pip install <package-name>
-{% endif -%}
+uv add <package-name>
 ```
 
 To remove them again, run:
 ```
-{% if cookiecutter.dependency_manager != 'pip' -%}
-poetry remove <package-name>
-{% else -%}
-pip uninstall <package-name>
-{% endif -%}
+uv remove <package-name>
 ```
-{% if cookiecutter.dependency_manager == 'pip' -%}
-To freeze dependencies into `requirements.txt`, run:
-```
-make freeze
-```
-{% endif %}
+
 To show all installed packages, run:
 ```
-{% if cookiecutter.dependency_manager != 'pip' -%}
-poetry show
-{% else -%}
-pip list
-{% endif -%}
+uv pip show
 ```
 
 

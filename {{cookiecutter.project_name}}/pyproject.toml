@@ -1,44 +1,17 @@
-{% if cookiecutter.dependency_manager != 'pip' -%}
-[tool.poetry]
-name = "{{cookiecutter.project_name}}"
-description = "{{cookiecutter.project_description}}"
-version = "0.0.0"
-authors = [
-    "{{cookiecutter.author_name}} <{{cookiecutter.email}}>",
-]
-readme = "README.md"
-license = {{'"MIT"' if cookiecutter.open_source == "y" else '"Proprietary"'}}
-repository = "https://github.com/alexandrainst/{{cookiecutter.project_name}}"
-
-[tool.poetry.dependencies]
-python = ">={{ cookiecutter.python_version }},<4.0"
-hydra-core = "^{{ cookiecutter._hydra_version }}"
-
-[tool.poetry.group.dev.dependencies]
-pytest = ">={{ cookiecutter._pytest_version }}"
-pytest-cov = ">={{ cookiecutter._pytest_cov_version }}"
-pre-commit = ">={{ cookiecutter._pre_commit_version }}"
-pdoc = ">={{ cookiecutter._pdoc_version }}"
-readme-coverage-badger = ">={{ cookiecutter._readme_coverage_badger_version }}"
-click = ">={{ cookiecutter._click_version }}"
-ruff = ">={{ cookiecutter._ruff_version }}"
-mypy = ">={{ cookiecutter._mypy_version }}"
-nbstripout = ">={{ cookiecutter._nbstripout_version }}"
-
-[[tool.poetry.source]]
-name = "pypi"
-{% else -%}
 [project]
 name = "{{cookiecutter.project_name}}"
-description = "{{cookiecutter.project_description}}"
 version = "0.0.0"
+description = "{{cookiecutter.project_description}}"
 readme = "README.md"
 authors = [
     {name = "{{cookiecutter.author_name}}", email = "{{cookiecutter.email}}"},
 ]
+maintainers = [
+    {name = "{{cookiecutter.author_name}}", email = "{{cookiecutter.email}}"},
+]
 requires-python = ">={{ cookiecutter.python_version }},<4.0"
 dependencies = [
-    "hydra-core=={{ cookiecutter._hydra_version }}",
+    "hydra-core>={{ cookiecutter._hydra_version }}",
 ]
 
 [project.urls]
@@ -46,10 +19,14 @@ Repository = "https://github.com/alexandrainst/{{cookiecutter.project_name}}"
 Issues = "https://github.com/alexandrainst/{{cookiecutter.project_name}}/issues"
 
 [project.license]
+{% if cookiecutter.open_source != 'y' -%}
+text = "Proprietary"
+{% else -%}
 file = "LICENSE"
+{% endif -%}
 
-[project.optional-dependencies]
-dev = [
+[tool.uv]
+dev-dependencies = [
     "pytest>={{ cookiecutter._pytest_version }}",
     "pytest-cov>={{ cookiecutter._pytest_cov_version }}",
     "pre-commit>={{ cookiecutter._pre_commit_version }}",
@@ -60,9 +37,8 @@ dev = [
     "mypy>={{ cookiecutter._mypy_version }}",
     "nbstripout>={{ cookiecutter._nbstripout_version }}",
     "coverage>={{ cookiecutter._coverage_version }}",
-    "toml>={{ cookiecutter._toml_version }}",
 ]
-{% endif %}
+
 [tool.ruff]
 {% if cookiecutter.python_version == '3.13' -%}
 target-version = "py313"
@@ -134,6 +110,7 @@ filterwarnings = [
     "ignore::DeprecationWarning",
     "ignore::PendingDeprecationWarning",
     "ignore::ImportWarning",
+    "ignore::ResourceWarning",
     "ignore::FutureWarning",
 ]
 log_cli_level = "info"
@@ -143,14 +120,5 @@ testpaths = [
 ]
 
 [build-system]
-{% if cookiecutter.dependency_manager != 'pip' -%}
-requires = [
-    "poetry-core>={{ cookiecutter._poetry_core_version }}",
-]
-build-backend = "poetry.core.masonry.api"
-{% else -%}
-requires = [
-    "setuptools>={{ cookiecutter._setuptools_version }}",
-]
-build-backend = "setuptools.build_meta"
-{% endif -%}
+requires = ["hatchling"]
+build-backend = "hatchling.build"

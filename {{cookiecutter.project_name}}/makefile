@@ -9,14 +9,6 @@
 ifeq (,$(wildcard .env))
   $(shell touch .env)
 endif
-{%- if cookiecutter.dependency_manager != 'pip' %}
-
-# Create poetry env file if it does not already exist
-ifeq (,$(wildcard ${HOME}/.poetry/env))
-	$(shell mkdir ${HOME}/.poetry)
-	$(shell touch ${HOME}/.poetry/env)
-endif
-{%- endif %}
 
 # Includes environment variables from the .env file
 include .env
@@ -25,84 +17,46 @@ include .env
 export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 
-# Ensure that `pipx`{{' and `poetry`' if cookiecutter.dependency_manager != 'pip'}} will be able to run, since `pip` and `brew` put these
-# in the following folders on Unix systems
-export PATH := ${HOME}/.local/bin:/opt/homebrew/bin:$(PATH)
-{%- if cookiecutter.dependency_manager != 'pip' %}
-
-# Prevent DBusErrorResponse during `poetry install`.
-# See https://stackoverflow.com/a/75098703 for more information
-export PYTHON_KEYRING_BACKEND := keyring.backends.null.Keyring
-{%- endif %}
+# Set the shell to bash, enabling the use of `source` statements
+SHELL := /bin/bash
 
 help:
 	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 install: ## Install dependencies
 	@echo "Installing the '{{ cookiecutter.project_name }}' project..."
-	@$(MAKE) --quiet install-brew
-	{%- if cookiecutter.dependency_manager != 'pip' %}
-	@$(MAKE) --quiet install-pipx
-	@$(MAKE) --quiet install-poetry
-	{%- endif %}
+	@$(MAKE) --quiet install-rust
+	@$(MAKE) --quiet install-uv
 	@$(MAKE) --quiet install-dependencies
 	@$(MAKE) --quiet setup-environment-variables
 	@$(MAKE) --quiet setup-git
-	{%- if cookiecutter.pre_commit_hooks != 'n' %}
-	@$(MAKE) --quiet install-pre-commit
-	{%- endif %}
-	{%- if cookiecutter.dependency_manager == 'pip' %}
-	@$(MAKE) --quiet freeze
-	{%- endif %}
 	@$(MAKE) --quiet add-repo-to-git
 	@echo "Installed the '{{ cookiecutter.project_name }}' project! You can now activate your virtual environment with 'source .venv/bin/activate'."
-	{%- if cookiecutter.pre_commit_hooks == 'n' %}
-	@echo "If you want to use pre-commit hooks in the future, run 'make install-pre-commit'."
-	{%- endif %}
-	@echo "Note that this is a {{'Poetry' if cookiecutter.dependency_manager != 'pip' else 'pip'}} project. Use '{{'poetry add <package>' if cookiecutter.dependency_manager != 'pip' else 'pip install <package>'}}' to install new dependencies and '{{'poetry remove <package>' if cookiecutter.dependency_manager != 'pip' else 'pip uninstall <package>'}}' to remove them.{{' Freeze your dependencies into pyproject.toml with \'make freeze\'.' if cookiecutter.dependency_manager == 'pip'}}"
+	@echo "Note that this is a 'uv' project. Use 'uv add <package>' to install new dependencies and 'uv remove <package>' to remove them."
 
-install-brew:
-	@if [ $$(uname) = "Darwin" ] && [ "$(shell which brew)" = "" ]; then \
-		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
-		echo "Installed Homebrew."; \
+install-rust:
+	@if [ "$(shell which rustup)" = "" ]; then \
+		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y; \
+		source $HOME/.cargo/env; \
+		echo "Installed Rust."; \
 	fi
 
-{%- if cookiecutter.dependency_manager != 'pip' %}
-
-install-pipx:
-	@if [ "$(shell which pipx)" = "" ]; then \
-		uname=$$(uname); \
-			case $${uname} in \
-				(*Darwin*) installCmd='brew install pipx';; \
-				(*CYGWIN*) installCmd='py -3 -m pip install --upgrade --user pipx';; \
-				(*) installCmd='python3 -m pip install --upgrade --user pipx';; \
-			esac; \
-			$${installCmd}; \
-		pipx ensurepath --force; \
-		echo "Installed pipx."; \
-	fi
-
-install-poetry:
-	@if [ ! "$(shell poetry --version)" = "Poetry (version {{ cookiecutter._poetry_version }})" ]; then \
-		python3 -m pip uninstall -y poetry poetry-core poetry-plugin-export; \
-		pipx install --force poetry=={{ cookiecutter._poetry_version }}; \
-		echo "Installed Poetry."; \
-	fi
-{%- endif %}
+install-uv:
+	@if [ "$(shell which uv)" = "" ]; then \
+		curl -LsSf https://astral.sh/uv/install.sh | sh; \
+		source $HOME/.cargo/env; \
+        echo "Installed uv."; \
+    fi
+	@uv self update
 
 install-dependencies:
-	{% if cookiecutter.dependency_manager != 'pip' -%}
-	@poetry env use python{{cookiecutter.python_version}} && poetry install
-	{%- else -%}
-	@python -m venv .venv
-	@. .venv/bin/activate && pip install -qU pip && pip install -qe .[dev]
-	{%- endif %}
+	@uv sync --all-extras
 
 setup-environment-variables:
-	{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py; \
+	@uv run python src/scripts/fix_dot_env_file.py
 
 setup-environment-variables-non-interactive:
-	{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}python src/scripts/fix_dot_env_file.py --non-interactive; \
+	@uv run python src/scripts/fix_dot_env_file.py --non-interactive
 
 setup-git:
 	@git config --global init.defaultBranch main
@@ -120,17 +74,10 @@ add-repo-to-git:
 	fi
 
 install-pre-commit:  ## Install pre-commit hooks
-	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}pre-commit install && pre-commit autoupdate
-
-{%- if cookiecutter.dependency_manager == 'pip' %}
-
-freeze:  ## Freeze dependencies
-	@. .venv/bin/activate && python src/scripts/freeze_dependencies.py
-	@echo "Updated dependencies in pyproject.toml."
-{%- endif %}
+	@uv run pre-commit install
 
 docs:  ## Generate documentation
-	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}pdoc --docformat google src/{{cookiecutter.project_name}} -o docs
+	@uv run pdoc --docformat google src/{{cookiecutter.project_name}} -o docs
 	@echo "Saved documentation."
 
 view-docs:  ## View documentation
@@ -145,44 +92,27 @@ view-docs:  ## View documentation
 		"$${openCmd}" docs/{{ cookiecutter.project_name }}.html
 
 test:  ## Run tests
-	@{{'poetry run ' if cookiecutter.dependency_manager != 'pip' else '. .venv/bin/activate && '}}pytest && {{'poetry run ' if cookiecutter.dependency_manager != 'pip'}}readme-cov
+	@uv run pytest && uv run readme-cov
 
 docker:  ## Build Docker image and run container
-	{% if cookiecutter.dependency_manager == 'pip' -%}
-	@$(MAKE) --quiet freeze
-	{% endif -%}
 	@docker build -t {{ cookiecutter.project_name }} .
 	@docker run -it --rm {{ cookiecutter.project_name }}
 
 tree:  ## Print directory tree
 	@tree -a --gitignore -I .git .
 
-check: lint format type-check  ## Lint, format, and type-check the code
-
 lint:  ## Lint the project
-	{% if cookiecutter.dependency_manager != 'pip' -%}
-	poetry run ruff check . --fix
-	{%- else -%}
-	. .venv/bin/activate && ruff check . --fix
-	{%- endif %}
+	uv run ruff check . --fix
 
 format:  ## Format the project
-	{% if cookiecutter.dependency_manager != 'pip' -%}
-	poetry run ruff format .
-	{%- else -%}
-	. .venv/bin/activate && ruff format .
-	{%- endif %}
+	uv run ruff format .
 
 type-check:  ## Type-check the project
-	{% if cookiecutter.dependency_manager != 'pip' -%}
-	@poetry run mypy . --install-types --non-interactive --ignore-missing-imports --show-error-codes --check-untyped-defs
-	{%- else -%}
-	. .venv/bin/activate && mypy . --install-types --non-interactive --ignore-missing-imports --show-error-codes --check-untyped-defs
-	{%- endif %}
+	@uv run mypy . \
+		--install-types \
+		--non-interactive \
+		--ignore-missing-imports \
+		--show-error-codes \
+		--check-untyped-defs
 
-add-rag:  ## Install the Ragger package, for RAG projects
-	{% if cookiecutter.dependency_manager != 'pip' -%}
-	@poetry add git+ssh://git@github.com/alexandrainst/ragger.git --extras all
-	{%- else -%}
-	. .venv/bin/activate && pip install ragger[all]@git+ssh://git@github.com/alexandrainst/ragger.git
-	{%- endif %}
+check: lint format type-check  ## Lint, format, and type-check the code

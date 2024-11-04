@@ -36,28 +36,19 @@ jobs:
     runs-on: {% raw %}${{ matrix.os }}{% endraw %}
     steps:
       - uses: actions/checkout@v{{ cookiecutter._checkout_action_version }}
-      {% if cookiecutter.dependency_manager != 'pip' -%}
-      - name: Install Poetry
-        run: pipx install poetry=={{ cookiecutter._poetry_version }}
-      {% endif -%}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v{{ cookiecutter._setup_uv_action_version }}
+        with:
+          enable-cache: true
+
       - name: Set up Python
         uses: actions/setup-python@v{{ cookiecutter._setup_python_action_version }}
         with:
           python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
-          cache: {{'poetry' if cookiecutter.dependency_manager != 'pip' else 'pip'}}
 
       - name: Install Dependencies
-        run: |
-          {% if cookiecutter.dependency_manager != 'pip' -%}
-          poetry env use {% raw %}"${{ matrix.python-version }}"{% endraw %}
-          poetry install
-          {%- else -%}
-          python3 -m venv .venv
-          . .venv/bin/activate && pip install .[dev]
-          {%- endif %}
+        run: uv sync --all-extras
+
       - name: Test with pytest
-        {% if cookiecutter.dependency_manager != 'pip' -%}
-        run: poetry run pytest
-        {%- else -%}
-        run: . .venv/bin/activate && python -m pytest
-        {%- endif %}
+        run: uv run pytest
