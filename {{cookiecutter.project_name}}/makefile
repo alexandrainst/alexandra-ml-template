@@ -32,6 +32,7 @@ install: ## Install dependencies
 	@$(MAKE) --quiet setup-git
 	@$(MAKE) --quiet add-repo-to-git
 	@echo "Installed the '{{ cookiecutter.project_name }}' project! You can now activate your virtual environment with 'source .venv/bin/activate'."
+	@echo "If you want to use pre-commit hooks, run 'make install-pre-commit'."
 	@echo "Note that this is a 'uv' project. Use 'uv add <package>' to install new dependencies and 'uv remove <package>' to remove them."
 
 install-rust:
