@@ -16,31 +16,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v{{ cookiecutter._checkout_action_version }}
-      {% if cookiecutter.dependency_manager != 'pip' -%}
-      - name: Install Poetry
-        run: pip3 install poetry=={{ cookiecutter._poetry_version }}
-      {% endif -%}
-      - name: Set up Python
-        uses: actions/setup-python@v{{ cookiecutter._setup_python_action_version }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v{{ cookiecutter._setup_uv_action_version }}
         with:
-          python-version: "{{ cookiecutter.python_version }}"
-          cache: {{'"poetry"' if cookiecutter.dependency_manager != 'pip' else 'pip'}}
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install {% raw %}${{ matrix.python-version }}{% endraw %}
 
       - name: Install Dependencies
-        run: |
-          {% if cookiecutter.dependency_manager != 'pip' -%}
-          poetry env use "{{ cookiecutter.python_version }}"
-          poetry install --no-interaction --no-cache
-          {% else -%}
-          python3 -m venv .venv
-          . .venv/bin/activate && python -m pip install .[dev]
-          {% endif -%}
+        run: uv sync --all-extras
+
       - name: Build documentation
-        {% if cookiecutter.dependency_manager != 'pip' -%}
-        run: poetry run pdoc --docformat google src/{{ cookiecutter.project_name }} -o docs
-        {% else -%}
-        run: . .venv/bin/activate && python -m pdoc --docformat google src/{{ cookiecutter.project_name }} -o docs
-        {% endif -%}
+        run: uv run pdoc --docformat google src/{{ cookiecutter.project_name }} -o docs
+
       - name: Compress documentation
         run: tar --directory docs/ -hcf artifact.tar .
 
