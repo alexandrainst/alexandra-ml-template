@@ -6,6 +6,7 @@
 	align="right"
 />
 </a>
+
 # {{cookiecutter.project_name}}
 
 {{cookiecutter.project_description}}
