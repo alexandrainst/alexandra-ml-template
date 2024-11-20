@@ -8,4 +8,4 @@ plugins:
 nav:
   - .
   - API Reference:
-    - $api:src/ugens_elev.***
+    - $api:src/{{ cookiecutter.project_name }}.***
