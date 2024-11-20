@@ -1,8 +1,11 @@
-site_name: {{ cookiecutter.project_name }}
+site_name: {{ cookiecutter.project_name | replace("_", " ") | title }}
 theme: material
 plugins:
   - include-markdown
   - search
   - include_dir_to_nav
+  - mkapi
 nav:
   - .
+  - API Reference:
+    - $api:src/ugens_elev.***

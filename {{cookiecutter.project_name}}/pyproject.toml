@@ -41,6 +41,7 @@ dev-dependencies = [
     "mkdocs-material>={{ cookiecutter._mkdocs_material_version }}",
     "mkdocs-include-markdown-plugin>={{ cookiecutter._mkdocs_plugin_include_markdown_version }}",
     "mkdocs-include-dir-to-nav>={{ cookiecutter._mkdocs_plugin_include_dir_to_nav_version }}",
+    "mkapi>={{ cookiecutter._mkdocs_plugin_mkapi_version }}",
 ]
 
 [tool.ruff]
