@@ -14,7 +14,7 @@
 ______________________________________________________________________
 [![Code Coverage](https://img.shields.io/badge/Coverage-0%25-red.svg)](https://github.com/alexandrainst/{{cookiecutter.project_name}}/tree/main/tests)
 {% if cookiecutter.open_source == 'y' -%}
-[![Documentation](https://img.shields.io/badge/docs-passing-green)](https://alexandrainst.github.io/{{cookiecutter.project_name}}/{{cookiecutter.project_name}}.html)
+[![Documentation](https://img.shields.io/badge/docs-passing-green)](https://alexandrainst.github.io/{{cookiecutter.project_name}})
 [![License](https://img.shields.io/github/license/alexandrainst/{{cookiecutter.project_name}})](https://github.com/alexandrainst/{{cookiecutter.project_name}}/blob/main/LICENSE)
 [![LastCommit](https://img.shields.io/github/last-commit/alexandrainst/{{cookiecutter.project_name}})](https://github.com/alexandrainst/{{cookiecutter.project_name}}/commits/main)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](https://github.com/alexandrainst/{{cookiecutter.project_name}}/blob/main/CODE_OF_CONDUCT.md)
@@ -62,8 +62,8 @@ The project includes the following convenience commands:
 - `make type-check`: Type check the code using `mypy`.
 - `make test`: Run tests using `pytest` and update the coverage badge in the readme.
 - `make docker`: Build a Docker image and run the Docker container.
-- `make docs`: Generate HTML documentation using `pdoc`.
-- `make view-docs`: View the generated HTML documentation in a browser.
+- `make docs`: View documentation locally in a browser.
+- `make publish-docs`: Publish documentation to GitHub Pages.
 - `make tree`: Show the project structure as a tree.
 
 
@@ -113,7 +113,8 @@ running `make docker`.
 ### Automatic Documentation
 
 Run `make docs` to create the documentation in the `docs` folder, which is based on
-your docstrings in your code. You can view this by running `make view-docs`.
+your docstrings in your code. You can publish this documentation to Github Pages by
+running `make publish-docs`.
 
 ### Automatic Test Coverage Calculation
 

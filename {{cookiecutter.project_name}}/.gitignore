@@ -51,9 +51,6 @@ coverage.xml
 # Django stuff:
 *.log
 
-# Sphinx documentation
-docs/_build/
-
 # PyBuilder
 target/
 
@@ -93,12 +90,6 @@ target/
 outputs/
 multirun/
 
-# Documentation
-docs/{{cookiecutter.project_name}}/
-docs/{{cookiecutter.project_name}}.html
-docs/index.html
-docs/search.js
-
 # Data
 data/raw/*
 !data/raw/.gitkeep
@@ -119,3 +110,6 @@ models/*
 
 # Python cache
 **/__pycache__/
+
+# Mkdocs compiled documentation
+site/

@@ -78,20 +78,13 @@ add-repo-to-git:
 install-pre-commit:  ## Install pre-commit hooks
 	@uv run pre-commit install
 
-docs:  ## Generate documentation
-	@uv run pdoc --docformat google src/{{cookiecutter.project_name}} -o docs
-	@echo "Saved documentation."
+docs:  ## View documentation locally
+	@echo "Viewing documentation - run 'make publish-docs' to publish the documentation website."
+	@uv run mkdocs serve
 
-view-docs:  ## View documentation
-	@echo "Viewing API documentation..."
-	@uname=$$(uname); \
-		case $${uname} in \
-			(*Linux*) openCmd='xdg-open';; \
-			(*Darwin*) openCmd='open';; \
-			(*CYGWIN*) openCmd='cygstart';; \
-			(*) echo 'Error: Unsupported platform: $${uname}'; exit 2;; \
-		esac; \
-		"$${openCmd}" docs/{{ cookiecutter.project_name }}.html
+publish-docs:  ## Publish documentation to GitHub Pages
+	@uv run mkdocs gh-deploy
+	@echo "Updated documentation website: https://alexandrainst.github.io/ugens_elev"
 
 test:  ## Run tests
 	@uv run pytest && uv run readme-cov

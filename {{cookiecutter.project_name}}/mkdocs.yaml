@@ -1,0 +1,8 @@
+site_name: {{ cookiecutter.project_name }}
+theme: material
+plugins:
+  - include-markdown
+  - search
+  - include_dir_to_nav
+nav:
+  - .
