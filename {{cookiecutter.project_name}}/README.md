@@ -7,9 +7,9 @@
 />
 </a>
 
-# {{cookiecutter.project_name}}
+# {{ cookiecutter.project_name | replace("_", " ") | title }}
 
-{{cookiecutter.project_description}}
+{{ cookiecutter.project_description }}
 
 ______________________________________________________________________
 [![Code Coverage](https://img.shields.io/badge/Coverage-0%25-red.svg)](https://github.com/alexandrainst/{{cookiecutter.project_name}}/tree/main/tests)
@@ -21,7 +21,7 @@ ______________________________________________________________________
 {% endif %}
 Developer:
 
-- {{cookiecutter.author_name}} ({{cookiecutter.email}})
+- {{ cookiecutter.author_name }} ({{ cookiecutter.email }})
 
 
 ## Setup
