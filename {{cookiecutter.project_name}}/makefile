@@ -45,7 +45,7 @@ install-rust:
 install-uv:
 	@if [ "$(shell which uv)" = "" ]; then \
 		curl -LsSf https://astral.sh/uv/install.sh | sh; \
-		source "source ${HOME}/.local/bin/env"; \
+		source "${HOME}/.local/bin/env"; \
         echo "Installed uv."; \
     fi
 	@uv self update
