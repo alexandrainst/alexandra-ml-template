@@ -37,7 +37,9 @@ def fix_dot_env_file(non_interactive: bool) -> None:
     name_and_email_path.touch(exist_ok=True)
 
     # Extract all the lines in the files
-    env_file_lines = env_path.read_text().splitlines(keepends=False)
+    env_file_lines = [
+        line for line in env_path.read_text().splitlines(keepends=False) if line.strip()
+    ]
     name_and_email_file_lines = name_and_email_path.read_text().splitlines(
         keepends=False
     )
