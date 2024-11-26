@@ -47,8 +47,10 @@ install-uv:
 		curl -LsSf https://astral.sh/uv/install.sh | sh; \
 		source "${HOME}/.local/bin/env"; \
 		echo "Installed uv."; \
-  fi
-	@uv self update
+    else \
+		echo "Updating uv..."; \
+		uv self update; \
+	fi
 
 install-dependencies:
 	@uv python install {{ cookiecutter.python_version }}
