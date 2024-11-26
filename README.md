@@ -38,7 +38,10 @@ running `make docker`.
 ### Automatic Documentation
 
 Run `make docs` to create the documentation in the `docs` folder, which is based on
-your docstrings in your code. You can view this by running `make view-docs`.
+your docstrings in your code. You can publish this documentation to Github Pages by
+running `make publish-docs`. To add more manual documentation pages, simply add more
+Markdown files to the `docs` directory; this will automatically be included in the
+documentation.
 
 ### Automatic Test Coverage Calculation
 
