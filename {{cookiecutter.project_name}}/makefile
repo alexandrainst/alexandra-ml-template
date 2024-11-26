@@ -46,8 +46,8 @@ install-uv:
 	@if [ "$(shell which uv)" = "" ]; then \
 		curl -LsSf https://astral.sh/uv/install.sh | sh; \
 		source "${HOME}/.local/bin/env"; \
-        echo "Installed uv."; \
-    fi
+		echo "Installed uv."; \
+  fi
 	@uv self update
 
 install-dependencies:
