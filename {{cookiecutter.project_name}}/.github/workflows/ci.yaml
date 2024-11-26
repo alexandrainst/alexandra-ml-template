@@ -47,7 +47,7 @@ jobs:
         run: uv python install {% raw %}${{ matrix.python-version }}{% endraw %}
 
       - name: Install Dependencies
-        run: uv sync --all-extras --no-dev
+        run: uv sync --all-extras
 
       - name: Test with pytest
         run: uv run pytest
