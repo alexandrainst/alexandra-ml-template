@@ -21,7 +21,8 @@ jobs:
     steps:
       - uses: actions/checkout@v{{ cookiecutter._checkout_action_version }}
       - uses: actions/setup-python@v{{ cookiecutter._setup_python_action_version }}
-        python-version: "{{ cookiecutter.python_version }}"
+        with:
+          python-version: "{{ cookiecutter.python_version }}"
       - uses: pre-commit/action@v{{ cookiecutter._pre_commit_action_version }}
 
   pytest:
