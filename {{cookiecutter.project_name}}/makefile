@@ -17,6 +17,9 @@ include .env
 export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 
+# Set the PATH env var used by cargo and uv
+export PATH := ${HOME}/.local/bin:${HOME}/.cargo/bin:$(PATH)
+
 # Set the shell to bash, enabling the use of `source` statements
 SHELL := /bin/bash
 
@@ -38,14 +41,12 @@ install: ## Install dependencies
 install-rust:
 	@if [ "$(shell which rustup)" = "" ]; then \
 		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y; \
-		source "${HOME}/.cargo/env"; \
 		echo "Installed Rust."; \
 	fi
 
 install-uv:
 	@if [ "$(shell which uv)" = "" ]; then \
 		curl -LsSf https://astral.sh/uv/install.sh | sh; \
-		source "${HOME}/.local/bin/env"; \
 		echo "Installed uv."; \
     else \
 		echo "Updating uv..."; \
