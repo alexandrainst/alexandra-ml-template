@@ -43,9 +43,7 @@ jobs:
         uses: astral-sh/setup-uv@v{{ cookiecutter._setup_uv_action_version }}
         with:
           enable-cache: true
-
-      - name: Set up Python
-        run: uv python install {% raw %}${{ matrix.python-version }}{% endraw %}
+          python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
 
       - name: Install Dependencies
         run: uv sync --all-extras
