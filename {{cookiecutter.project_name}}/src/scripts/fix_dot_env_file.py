@@ -1,7 +1,7 @@
 """Checks related to the .env file in the repository.
 
 Usage:
-    python src/scripts/fix_dot_env_file.py [--non-interactive]
+    uv run src/scripts/fix_dot_env_file.py [--non-interactive]
 """
 
 from pathlib import Path

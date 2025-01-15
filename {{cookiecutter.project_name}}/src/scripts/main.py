@@ -1,7 +1,7 @@
 """Main script.
 
 Usage:
-    python src/scripts/main.py <config_key>=<config_value> ...
+    uv run src/scripts/main.py <config_key>=<config_value> ...
 """
 
 import hydra
