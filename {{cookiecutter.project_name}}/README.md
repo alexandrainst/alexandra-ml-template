@@ -47,7 +47,7 @@ uv remove <package-name>
 
 To show all installed packages, run:
 ```
-uv pip show
+uv pip list
 ```
 
 
