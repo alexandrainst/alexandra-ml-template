@@ -28,12 +28,12 @@ help:
 
 install: ## Install dependencies
 	@echo "Installing the '{{ cookiecutter.project_name }}' project..."
+	@$(MAKE) --quiet setup-git
 	@$(MAKE) --quiet install-rust
 	@$(MAKE) --quiet install-uv
 	@$(MAKE) --quiet install-pre-commit
 	@$(MAKE) --quiet install-dependencies
 	@$(MAKE) --quiet setup-environment-variables
-	@$(MAKE) --quiet setup-git
 	@$(MAKE) --quiet add-repo-to-git
 	@echo "Installed the '{{ cookiecutter.project_name }}' project! You can now activate your virtual environment with 'source .venv/bin/activate'."
 	@echo "Note that this is a 'uv' project. Use 'uv add <package>' to install new dependencies and 'uv remove <package>' to remove them."
