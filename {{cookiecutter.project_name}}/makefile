@@ -30,11 +30,11 @@ install: ## Install dependencies
 	@echo "Installing the '{{ cookiecutter.project_name }}' project..."
 	@$(MAKE) --quiet install-rust
 	@$(MAKE) --quiet install-uv
-	@$(MAKE) --quiet install-pre-commit
 	@$(MAKE) --quiet install-dependencies
 	@$(MAKE) --quiet setup-environment-variables
 	@$(MAKE) --quiet setup-git
 	@$(MAKE) --quiet add-repo-to-git
+	@$(MAKE) --quiet install-pre-commit
 	@echo "Installed the '{{ cookiecutter.project_name }}' project! You can now activate your virtual environment with 'source .venv/bin/activate'."
 	@echo "Note that this is a 'uv' project. Use 'uv add <package>' to install new dependencies and 'uv remove <package>' to remove them."
 
@@ -55,12 +55,12 @@ install-uv:
 
 install-pre-commit:
 	@uv run pre-commit install
+	@uv run pre-commit autoupdate
 
 install-dependencies:
 	@uv python install {{ cookiecutter.python_version }}
 	@uv sync --all-extras --python {{ cookiecutter.python_version }}
 	@uv sync -U --only-dev
-	@uv run pre-commit autoupdate
 
 setup-environment-variables:
 	@uv run python src/scripts/fix_dot_env_file.py
