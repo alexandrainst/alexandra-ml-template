@@ -30,12 +30,12 @@ install: ## Install dependencies
 	@echo "Installing the '{{ cookiecutter.project_name }}' project..."
 	@$(MAKE) --quiet install-rust
 	@$(MAKE) --quiet install-uv
+	@$(MAKE) --quiet install-pre-commit
 	@$(MAKE) --quiet install-dependencies
 	@$(MAKE) --quiet setup-environment-variables
 	@$(MAKE) --quiet setup-git
 	@$(MAKE) --quiet add-repo-to-git
 	@echo "Installed the '{{ cookiecutter.project_name }}' project! You can now activate your virtual environment with 'source .venv/bin/activate'."
-	@echo "If you want to use pre-commit hooks, run 'make install-pre-commit'."
 	@echo "Note that this is a 'uv' project. Use 'uv add <package>' to install new dependencies and 'uv remove <package>' to remove them."
 
 install-rust:
@@ -53,9 +53,14 @@ install-uv:
 		uv self update; \
 	fi
 
+install-pre-commit:
+	@uv run pre-commit install
+
 install-dependencies:
 	@uv python install {{ cookiecutter.python_version }}
 	@uv sync --all-extras --python {{ cookiecutter.python_version }}
+	@uv sync -U --only-dev
+	@pre-commit autoupdate
 
 setup-environment-variables:
 	@uv run python src/scripts/fix_dot_env_file.py
@@ -77,9 +82,6 @@ add-repo-to-git:
 	@if [ "$(shell git remote)" = "" ]; then \
 		git remote add origin git@github.com:alexandrainst/{{ cookiecutter.project_name }}.git; \
 	fi
-
-install-pre-commit:  ## Install pre-commit hooks
-	@uv run pre-commit install
 
 docs:  ## View documentation locally
 	@echo "Viewing documentation - run 'make publish-docs' to publish the documentation website."
