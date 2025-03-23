@@ -95,6 +95,12 @@ select = [
     # Pyflakes
     "F",
 ]
+ignore = [
+    # Type annotations for "self" arguments
+    "ANN101",
+    # Type annotations for **kwargs
+    "ANN003",
+]
 
 [tool.ruff.lint.extend-per-file-ignores]
 "__init__.py" = [
