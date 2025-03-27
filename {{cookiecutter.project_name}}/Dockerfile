@@ -1,9 +1,8 @@
 FROM python:{{ cookiecutter.python_version }}-slim-bookworm
 
 # Install uv
-RUN sudo apt-get update && sudo apt-get install -y curl && \
-    curl -LsSf https://astral.sh/uv/install.sh | sh && \
-    source $HOME/.cargo/env
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
 
 # Move the files into the container
 WORKDIR /project
