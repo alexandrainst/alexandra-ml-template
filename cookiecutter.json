@@ -5,6 +5,7 @@
     "email": "name@alexandra.dk",
     "open_source": "Is this a public open source project? (y/n, default: n)",
     "python_version": "3.11",
+    "_docker-uv-version": "0.6.11",
     "_hydra_version": "1.3.2",
     "_pytest_version": "8.3.3",
     "_pytest_cov_version": "5.0.0",
