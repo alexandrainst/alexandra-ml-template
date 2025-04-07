@@ -98,8 +98,12 @@ select = [
 ignore = [
     # Type annotations for "self" arguments
     "ANN101",
+    # Type annotations for "cls" arguments
+    "ANN102",
     # Type annotations for **kwargs
     "ANN003",
+    # Docstrings for **kwargs
+    "D417",
 ]
 
 [tool.ruff.lint.extend-per-file-ignores]
