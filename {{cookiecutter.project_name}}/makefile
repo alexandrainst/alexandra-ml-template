@@ -60,7 +60,6 @@ install-pre-commit:
 install-dependencies:
 	@uv python install {{ cookiecutter.python_version }}
 	@uv sync --all-extras --python {{ cookiecutter.python_version }}
-	@uv sync -U --only-dev
 
 setup-environment-variables:
 	@uv run python src/scripts/fix_dot_env_file.py
