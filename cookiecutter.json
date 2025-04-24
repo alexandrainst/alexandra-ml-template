@@ -25,7 +25,6 @@
     "_checkout_action_version": "4",
     "_setup_uv_action_version": "4",
     "_setup_python_action_version": "5",
-    "_pre_commit_action_version": "3.0.1",
     "_deploy_pages_action_version": "4",
     "_copy_without_render": []
 }
