@@ -11,7 +11,7 @@ on:
       - main
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref }}
+  group: {% raw %}${{ github.workflow }}-${{ github.head_ref }}{% endraw %}
   cancel-in-progress: true
 
 jobs:
