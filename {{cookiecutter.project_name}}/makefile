@@ -28,7 +28,6 @@ help:
 
 install: ## Install dependencies
 	@echo "Installing the '{{ cookiecutter.project_name }}' project..."
-	@$(MAKE) --quiet install-rust
 	@$(MAKE) --quiet install-uv
 	@$(MAKE) --quiet install-dependencies
 	@$(MAKE) --quiet setup-environment-variables
@@ -38,19 +37,17 @@ install: ## Install dependencies
 	@echo "Installed the '{{ cookiecutter.project_name }}' project! You can now activate your virtual environment with 'source .venv/bin/activate'."
 	@echo "Note that this is a 'uv' project. Use 'uv add <package>' to install new dependencies and 'uv remove <package>' to remove them."
 
-install-rust:
-	@if [ "$(shell which rustup)" = "" ]; then \
-		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y; \
-		echo "Installed Rust."; \
-	fi
-
 install-uv:
 	@if [ "$(shell which uv)" = "" ]; then \
+		if [ "$(shell which rustup)" = "" ]; then \
+			curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y; \
+			echo "Installed Rust."; \
+		fi; \
 		curl -LsSf https://astral.sh/uv/install.sh | sh; \
 		echo "Installed uv."; \
     else \
 		echo "Updating uv..."; \
-		uv self update; \
+		uv self update || true; \
 	fi
 
 install-pre-commit:
