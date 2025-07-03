@@ -1,16 +1,20 @@
 FROM python:{{ cookiecutter.python_version }}-slim-bookworm
 
-# Install uv
-RUN sudo apt-get update && sudo apt-get install -y curl && \
+# Install uv (note: the script itself also requires curl)
+RUN apt-get update && apt-get install -y curl && \
     curl -LsSf https://astral.sh/uv/install.sh | sh && \
-    source $HOME/.cargo/env
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Move the files into the container
+ENV PATH="/root/.local/bin:/project/.venv/bin/:${PATH}"
+
 WORKDIR /project
-COPY . /project
 
 # Install dependencies
+COPY pyproject.toml uv.lock ./
 RUN uv sync --no-dev --no-cache
+
+# Copy the project files into the container
+COPY . .
 
 # Run the script
 CMD uv run python src/scripts/main.py
