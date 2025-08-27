@@ -29,11 +29,15 @@ jobs:
       - uses: actions/checkout@v{{ cookiecutter._checkout_action_version }}
         with:
           persist-credentials: false
+          ref: main
+
       - uses: actions/setup-python@v{{ cookiecutter._setup_python_action_version }}
         with:
           python-version: "{{ cookiecutter.python_version }}"
+
       - run: python -m pip install pre-commit
         shell: bash
+
       - run: pre-commit run --show-diff-on-failure --color=always --all-files
         shell: bash
 
@@ -55,6 +59,7 @@ jobs:
       - uses: actions/checkout@v{{ cookiecutter._checkout_action_version }}
         with:
           persist-credentials: false
+          ref: main
 
       - name: Install uv
         uses: astral-sh/setup-uv@v{{ cookiecutter._setup_uv_action_version }}
