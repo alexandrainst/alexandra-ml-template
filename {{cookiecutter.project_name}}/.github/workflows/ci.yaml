@@ -31,8 +31,10 @@ jobs:
           persist-credentials: false
           ref: main
 
-      - uses: actions/setup-python@v{{ cookiecutter._setup_python_action_version }}
+      - name: Install uv and set up Python
+        uses: astral-sh/setup-uv@v{{ cookiecutter._setup_uv_action_version }}
         with:
+          enable-cache: false
           python-version: "{{ cookiecutter.python_version }}"
 
       - run: python -m pip install pre-commit
@@ -61,10 +63,10 @@ jobs:
           persist-credentials: false
           ref: main
 
-      - name: Install uv
+      - name: Install uv and set up Python
         uses: astral-sh/setup-uv@v{{ cookiecutter._setup_uv_action_version }}
         with:
-          enable-cache: true
+          enable-cache: false
           python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
 
       - name: Install Dependencies
