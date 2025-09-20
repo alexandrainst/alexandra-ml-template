@@ -27,8 +27,8 @@ file = "LICENSE"
 
 {% endif -%}
 
-[tool.uv]
-dev-dependencies = [
+[dependency-groups]
+dev = [
     "pytest>={{ cookiecutter._pytest_version }}",
     "pytest-cov>={{ cookiecutter._pytest_cov_version }}",
     "pre-commit>={{ cookiecutter._pre_commit_version }}",
