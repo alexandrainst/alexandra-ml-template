@@ -33,8 +33,6 @@ Developer:
 1. Run `make install`, which sets up a virtual environment and all Python dependencies
    therein.
 2. Run `source .venv/bin/activate` to activate the virtual environment.
-3. (Optional) Run `make install-pre-commit`, which installs pre-commit hooks for
-   linting, formatting and type checking.
 
 ### Adding and Removing Packages
 
