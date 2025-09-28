@@ -1,9 +1,12 @@
+<!-- This disables the "First line in file should be a top level heading" rule -->
+<!-- markdownlint-disable MD041 -->
 <a href="https://github.com/alexandrainst/{{ cookiecutter.project_name }}">
 <img
     src="https://filedn.com/lRBwPhPxgV74tO0rDoe8SpH/alexandra/alexandra-logo.jpeg"
 	width="239"
 	height="175"
 	align="right"
+	alt="Alexandra Institute Logo"
 />
 </a>
 
@@ -28,25 +31,27 @@ Developer:
 
 ### Installation
 
-1. Run `make install`, which sets up a virtual environment and all Python dependencies therein.
+1. Run `make install`, which sets up a virtual environment and all Python dependencies
+   therein.
 2. Run `source .venv/bin/activate` to activate the virtual environment.
-3. (Optional) Run `make install-pre-commit`, which installs pre-commit hooks for linting, formatting and type checking.
+3. (Optional) Run `make install-pre-commit`, which installs pre-commit hooks for
+   linting, formatting and type checking.
 
 
 ### Adding and Removing Packages
 
 To install new PyPI packages, run:
-```
+```bash
 uv add <package-name>
 ```
 
 To remove them again, run:
-```
+```bash
 uv remove <package-name>
 ```
 
 To show all installed packages, run:
-```
+```bash
 uv pip list
 ```
 
@@ -56,7 +61,8 @@ uv pip list
 The project includes the following convenience commands:
 
 - `make install`: Install the project and its dependencies in a virtual environment.
-- `make install-pre-commit`: Install pre-commit hooks for linting, formatting and type checking.
+- `make install-pre-commit`: Install pre-commit hooks for linting, formatting and type
+  checking.
 - `make lint`: Lint the code using `ruff`.
 - `make format`: Format the code using `ruff`.
 - `make type-check`: Type check the code using `mypy`.
@@ -80,7 +86,7 @@ blocks of a project.
 When a module is importing functions/classes from other modules we use the _relative
 import_ notation - here's an example:
 
-```
+```python
 from .other_module import some_function
 ```
 
@@ -94,7 +100,7 @@ some `numpy` functions and actually run them, that a script.
 When importing module functions/classes when you're in a script, you do it like you
 would normally import from any other package:
 
-```
+```python
 from {{ cookiecutter.project_name }} import some_function
 ```
 
