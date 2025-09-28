@@ -72,10 +72,12 @@ The project includes the following convenience commands:
 - `make tree`: Show the project structure as a tree.
 
 ## A Word on Modules and Scripts
+
 In the `src` directory there are two subdirectories, `{{ cookiecutter.project_name }}`
 and `scripts`. This is a brief explanation of the differences between the two.
 
 ### Modules
+
 All Python files in the `{{ cookiecutter.project_name }}` directory are _modules_
 internal to the project package. Examples here could be a general data loading script,
 a definition of a model, or a training function. Think of modules as all the building
@@ -89,6 +91,7 @@ from .other_module import some_function
 ```
 
 ### Scripts
+
 Python files in the `scripts` folder are scripts, which are short code snippets that
 are _external_ to the project package, and which is meant to actually run the code. As
 such, _only_ scripts will be called from the terminal. An analogy here is that the
