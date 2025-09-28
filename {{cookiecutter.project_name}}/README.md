@@ -1,9 +1,12 @@
+<!-- This disables the "First line in file should be a top level heading" rule -->
+<!-- markdownlint-disable MD041 -->
 <a href="https://github.com/alexandrainst/{{ cookiecutter.project_name }}">
 <img
-    src="https://filedn.com/lRBwPhPxgV74tO0rDoe8SpH/alexandra/alexandra-logo.jpeg"
-	width="239"
-	height="175"
-	align="right"
+ src="https://filedn.com/lRBwPhPxgV74tO0rDoe8SpH/alexandra/alexandra-logo.jpeg"
+ width="239"
+ height="175"
+ align="right"
+ alt="Alexandra Institute Logo"
 />
 </a>
 
@@ -21,42 +24,45 @@ ______________________________________________________________________
 {% endif %}
 Developer:
 
-- {{ cookiecutter.author_name }} ({{ cookiecutter.email }})
-
+- {{ cookiecutter.author_name }} (<{{ cookiecutter.email }}>)
 
 ## Setup
 
 ### Installation
 
-1. Run `make install`, which sets up a virtual environment and all Python dependencies therein.
+1. Run `make install`, which sets up a virtual environment and all Python dependencies
+   therein.
 2. Run `source .venv/bin/activate` to activate the virtual environment.
-3. (Optional) Run `make install-pre-commit`, which installs pre-commit hooks for linting, formatting and type checking.
-
+3. (Optional) Run `make install-pre-commit`, which installs pre-commit hooks for
+   linting, formatting and type checking.
 
 ### Adding and Removing Packages
 
 To install new PyPI packages, run:
-```
+
+```bash
 uv add <package-name>
 ```
 
 To remove them again, run:
-```
+
+```bash
 uv remove <package-name>
 ```
 
 To show all installed packages, run:
-```
+
+```bash
 uv pip list
 ```
-
 
 ## All Built-in Commands
 
 The project includes the following convenience commands:
 
 - `make install`: Install the project and its dependencies in a virtual environment.
-- `make install-pre-commit`: Install pre-commit hooks for linting, formatting and type checking.
+- `make install-pre-commit`: Install pre-commit hooks for linting, formatting and type
+  checking.
 - `make lint`: Lint the code using `ruff`.
 - `make format`: Format the code using `ruff`.
 - `make type-check`: Type check the code using `mypy`.
@@ -66,12 +72,13 @@ The project includes the following convenience commands:
 - `make publish-docs`: Publish documentation to GitHub Pages.
 - `make tree`: Show the project structure as a tree.
 
-
 ## A Word on Modules and Scripts
+
 In the `src` directory there are two subdirectories, `{{ cookiecutter.project_name }}`
 and `scripts`. This is a brief explanation of the differences between the two.
 
 ### Modules
+
 All Python files in the `{{ cookiecutter.project_name }}` directory are _modules_
 internal to the project package. Examples here could be a general data loading script,
 a definition of a model, or a training function. Think of modules as all the building
@@ -80,11 +87,12 @@ blocks of a project.
 When a module is importing functions/classes from other modules we use the _relative
 import_ notation - here's an example:
 
-```
+```python
 from .other_module import some_function
 ```
 
 ### Scripts
+
 Python files in the `scripts` folder are scripts, which are short code snippets that
 are _external_ to the project package, and which is meant to actually run the code. As
 such, _only_ scripts will be called from the terminal. An analogy here is that the
@@ -94,13 +102,12 @@ some `numpy` functions and actually run them, that a script.
 When importing module functions/classes when you're in a script, you do it like you
 would normally import from any other package:
 
-```
+```python
 from {{ cookiecutter.project_name }} import some_function
 ```
 
 Note that this is also how we import functions/classes in tests, since each test Python
 file is also a Python script, rather than a module.
-
 
 ## Features
 
