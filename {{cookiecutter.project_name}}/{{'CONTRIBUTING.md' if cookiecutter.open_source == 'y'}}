@@ -40,13 +40,10 @@ to work on, you are welcome to open a PR with a fix.
 - Using GitHub Desktop:
   - [Getting started with GitHub Desktop][7] will guide you through setting up Desktop.
   - Once Desktop is set up, you can use it to [fork the repo][8].
-
 2 Using the command line:
   - [Fork the repo][9] so that you can make your changes without affecting the original
     project until you're ready to merge them.
-
 3. Run `make install` from within the repo to get set up
-
 4. Create a working branch and start with your changes!
 
 ### Commit Your Update
