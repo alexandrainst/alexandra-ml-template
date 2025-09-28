@@ -1,7 +1,7 @@
 FROM python:{{ cookiecutter.python_version }}-slim-bookworm
 
 # Install uv
-COPY --from=ghcr.io/astral-sh/uv:{{ cookiecutter._docker-uv-version }} /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:{{ cookiecutter._docker_uv_version }} /uv /uvx /bin/
 
 
 # Move the files into the container
