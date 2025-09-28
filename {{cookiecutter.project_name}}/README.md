@@ -2,11 +2,10 @@
 <!-- markdownlint-disable MD041 -->
 <a href="https://github.com/alexandrainst/{{ cookiecutter.project_name }}">
 <img
-    src="https://filedn.com/lRBwPhPxgV74tO0rDoe8SpH/alexandra/alexandra-logo.jpeg"
-	width="239"
-	height="175"
-	align="right"
-	alt="Alexandra Institute Logo"
+ width="239"
+ height="175"
+ align="right"
+ alt="Alexandra Institute Logo"
 />
 </a>
 

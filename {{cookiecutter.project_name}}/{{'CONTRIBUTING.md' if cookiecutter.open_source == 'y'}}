@@ -73,7 +73,7 @@ questions or request for additional information.
 - If you run into any merge issues, checkout this [git tutorial][15] to help you resolve
   merge conflicts and other issues.
 
-### Your PR is merged!
+### Your PR is merged
 
 Congratulations :tada::tada: The {{ cookiecutter.project_name | replace("_", " ") |
 title }} team thanks you :sparkles:.
