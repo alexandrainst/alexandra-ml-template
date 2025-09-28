@@ -57,6 +57,7 @@ to speed up the review process :zap:
 ### Pull Request
 
 When you're finished with the changes, create a pull request, also known as a PR.
+
 - Fill the "Ready for review" template so that we can review your PR. This template
   helps reviewers understand your changes as well as the purpose of your pull request.
 - Don't forget to [link PR to issue][11] if you are solving one.
@@ -65,6 +66,7 @@ When you're finished with the changes, create a pull request, also known as a PR
 
 Once you submit your PR, a team member will review your proposal. We may ask
 questions or request for additional information.
+
 - We may ask for changes to be made before a PR can be merged, either using [suggested
   changes][13] or pull request comments. You can apply suggested changes directly
   through the UI. You can make any other changes in your fork, then commit them to your
