@@ -12,7 +12,7 @@ repos:
 -   repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v{{ cookiecutter._ruff_version }}
     hooks:
-      - id: ruff
+      - id: ruff-check
         args:
           - --fix
           - --unsafe-fixes
@@ -40,3 +40,9 @@ repos:
           - --ignore-missing-imports
           - --show-error-codes
           - --check-untyped-defs
+-   repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.18.1
+    hooks:
+    -   id: markdownlint-cli2
+        args:
+          - --fix

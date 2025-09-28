@@ -27,8 +27,8 @@ file = "LICENSE"
 
 {% endif -%}
 
-[tool.uv]
-dev-dependencies = [
+[dependency-groups]
+dev = [
     "pytest>={{ cookiecutter._pytest_version }}",
     "pytest-cov>={{ cookiecutter._pytest_cov_version }}",
     "pre-commit>={{ cookiecutter._pre_commit_version }}",
@@ -100,6 +100,8 @@ ignore = [
     "ANN101",
     # Type annotations for "cls" arguments
     "ANN102",
+    # Type annotations for *args
+    "ANN002",
     # Type annotations for **kwargs
     "ANN003",
     # Docstrings for **kwargs

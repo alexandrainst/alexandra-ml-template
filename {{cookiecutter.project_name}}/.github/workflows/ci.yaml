@@ -10,9 +10,16 @@ on:
     branches:
       - main
 
+concurrency:
+  group: {% raw %}${{ github.workflow }}-${{ github.head_ref }}{% endraw %}
+  cancel-in-progress: true
+
 jobs:
   code-check:
     if: github.event.pull_request.draft == false
+    permissions:
+      contents: read
+      pull-requests: write
     {% if cookiecutter.open_source == 'y' -%}
     runs-on: ubuntu-latest
     {% else -%}
@@ -20,16 +27,27 @@ jobs:
     {% endif -%}
     steps:
       - uses: actions/checkout@v{{ cookiecutter._checkout_action_version }}
-      - uses: actions/setup-python@v{{ cookiecutter._setup_python_action_version }}
         with:
+          persist-credentials: false
+          ref: main
+
+      - name: Install uv and set up Python
+        uses: astral-sh/setup-uv@v{{ cookiecutter._setup_uv_action_version }}
+        with:
+          enable-cache: false
           python-version: "{{ cookiecutter.python_version }}"
+
       - run: python -m pip install pre-commit
         shell: bash
-      - run: pre-commit run --show-diff-on-failure --color=always
+
+      - run: pre-commit run --show-diff-on-failure --color=always --all-files
         shell: bash
 
   pytest:
     if: github.event.pull_request.draft == false
+    permissions:
+      contents: read
+      pull-requests: write
     strategy:
         matrix:
             {% if cookiecutter.open_source == 'y' -%}
@@ -41,11 +59,14 @@ jobs:
     runs-on: {% raw %}${{ matrix.os }}{% endraw %}
     steps:
       - uses: actions/checkout@v{{ cookiecutter._checkout_action_version }}
+        with:
+          persist-credentials: false
+          ref: main
 
-      - name: Install uv
+      - name: Install uv and set up Python
         uses: astral-sh/setup-uv@v{{ cookiecutter._setup_uv_action_version }}
         with:
-          enable-cache: true
+          enable-cache: false
           python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
 
       - name: Install Dependencies
