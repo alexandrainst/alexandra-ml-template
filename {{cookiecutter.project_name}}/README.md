@@ -38,16 +38,19 @@ Developer:
 ### Adding and Removing Packages
 
 To install new PyPI packages, run:
+
 ```bash
 uv add <package-name>
 ```
 
 To remove them again, run:
+
 ```bash
 uv remove <package-name>
 ```
 
 To show all installed packages, run:
+
 ```bash
 uv pip list
 ```
@@ -84,6 +87,7 @@ import_ notation - here's an example:
 ```python
 from .other_module import some_function
 ```
+
 ### Scripts
 Python files in the `scripts` folder are scripts, which are short code snippets that
 are _external_ to the project package, and which is meant to actually run the code. As
