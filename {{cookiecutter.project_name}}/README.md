@@ -23,7 +23,7 @@ ______________________________________________________________________
 {% endif %}
 Developer:
 
-- {{ cookiecutter.author_name }} ({{ cookiecutter.email }})
+- {{ cookiecutter.author_name }} (<{{ cookiecutter.email }}>)
 
 
 ## Setup
