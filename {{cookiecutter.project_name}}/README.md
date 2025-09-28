@@ -25,7 +25,6 @@ Developer:
 
 - {{ cookiecutter.author_name }} (<{{ cookiecutter.email }}>)
 
-
 ## Setup
 
 ### Installation
@@ -35,7 +34,6 @@ Developer:
 2. Run `source .venv/bin/activate` to activate the virtual environment.
 3. (Optional) Run `make install-pre-commit`, which installs pre-commit hooks for
    linting, formatting and type checking.
-
 
 ### Adding and Removing Packages
 
@@ -54,7 +52,6 @@ To show all installed packages, run:
 uv pip list
 ```
 
-
 ## All Built-in Commands
 
 The project includes the following convenience commands:
@@ -70,7 +67,6 @@ The project includes the following convenience commands:
 - `make docs`: View documentation locally in a browser.
 - `make publish-docs`: Publish documentation to GitHub Pages.
 - `make tree`: Show the project structure as a tree.
-
 
 ## A Word on Modules and Scripts
 In the `src` directory there are two subdirectories, `{{ cookiecutter.project_name }}`
@@ -88,7 +84,6 @@ import_ notation - here's an example:
 ```python
 from .other_module import some_function
 ```
-
 ### Scripts
 Python files in the `scripts` folder are scripts, which are short code snippets that
 are _external_ to the project package, and which is meant to actually run the code. As
@@ -105,7 +100,6 @@ from {{ cookiecutter.project_name }} import some_function
 
 Note that this is also how we import functions/classes in tests, since each test Python
 file is also a Python script, rather than a module.
-
 
 ## Features
 
