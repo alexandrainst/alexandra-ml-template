@@ -4,5 +4,5 @@
   "features": {
     "ghcr.io/devcontainers-contrib/features/coverage-py:2": {}
   },
-  "postCreateCommand": "make install-rust && make install-uv && make install-dependencies && make setup-environment-variables-non-interactive && make setup-git && make add-repo-to-git"
+  "postCreateCommand": "make install-non-interactive"
 }
