@@ -37,10 +37,10 @@ jobs:
           enable-cache: false
           python-version: "{{ cookiecutter.python_version }}"
 
-      - run: python -m pip install pre-commit
+      - run: uv add pre-commit
         shell: bash
 
-      - run: pre-commit run --show-diff-on-failure --color=always --all-files
+      - run: uv run pre-commit run --show-diff-on-failure --color=always --all-files
         shell: bash
 
   pytest:
