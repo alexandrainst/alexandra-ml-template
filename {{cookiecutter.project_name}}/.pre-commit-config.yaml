@@ -30,16 +30,12 @@ repos:
     rev: {{ cookiecutter._nbstripout_version }}
     hooks:
     -   id: nbstripout
--   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v{{ cookiecutter._mypy_version }}
+-   repo: https://github.com/facebook/pyrefly-pre-commit
+    rev: {{ cookiecutter._pyrefly_version }}
     hooks:
-    -   id: mypy
-        args:
-          - --install-types
-          - --non-interactive
-          - --ignore-missing-imports
-          - --show-error-codes
-          - --check-untyped-defs
+    -   id: pyrefly-typecheck-system
+        name: Pyrefly (type checking)
+        pass_filenames: false
 -   repo: https://github.com/DavidAnson/markdownlint-cli2
     rev: v{{ cookiecutter._markdownlint_version }}
     hooks:

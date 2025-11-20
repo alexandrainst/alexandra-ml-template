@@ -35,7 +35,6 @@ dev = [
     "readme-coverage-badger>={{ cookiecutter._readme_coverage_badger_version }}",
     "click>={{ cookiecutter._click_version }}",
     "ruff>={{ cookiecutter._ruff_version }}",
-    "mypy>={{ cookiecutter._mypy_version }}",
     "nbstripout>={{ cookiecutter._nbstripout_version }}",
     "coverage>={{ cookiecutter._coverage_version }}",
     "mkdocs-material>={{ cookiecutter._mkdocs_material_version }}",
@@ -66,7 +65,6 @@ target-version = "py36"
 line-length = 88
 exclude = [
     ".git",
-    ".mypy_cache",
     ".pytest_cache",
     ".ruff_cache",
     ".venv",
