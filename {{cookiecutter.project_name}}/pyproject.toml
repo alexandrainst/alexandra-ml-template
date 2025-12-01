@@ -144,6 +144,9 @@ testpaths = [
     "src/{{cookiecutter.project_name}}",
 ]
 
+[tool.pyrefly]
+site-package-path = [".venv/lib/python{{ cookiecutter.python_version }}/site-packages"]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
