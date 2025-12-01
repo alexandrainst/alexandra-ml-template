@@ -35,6 +35,7 @@ dev = [
     "readme-coverage-badger>={{ cookiecutter._readme_coverage_badger_version }}",
     "click>={{ cookiecutter._click_version }}",
     "ruff>={{ cookiecutter._ruff_version }}",
+    "pyrefly>={{ cookiecutter._pyrefly_version }}",
     "nbstripout>={{ cookiecutter._nbstripout_version }}",
     "coverage>={{ cookiecutter._coverage_version }}",
     "mkdocs-material>={{ cookiecutter._mkdocs_material_version }}",
