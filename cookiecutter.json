@@ -25,6 +25,6 @@
     "_pygrep_hooks_version": "1.10.0",
     "_pre_commit_hooks_version": "6.0.0",
     "_checkout_action_version": "5",
-    "_setup_uv_action_version": "6",
+    "_setup_uv_action_version": "7",
     "_copy_without_render": []
 }
