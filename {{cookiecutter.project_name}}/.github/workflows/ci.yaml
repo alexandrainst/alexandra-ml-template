@@ -34,7 +34,7 @@ jobs:
       - name: Install uv and set up Python
         uses: astral-sh/setup-uv@v{{ cookiecutter._setup_uv_action_version }}
         with:
-          enable-cache: false
+          enable-cache: true
           python-version: "{{ cookiecutter.python_version }}"
 
       - run: uv add pre-commit
@@ -66,11 +66,11 @@ jobs:
       - name: Install uv and set up Python
         uses: astral-sh/setup-uv@v{{ cookiecutter._setup_uv_action_version }}
         with:
-          enable-cache: false
+          enable-cache: true
           python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
 
       - name: Install Dependencies
-        run: uv sync --all-extras
+        run: uv sync --locked --all-extras --dev
 
       - name: Test with pytest
-        run: uv run --no-cache pytest
+        run: uv run pytest
