@@ -125,6 +125,7 @@ convention = "google"
 missing-import = false
 missing-attribute = false
 not-iterable = false
+no-matching-overload = false
 
 [tool.pytest.ini_options]
 minversion = "7.0"
