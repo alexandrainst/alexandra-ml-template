@@ -18,7 +18,7 @@ indent_style = tab
 indent_size = 4
 indent_style = space
 
-[*.{yml,yaml}]
+[*.{yml,yaml,toml}]
 indent_size = 2
 indent_style = space
 
