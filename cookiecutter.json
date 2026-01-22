@@ -20,7 +20,7 @@
     "_ruff_version": "0.14.13",
     "_pyrefly_version": "0.49.0",
     "_markdownlint_version": "0.20.0",
-    "_nbstripout_version": "0.8.2",
+    "_nbstripout_version": "0.9.0",
     "_coverage_version": "7.10.5",
     "_pygrep_hooks_version": "1.10.0",
     "_pre_commit_hooks_version": "6.0.0",
