@@ -85,7 +85,7 @@ preview = true
 select = [
     # Imports
     "I",
-    "PLC0415"
+    "PLC0415",
     # Docstrings
     "D",
     "DOC",
