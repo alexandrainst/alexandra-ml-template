@@ -106,6 +106,10 @@ ignore = [
     "ANN002",
     # Type annotations for **kwargs
     "ANN003",
+    # Always add blank line before class docstring
+    "D203",
+    # No new-line as first line of docstring
+    "D213",
 ]
 
 [tool.ruff.lint.extend-per-file-ignores]
