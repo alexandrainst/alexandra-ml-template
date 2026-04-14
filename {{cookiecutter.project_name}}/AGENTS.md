@@ -44,15 +44,19 @@
   uses it. If there is a `main` function, then it should always be first
 - When we import things in modules from other modules in the package, we always do it
   using relative imports:
+
   ```python title="src/mypackage/module.py"
   from .another_module import some_function
   ```
+
 - When we import things in scripts from other modules or other scripts, we always do it
   using absolute imports:
+
   ```python title="src/scripts/script.py"
   from mypackage.module import some_function
   from another_script import some_other_function
   ```
+
   This also holds when we're importing things from modules in our tests.
 
 #### Type Hints
