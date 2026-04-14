@@ -61,11 +61,11 @@ install-pre-commit:
 	@uv run pre-commit autoupdate
 
 install-dependencies:
-	@uv python install {{ cookiecutter.python_version }}
-	@uv sync --all-extras --all-groups --python {{ cookiecutter.python_version }}
-	{% if cookiecutter.include_frontend == 'y' -%}
+	{%- if cookiecutter.include_frontend == 'y' %}
 	@npm install
 	{%- endif %}
+	@uv python install {{ cookiecutter.python_version }}
+	@uv sync --all-extras --all-groups --python {{ cookiecutter.python_version }}
 
 setup-environment-variables:
 	@uv run python src/scripts/fix_dot_env_file.py
@@ -104,7 +104,7 @@ tree:  ## Print directory tree
 	@tree -a --gitignore -I .git .
 
 check:  ## Lint, format, and type-check the code
-	@git add . && uv run pre-commit run --all-files
-	{% if cookiecutter.include_frontend == 'y' -%}
+	{%- if cookiecutter.include_frontend == 'y' %}
 	@npm run check
 	{%- endif %}
+	@git add . && uv run pre-commit run --all-files

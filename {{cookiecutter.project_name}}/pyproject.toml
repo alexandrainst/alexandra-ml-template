@@ -11,9 +11,9 @@ maintainers = [
 ]
 requires-python = ">={{ cookiecutter.python_version }},<4.0"
 dependencies = [
-  {% if cookiecutter.include_frontend == 'y' -%}
+  {%- if cookiecutter.include_frontend == 'y' -%}
   "fastapi[standard]>={{ cookiecutter._fastapi_version }}",
-  {%- endif %}
+  {%- endif -%}
 ]
 
 [project.urls]
