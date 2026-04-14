@@ -38,6 +38,8 @@
 - All imports should happen at the top of each file. The only excuse for not doing this
   is if the import would cause a circular import, in which case this should be stated in
   a comment next to the import statement
+- Never use the old %-style string formatting. Use f-strings instead
+- Never use `print` statements - use a logger instead
 - Functions and classes in a module or script should be ordered from the most high-level
   to the most low-level. For example, if a function is a helper function that is only
   used by another function, then the helper function should come after the function that
