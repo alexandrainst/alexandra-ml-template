@@ -37,15 +37,17 @@ dev = [
     "pyrefly>={{ cookiecutter._pyrefly_version }}",
     "nbstripout>={{ cookiecutter._nbstripout_version }}",
     "coverage>={{ cookiecutter._coverage_version }}",
-    "mkdocs-material>={{ cookiecutter._mkdocs_material_version }}",
-    "mkdocs-include-markdown-plugin>={{ cookiecutter._mkdocs_plugin_include_markdown_version }}",
-    "mkdocs-include-dir-to-nav>={{ cookiecutter._mkdocs_plugin_include_dir_to_nav_version }}",
-    "mkapi>={{ cookiecutter._mkdocs_plugin_mkapi_version }}",
     "pip>={{ cookiecutter._pip_version }}",
 ]
 
 [tool.ruff]
-{% if cookiecutter.python_version == '3.13' -%}
+{% if cookiecutter.python_version == '3.16' -%}
+target-version = "py316"
+{% elif cookiecutter.python_version == '3.15' -%}
+target-version = "py315"
+{% elif cookiecutter.python_version == '3.14' -%}
+target-version = "py314"
+{% elif cookiecutter.python_version == '3.13' -%}
 target-version = "py313"
 {% elif cookiecutter.python_version == '3.12' -%}
 target-version = "py312"
