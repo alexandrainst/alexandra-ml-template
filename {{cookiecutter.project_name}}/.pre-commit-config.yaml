@@ -30,11 +30,12 @@ repos:
     rev: {{ cookiecutter._nbstripout_version }}
     hooks:
     -   id: nbstripout
--   repo: https://github.com/facebook/pyrefly-pre-commit
-    rev: {{ cookiecutter._pyrefly_version }}
+-   repo: local
     hooks:
-    -   id: pyrefly-check
-        name: Pyrefly (type checking)
+    -   id: ty-check
+        name: Ty (type checking)
+        language: python
+        entry: uv run ty check src/{{cookiecutter.project_name}}
         pass_filenames: false
 -   repo: https://github.com/DavidAnson/markdownlint-cli2
     rev: v{{ cookiecutter._markdownlint_version }}
@@ -42,3 +43,12 @@ repos:
     -   id: markdownlint-cli2
         args:
           - --fix
+{%- if cookiecutter.include_frontend == 'y' %}
+-   repo: local
+    hooks:
+    -   id: frontend-check
+        name: Frontend type check and lint
+        language: system
+        entry: npm run check
+        pass_filenames: false
+{%- endif %}

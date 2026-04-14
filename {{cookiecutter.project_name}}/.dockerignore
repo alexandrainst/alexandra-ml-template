@@ -1,0 +1,17 @@
+# Ignore local virtual environments
+.venv
+venv
+
+# Ignore python cache files
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore git history (reduces build context size)
+.git
+.gitignore
+
+# Ignore local IDE settings
+.vscode
+.idea

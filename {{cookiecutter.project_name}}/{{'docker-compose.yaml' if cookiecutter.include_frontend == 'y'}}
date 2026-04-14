@@ -1,0 +1,42 @@
+name: {{ cookiecutter.project_name }}
+
+services:
+  proxy:
+    image: nginx:alpine
+    ports:
+      - 80:80
+    volumes:
+      - ./docker-compose.nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    restart: unless-stopped
+    depends_on:
+      - frontend
+      - backend
+
+  db:
+    attach: false
+    env_file:
+      - .env
+    volumes:
+      - ./data/pgdata/:/var/lib/postgresql/data
+    image: postgres:{{ cookiecutter._postgres_version }}
+    restart: unless-stopped
+
+  backend:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    restart: unless-stopped
+    depends_on:
+      - db
+
+  frontend:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    restart: unless-stopped
+    depends_on:
+      - backend

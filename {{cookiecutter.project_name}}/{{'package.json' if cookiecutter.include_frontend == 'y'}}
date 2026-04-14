@@ -1,0 +1,29 @@
+{
+  "name": "{{cookiecutter.project_name}}-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "check": "vue-tsc --noEmit && eslint src/frontend --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix"
+  },
+  "dependencies": {
+    "vue": "^{{ cookiecutter._vue_version }}",
+    "vue-router": "^{{ cookiecutter._vue_router_version }}"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^{{ cookiecutter._vite_plugin_vue_version }}",
+    "@vue/eslint-config-prettier": "^{{ cookiecutter._eslint_version }}",
+    "@vue/eslint-config-typescript": "^{{ cookiecutter._vue_plugin_eslint_typescript_version }}",
+    "eslint": "^{{ cookiecutter._eslint_version }}",
+    "@eslint/js": "^{{ cookiecutter._eslint_js_version }}",
+    "eslint-plugin-prettier": "^{{ cookiecutter._eslint_plugin_prettier_version }}",
+    "eslint-plugin-vue": "^{{ cookiecutter._eslint_plugin_vue_version }}",
+    "prettier": "^{{ cookiecutter._prettier_version }}",
+    "typescript": "^{{ cookiecutter._typescript_version }}",
+    "vite": "^{{ cookiecutter._vite_version }}",
+    "vue-tsc": "^{{ cookiecutter._vue_tsc_version }}"
+  }
+}

@@ -110,3 +110,6 @@ models/*
 
 # Mkdocs compiled documentation
 site/
+
+# Node modules
+node_modules/

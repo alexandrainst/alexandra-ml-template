@@ -1,0 +1,12 @@
+FROM python:{{ cookiecutter.python_version }}-slim-bookworm AS backend
+COPY --from=ghcr.io/astral-sh/uv:{{ cookiecutter._docker_uv_version }} /uv /uvx /bin/
+ENV PATH="/root/.local/bin:/project/.venv/bin/:${PATH}"
+WORKDIR /project
+RUN --mount=type=cache,target=/root/.cache/uv \
+  --mount=type=bind,source=uv.lock,target=uv.lock \
+  --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+  uv sync --locked --no-install-project
+COPY . /project
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --locked
+EXPOSE 8000
+CMD ["uv", "run", "uvicorn", "{{ cookiecutter.project_name }}.api:app", "--host", "0.0.0.0", "--port", "8000"]

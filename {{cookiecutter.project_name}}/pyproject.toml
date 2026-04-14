@@ -4,13 +4,16 @@ version = "0.0.0"
 description = "{{cookiecutter.project_description}}"
 readme = "README.md"
 authors = [
-    {name = "{{cookiecutter.author_name}}", email = "{{cookiecutter.email}}"},
+  {name = "{{cookiecutter.author_name}}", email = "{{cookiecutter.email}}"},
 ]
 maintainers = [
-    {name = "{{cookiecutter.author_name}}", email = "{{cookiecutter.email}}"},
+  {name = "{{cookiecutter.author_name}}", email = "{{cookiecutter.email}}"},
 ]
 requires-python = ">={{ cookiecutter.python_version }},<4.0"
 dependencies = [
+  {% if cookiecutter.include_frontend == 'y' -%}
+  "fastapi[standard]>={{ cookiecutter._fastapi_version }}",
+  {%- endif %}
 ]
 
 [project.urls]
@@ -28,16 +31,16 @@ file = "LICENSE"
 
 [dependency-groups]
 dev = [
-    "pytest>={{ cookiecutter._pytest_version }}",
-    "pytest-cov>={{ cookiecutter._pytest_cov_version }}",
-    "pre-commit>={{ cookiecutter._pre_commit_version }}",
-    "readme-coverage-badger>={{ cookiecutter._readme_coverage_badger_version }}",
-    "click>={{ cookiecutter._click_version }}",
-    "ruff>={{ cookiecutter._ruff_version }}",
-    "pyrefly>={{ cookiecutter._pyrefly_version }}",
-    "nbstripout>={{ cookiecutter._nbstripout_version }}",
-    "coverage>={{ cookiecutter._coverage_version }}",
-    "pip>={{ cookiecutter._pip_version }}",
+  "pytest>={{ cookiecutter._pytest_version }}",
+  "pytest-cov>={{ cookiecutter._pytest_cov_version }}",
+  "pre-commit>={{ cookiecutter._pre_commit_version }}",
+  "readme-coverage-badger>={{ cookiecutter._readme_coverage_badger_version }}",
+  "click>={{ cookiecutter._click_version }}",
+  "ruff>={{ cookiecutter._ruff_version }}",
+  "ty>={{ cookiecutter._ty_version }}",
+  "nbstripout>={{ cookiecutter._nbstripout_version }}",
+  "coverage>={{ cookiecutter._coverage_version }}",
+  "pip>={{ cookiecutter._pip_version }}",
 ]
 
 [tool.ruff]
@@ -66,13 +69,13 @@ target-version = "py36"
 {% endif -%}
 line-length = 88
 exclude = [
-    ".git",
-    ".pytest_cache",
-    ".ruff_cache",
-    ".venv",
+  ".git",
+  ".pytest_cache",
+  ".ruff_cache",
+  ".venv",
 ]
 extend-include = [
-    "*.ipynb",
+  "*.ipynb",
 ]
 
 [tool.ruff.format]
@@ -84,41 +87,41 @@ skip-magic-trailing-comma = true
 [tool.ruff.lint]
 preview = true
 select = [
-    # Imports
-    "I",
-    "PLC0415",
-    # Docstrings
-    "D",
-    "DOC",
-    # pycodestyle errors and warnings (PEP8)
-    "E",
-    "W",
-    # flake-annotations (type hints)
-    "ANN",
-    # Pyflakes
-    "F",
+  # Imports
+  "I",
+  "PLC0415",
+  # Docstrings
+  "D",
+  "DOC",
+  # pycodestyle errors and warnings (PEP8)
+  "E",
+  "W",
+  # flake-annotations (type hints)
+  "ANN",
+  # Pyflakes
+  "F",
 ]
 ignore = [
-    # Type annotations for "self" arguments
-    "ANN101",
-    # Type annotations for "cls" arguments
-    "ANN102",
-    # Type annotations for *args
-    "ANN002",
-    # Type annotations for **kwargs
-    "ANN003",
-    # Always add blank line before class docstring
-    "D203",
-    # No new-line as first line of docstring
-    "D213",
+  # Type annotations for "self" arguments
+  "ANN101",
+  # Type annotations for "cls" arguments
+  "ANN102",
+  # Type annotations for *args
+  "ANN002",
+  # Type annotations for **kwargs
+  "ANN003",
+  # Always add blank line before class docstring
+  "D203",
+  # No new-line as first line of docstring
+  "D213",
 ]
 
 [tool.ruff.lint.extend-per-file-ignores]
 "__init__.py" = [
-    "F401",
+  "F401",
 ]
 "src/scripts/main.py" = [
-    "I",
+  "I",
 ]
 
 [tool.ruff.lint.isort]
@@ -127,38 +130,29 @@ split-on-trailing-comma = false
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
-[tool.pyrefly.errors]
-missing-import = false
-missing-attribute = false
-not-iterable = false
-no-matching-overload = false
-
 [tool.pytest.ini_options]
-minversion = "7.0"
+minversion = "{{ cookiecutter._pytest_version }}"
 addopts = [
-    '--durations=10',
-    '--color=yes',
-    '--doctest-modules',
-    '--cov=src/{{cookiecutter.project_name}}',
+  '--durations=10',
+  '--color=yes',
+  '--doctest-modules',
+  '--cov=src/{{cookiecutter.project_name}}',
 ]
 xfail_strict = true
 filterwarnings = [
-    "error",
-    "ignore::UserWarning",
-    "ignore::DeprecationWarning",
-    "ignore::PendingDeprecationWarning",
-    "ignore::ImportWarning",
-    "ignore::ResourceWarning",
-    "ignore::FutureWarning",
+  "error",
+  "ignore::UserWarning",
+  "ignore::DeprecationWarning",
+  "ignore::PendingDeprecationWarning",
+  "ignore::ImportWarning",
+  "ignore::ResourceWarning",
+  "ignore::FutureWarning",
 ]
 log_cli_level = "info"
 testpaths = [
-    "tests",
-    "src/{{cookiecutter.project_name}}",
+  "tests",
+  "src/{{cookiecutter.project_name}}",
 ]
-
-[tool.pyrefly]
-site-package-path = [".venv/lib/python{{ cookiecutter.python_version }}/site-packages"]
 
 [build-system]
 requires = ["hatchling"]

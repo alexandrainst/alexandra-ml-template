@@ -63,6 +63,9 @@ install-pre-commit:
 install-dependencies:
 	@uv python install {{ cookiecutter.python_version }}
 	@uv sync --all-extras --all-groups --python {{ cookiecutter.python_version }}
+	{% if cookiecutter.include_frontend == 'y' -%}
+	@npm install
+	{%- endif %}
 
 setup-environment-variables:
 	@uv run python src/scripts/fix_dot_env_file.py
@@ -89,11 +92,19 @@ test:  ## Run tests
 	@uv run pytest && uv run readme-cov
 
 docker:  ## Build Docker image and run container
+	@make install
+	{% if cookiecutter.include_frontend == 'y' -%}
+	@docker compose up --build --remove-orphans
+	{%- else -%}
 	@docker build -t {{ cookiecutter.project_name }} .
 	@docker run -it --rm {{ cookiecutter.project_name }}
+	{%- endif %}
 
 tree:  ## Print directory tree
 	@tree -a --gitignore -I .git .
 
 check:  ## Lint, format, and type-check the code
 	@git add . && uv run pre-commit run --all-files
+	{% if cookiecutter.include_frontend == 'y' -%}
+	@npm run check
+	{%- endif %}

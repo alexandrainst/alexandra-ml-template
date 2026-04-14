@@ -1,0 +1,17 @@
+FROM node:lts-alpine AS frontend-builder
+COPY package*.json /project/
+WORKDIR /project
+RUN npm install
+COPY index.html /project
+COPY vite.config.ts /project
+COPY tsconfig.json /project
+COPY src/frontend /project/src/frontend
+COPY public /project/public
+RUN npm run build
+
+FROM node:lts-alpine AS frontend
+WORKDIR /project
+RUN npm install -g serve
+COPY --from=frontend-builder /project/dist /project/dist
+EXPOSE 5173
+CMD ["serve", "dist", "-l", "5173"]
