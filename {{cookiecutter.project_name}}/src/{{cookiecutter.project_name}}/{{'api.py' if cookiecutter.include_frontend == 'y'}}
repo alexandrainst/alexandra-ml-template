@@ -33,10 +33,10 @@ app.add_middleware(
 
 
 @app.get("/health")
-def health_check() -> str:
+def health_check() -> dict[str, str]:
     """Health check endpoint.
 
     Returns:
-        "OK" if the service is healthy.
+        Dictionary with status "OK" if the service is healthy.
     """
-    return "OK"
+    return {"status": "OK"}
