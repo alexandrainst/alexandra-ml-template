@@ -12,15 +12,6 @@ services:
       - frontend
       - backend
 
-  db:
-    attach: false
-    env_file:
-      - .env
-    volumes:
-      - ./data/pgdata/:/var/lib/postgresql/data
-    image: postgres:{{ cookiecutter._postgres_version }}
-    restart: unless-stopped
-
   backend:
     env_file:
       - .env
@@ -28,8 +19,6 @@ services:
       context: .
       dockerfile: Dockerfile.backend
     restart: unless-stopped
-    depends_on:
-      - db
 
   frontend:
     env_file:
