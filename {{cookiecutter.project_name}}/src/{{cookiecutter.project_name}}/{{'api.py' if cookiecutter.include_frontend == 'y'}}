@@ -11,7 +11,12 @@ from fastapi.middleware.cors import CORSMiddleware
 async def lifespan(app: FastAPI) -> t.AsyncGenerator[None, None]:
     """Manage application lifespan.
 
-    Creates database tables on startup and stores model_id in app state.
+    Args:
+        app:
+            The FastAPI application.
+
+    Yields:
+        Nothing, really. Yielding is just used to separate setup and teardown.
     """
     # Set up global state using `app.state.<new-attribute>` here
 
