@@ -23,7 +23,7 @@
 - There will always be a `pyproject.toml` file in the root directory
 - Use `uv add <package>` to add packages to the project, do not just add them manually
   to `pyproject.toml`. Add development dependencies with `uv add --group=dev <package>`
-- Use the `tree -a --gitignore -I .git .` command to see the directory structure
+- Use the `make tree` command to see the directory structure
 
 ### Code Quality
 
