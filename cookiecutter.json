@@ -5,6 +5,7 @@
     "email": "name@alexandra.dk",
     "open_source": "Is this a public open source project? (y/n, default: n)",
     "include_frontend": "Include a frontend? (y/n, default: n)",
+    "include_database": "Include a PostgreSQL database? (y/n, default: n)",
     "python_version": "3.12",
     "_docker_uv_version": "0.6.11",
     "_pytest_version": "8.4.1",
