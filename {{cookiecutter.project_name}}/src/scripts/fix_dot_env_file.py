@@ -45,9 +45,13 @@ def fix_dot_env_file(non_interactive: bool) -> None:
     )
 
     # Extract all the environment variables in the files
-    env_vars = {line.split("=")[0]: line.split("=")[1] for line in env_file_lines}
+    env_vars = {
+        line.split("=")[0]: line.split("=")[1] for line in env_file_lines if "=" in line
+    }
     name_and_email_vars = {
-        line.split("=")[0]: line.split("=")[1] for line in name_and_email_file_lines
+        line.split("=")[0]: line.split("=")[1]
+        for line in name_and_email_file_lines
+        if "=" in line
     }
 
     desired_env_vars = DESIRED_ENVIRONMENT_VARIABLES
