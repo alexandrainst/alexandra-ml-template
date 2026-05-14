@@ -110,4 +110,4 @@ check:  ## Lint, format, and type-check the code
 	{%- if cookiecutter.include_frontend == 'y' %}
 	@npm run check
 	{%- endif %}
-	@git add . && uv run pre-commit run --all-files
+	@git add . && uv run pre-commit run --all-files; status=$$?; git reset >/dev/null; exit $$status
