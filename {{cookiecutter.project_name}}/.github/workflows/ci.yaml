@@ -26,13 +26,13 @@ jobs:
     runs-on: [self-hosted, self-hosted-ubuntu-latest]
     {%- endif %}
     steps:
-      - uses: actions/checkout@v{{ cookiecutter._checkout_action_version }}
+      - uses: actions/checkout@{{ cookiecutter._checkout_action_sha }}  # {{ cookiecutter._checkout_action_version }}
         with:
           persist-credentials: false
           ref: main
 
       - name: Install uv and set up Python
-        uses: astral-sh/setup-uv@v{{ cookiecutter._setup_uv_action_version }}
+        uses: astral-sh/setup-uv@{{ cookiecutter._setup_uv_action_sha }}  # {{ cookiecutter._setup_uv_action_version }}
         with:
           enable-cache: true
           python-version: "{{ cookiecutter.python_version }}"
@@ -55,13 +55,13 @@ jobs:
             python-version: ["{{ cookiecutter.python_version }}"]
     runs-on: {% raw %}${{ matrix.os }}{% endraw %}
     steps:
-      - uses: actions/checkout@v{{ cookiecutter._checkout_action_version }}
+      - uses: actions/checkout@{{ cookiecutter._checkout_action_sha }}  # {{ cookiecutter._checkout_action_version }}
         with:
           persist-credentials: false
           ref: main
 
       - name: Install uv and set up Python
-        uses: astral-sh/setup-uv@v{{ cookiecutter._setup_uv_action_version }}
+        uses: astral-sh/setup-uv@{{ cookiecutter._setup_uv_action_sha }}  # {{ cookiecutter._setup_uv_action_version }}
         with:
           enable-cache: true
           python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
