@@ -22,9 +22,9 @@ jobs:
       pull-requests: write
     {% if cookiecutter.open_source == 'y' -%}
     runs-on: ubuntu-latest
-    {% else -%}
-  runs-on: [self-hosted, self-hosted-ubuntu-latest]
-    {% endif -%}
+    {%- else -%}
+    runs-on: [self-hosted, self-hosted-ubuntu-latest]
+    {%- endif %}
     steps:
       - uses: actions/checkout@v{{ cookiecutter._checkout_action_version }}
         with:
@@ -52,9 +52,9 @@ jobs:
         matrix:
             {% if cookiecutter.open_source == 'y' -%}
             os: [windows-latest, macos-latest, ubuntu-latest]
-            {% else -%}
+            {%- else -%}
             os: [self-hosted-ubuntu-latest]
-            {% endif -%}
+            {%- endif %}
             python-version: ["{{ cookiecutter.python_version }}"]
     runs-on: {% raw %}${{ matrix.os }}{% endraw %}
     steps:
