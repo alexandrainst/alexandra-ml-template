@@ -8,5 +8,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
   uv sync --locked --no-install-project
 COPY . /project
 RUN --mount=type=cache,target=/root/.cache/uv uv sync --locked
+RUN useradd --create-home --uid 1000 appuser && chown -R appuser:appuser /project
+USER appuser
 EXPOSE 8000
 CMD ["uv", "run", "uvicorn", "{{ cookiecutter.project_name }}.api:app", "--host", "0.0.0.0", "--port", "8000"]

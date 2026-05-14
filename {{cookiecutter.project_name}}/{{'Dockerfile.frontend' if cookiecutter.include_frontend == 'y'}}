@@ -13,5 +13,6 @@ FROM node:{{ cookiecutter._node_version }} AS frontend
 WORKDIR /project
 RUN npm install -g serve
 COPY --from=frontend-builder /project/dist /project/dist
+USER node
 EXPOSE 5173
 CMD ["serve", "dist", "-l", "5173"]
