@@ -2,7 +2,7 @@ name: {{ cookiecutter.project_name }}
 
 services:
   proxy:
-    image: nginx:alpine
+    image: nginx:{{ cookiecutter._nginx_version }}
     ports:
       - 80:80
     volumes:

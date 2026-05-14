@@ -1,4 +1,4 @@
-FROM node:lts-alpine AS frontend-builder
+FROM node:{{ cookiecutter._node_version }} AS frontend-builder
 COPY package*.json /project/
 WORKDIR /project
 RUN npm install
@@ -9,7 +9,7 @@ COPY src/frontend /project/src/frontend
 COPY public /project/public
 RUN npm run build
 
-FROM node:lts-alpine AS frontend
+FROM node:{{ cookiecutter._node_version }} AS frontend
 WORKDIR /project
 RUN npm install -g serve
 COPY --from=frontend-builder /project/dist /project/dist
