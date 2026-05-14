@@ -31,7 +31,9 @@ app = FastAPI(title="{{ cookiecutter.project_name | replace("_", " ") | title }}
 
 allow_origins = [
     origin.strip()
-    for origin in os.environ.get("CORS_ALLOW_ORIGINS", "http://localhost:8000").split(",")
+    for origin in os.environ.get("CORS_ALLOW_ORIGINS", "http://localhost:8000").split(
+        ","
+    )
     if origin.strip()
 ]
 
