@@ -1,17 +1,46 @@
-# Ignore local virtual environments
+# Local virtual environments
 .venv
 venv
 
-# Ignore python cache files
+# Python caches and build artifacts
 __pycache__
 *.pyc
 *.pyo
 *.pyd
+.ruff_cache
+.pytest_cache
+.mypy_cache
+.coverage
+.coverage.*
+htmlcov
+dist
+build
+*.egg-info
 
-# Ignore git history (reduces build context size)
+# Git metadata
 .git
 .gitignore
 
-# Ignore local IDE settings
+# IDE / editor settings
 .vscode
 .idea
+
+# Secrets and local env files
+.env
+.env.*
+!.env.example
+
+# Local data and models — keep out of images
+data
+models
+
+# Tests should not ship in the production image
+tests
+
+# Logs and temp files
+*.log
+*.tmp
+
+# Frontend
+node_modules
+dist
