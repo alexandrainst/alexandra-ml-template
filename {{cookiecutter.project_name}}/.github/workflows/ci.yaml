@@ -29,7 +29,6 @@ jobs:
       - uses: actions/checkout@{{ cookiecutter._checkout_action_sha }}  # {{ cookiecutter._checkout_action_version }}
         with:
           persist-credentials: false
-          ref: main
 
       - name: Install uv and set up Python
         uses: astral-sh/setup-uv@{{ cookiecutter._setup_uv_action_sha }}  # {{ cookiecutter._setup_uv_action_version }}
@@ -58,7 +57,6 @@ jobs:
       - uses: actions/checkout@{{ cookiecutter._checkout_action_sha }}  # {{ cookiecutter._checkout_action_version }}
         with:
           persist-credentials: false
-          ref: main
 
       - name: Install uv and set up Python
         uses: astral-sh/setup-uv@{{ cookiecutter._setup_uv_action_sha }}  # {{ cookiecutter._setup_uv_action_version }}
